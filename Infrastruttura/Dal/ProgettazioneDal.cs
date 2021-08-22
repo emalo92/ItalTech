@@ -38,8 +38,6 @@ namespace Infrastruttura.Dal
 
             }
 
-            tipoCrud.ToDto();
-
             throw new NotImplementedException();
         }
     }
