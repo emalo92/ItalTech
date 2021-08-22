@@ -20,7 +20,7 @@ namespace Infrastruttura.Dal
             throw new NotImplementedException();
         }
 
-        public Task<Progetto> GetAllProgetti()
+        public Task<List<Progetto>> GetAllProgetti()
         {
             throw new NotImplementedException();
         }
@@ -32,6 +32,14 @@ namespace Infrastruttura.Dal
 
         public Task<bool> SaveProgetto(Progetto progetto, TipoCrud tipoCrud)
         {
+            switch (tipoCrud)
+            {
+                case TipoCrud.insert: break;
+
+            }
+
+            tipoCrud.ToDto();
+
             throw new NotImplementedException();
         }
     }
