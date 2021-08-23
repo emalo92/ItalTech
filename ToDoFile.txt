@@ -1,0 +1,6 @@
+In questo file di testo metteremo man mano le cose che andranno implementate quando inizieremo a pieno regime
+
+ESEMPIO
+
+Classe: PogettazioneDal
+Metodo: GetAllComponentiINProgetto (string codiceProdotto); // metodo che riceve in ingresso il codice del progetto e restituisce la lista dei componenti utilizzati per quel progetto
