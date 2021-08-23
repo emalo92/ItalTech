@@ -32,6 +32,9 @@ namespace ItalTech
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
+            string connectionString = Configuration.GetConnectionString("ItalTechContext");
+            var dalStrartup = new Infrastruttura.Startup(Configuration);
+            dalStrartup.ConfigureServices(services, connectionString);
 
         }
 

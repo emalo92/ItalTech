@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItalTech", "ItalTech\ItalTech.csproj", "{CD2E272C-BB38-4504-A85A-F67BB3E184FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastruttura", "Infrastruttura\Infrastruttura.csproj", "{8FA2D591-1676-4D52-A961-3A95D16F5C91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastruttura", "Infrastruttura\Infrastruttura.csproj", "{8FA2D591-1676-4D52-A961-3A95D16F5C91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{6E31EC56-9DD6-4288-B0F2-AFE1A59029F6}"
+	ProjectSection(SolutionItems) = preProject
+		TextFile1.txt = TextFile1.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

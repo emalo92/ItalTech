@@ -1,4 +1,5 @@
-﻿using Infrastruttura.Models;
+﻿using Infrastruttura.Data.Context;
+using Infrastruttura.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,15 @@ namespace Infrastruttura.Dal
 {
     public class ProgettazioneDal : IProgettazioneDal
     {
+        private ItalTechContext context;
         
-        public ProgettazioneDal ()
+        public ProgettazioneDal (ItalTechContext context)
         {
-            //context Todoasasd
+            this.context = context;
         }
 
         public Task<bool> CheckProgettoExist(string codice)
-        {
+        {            
             throw new NotImplementedException();
         }
 

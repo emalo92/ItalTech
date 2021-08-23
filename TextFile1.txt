@@ -1,0 +1,41 @@
+*** Migrations ***
+
+
+Aggiungere DBContext
+Scaffold-DbContext CONNECTIONSTRING Microsoft.EntityFrameworkCore.SqlServer -OutputDir DIRECTORY -ContextDir CONTEXTDIRECTORY NOMECONTEXT -Tables "NOMETABELLEDAINSERIRESEESISTONO"
+Esempio:
+Scaffold-DbContext "data source=.; initial catalog = ItalTech; persist security info=True; Integrated Security = SSPI;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data -ContextDir Data\Data -Context ItalTechContext -Tables "NEW_TABLE"
+
+Aggiungere Migration
+Add-Migration NOMEMIGRATION -OutputDir DIRECTORY -Context NOMECONTEXT
+Esempio:
+Add-Migration FirstMigration -OutputDir Data\Migrations -Context ItalTechContext
+
+Rimuovere ultima Migration
+remove-migration
+
+Per aggiornare il database da console NUGet:
+Update-Database -context NOMEDBCONTEXT
+Esempio:
+Update-Database -context ItalTechContext
+
+
+
+
+
+
+
+Importante: da console NuGet ricordarsi di selezionare il progetto sul quale andranno creati i modelli e il context
+
+Per generare tutte le tabelle del db e metterle nella cartella Models (il context avrà il nome di default e starà in Models):
+- Scaffold-DbContext "Server=.\SQLExpress;Database=AHE_8_STD;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Per generare solo le tabelle elencate e metterle nella cartella Models\Produttivita, mentre il context avrà nome ProduttivitaDbContext e starà nella cartella Data:
+- Scaffold-DbContext "Server=.\SQLExpress;Database=AHE_8_STD;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\Produttivita -ContextDir Data -Context ProduttivitaDbContext -Tables "CNATUVER_PROD","CNATUVER_RESO"
+
+Qualora si volesse aggiungere solo una o più tabelle ad un contesto già esistente, le alternative sono due:
+1. o rifare lo scaffolding, così come sopra menzionato, con la riproposizione di tutte le tabelle che devono appartenere al context, ossia sia quelle già presenti che le nuove da aggiungere,
+   con l'aggiunta della clausola -Force che indica la sovrascrittura dell'attuale contesto, con il rischio quindi di perdere eventuali aggiunte personalizzate:
+   - Scaffold-DbContext "Server=.\SQLExpress;Database=AHE_8_STD;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\Produttivita -ContextDir Data -Context ProduttivitaDbContext -Tables "CNATUVER_PROD","CNATUVER_RESO", "NEW_TABLE" -Force
+2. oppure creare un context temporaneo, per poi copiare la parte di codice creata (proprietà e modelbuilder.Entity in OnModelCreating) nel contesto effettivo:
+   - Scaffold-DbContext "Server=.\SQLExpress;Database=AHE_8_STD;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\Produttivita -ContextDir Data -Context TempContext -Tables "NEW_TABLE"
