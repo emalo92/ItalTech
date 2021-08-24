@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Modelli\" />
     <Folder Include="Mapper\" />
   </ItemGroup>
 
