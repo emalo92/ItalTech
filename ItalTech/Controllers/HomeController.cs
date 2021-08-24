@@ -1,6 +1,4 @@
-﻿using Infrastruttura;
-using Infrastruttura.Dal;
-using ItalTech.Models;
+﻿using ItalTech.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

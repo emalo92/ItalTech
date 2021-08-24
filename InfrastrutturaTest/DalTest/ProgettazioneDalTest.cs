@@ -14,19 +14,19 @@ namespace InfrastrutturaTest
         private IProgettazioneDal _sut;
         private static string connectionString = "data source=.; initial catalog = ItalTech; persist security info=True; Integrated Security = SSPI;";
         private IHost _host = null;
-        private ItalTechContext context;
+        private ItalTechDbContext context;
 
         static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder(null)
                 .ConfigureServices((_, services) =>
                 {
-                    services.AddDbContext<ItalTechContext>(options =>
+                    services.AddDbContext<ItalTechDbContext>(options =>
                         options.UseSqlServer(connectionString));
 
                     services.AddScoped<IMemoryCache, MemoryCache>();
 
                     services.AddScoped<IProgettazioneDal>(s =>
-                        new ProgettazioneDal(s.GetRequiredService<ItalTechContext>()));
+                        new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>()));
                                           
                 });
 
@@ -49,7 +49,7 @@ namespace InfrastrutturaTest
         [SetUp]
         public void Setup()
         {
-            context = _host.Services.CreateScope().ServiceProvider.GetRequiredService<ItalTechContext>();
+            context = _host.Services.CreateScope().ServiceProvider.GetRequiredService<ItalTechDbContext>();
             _sut = _host.Services.GetService<IProgettazioneDal>();
         }
 

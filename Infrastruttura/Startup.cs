@@ -21,7 +21,7 @@ namespace Infrastruttura
 
         public void ConfigureServices (IServiceCollection services, string connectionString)
         {            
-             services.AddDbContext<ItalTechContext>(options => options.UseSqlServer(connectionString));
+             services.AddDbContext<ItalTechDbContext>(options => options.UseSqlServer(connectionString));
         }
     }
 }

@@ -8,13 +8,13 @@ using System.Collections.Generic;
 
 namespace Infrastruttura.Data.Context
 {
-    public partial class ItalTechContext : DbContext
+    public partial class ItalTechDbContext : DbContext
     {
-        public ItalTechContext()
+        public ItalTechDbContext()
         {
         }
 
-        public ItalTechContext(DbContextOptions<ItalTechContext> options)
+        public ItalTechDbContext(DbContextOptions<ItalTechDbContext> options)
             : base(options)
         {
         }

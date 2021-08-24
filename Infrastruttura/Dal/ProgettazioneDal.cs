@@ -10,9 +10,9 @@ namespace Infrastruttura.Dal
 {
     public class ProgettazioneDal : IProgettazioneDal
     {
-        private ItalTechContext context;
+        private ItalTechDbContext context;
         
-        public ProgettazioneDal (ItalTechContext context)
+        public ProgettazioneDal (ItalTechDbContext context)
         {
             this.context = context;
         }
