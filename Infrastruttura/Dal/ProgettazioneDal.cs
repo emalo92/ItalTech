@@ -18,7 +18,7 @@ namespace Infrastruttura.Dal
         }
 
         public Task<bool> CheckProgettoExist(string codice)
-        {            
+        {
             throw new NotImplementedException();
         }
 

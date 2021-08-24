@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Infrastruttura.Data;
+using System.Collections.Generic;
 
 #nullable disable
 
@@ -19,7 +20,7 @@ namespace Infrastruttura.Data.Context
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {        
             modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
             OnModelCreatingPartial(modelBuilder);
