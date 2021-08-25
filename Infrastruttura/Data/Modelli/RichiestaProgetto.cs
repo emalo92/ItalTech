@@ -8,6 +8,16 @@ namespace Infrastruttura.Data.Modelli
 {
     public class RichiestaProgetto
     {
-        //todo
+        public int Codice { get; set; }
+
+        public int? CodiceProgetto { get; set; }
+
+        public string Descrizione { get; set;}
+
+        public string EsitoStudio { get; set; }
+
+        public decimal? Budget { get; set; }
+
+
     }
 }
