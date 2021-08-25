@@ -1,3 +1,5 @@
+using Infrastruttura;
+using Infrastruttura.Dal;
 using ItalTech.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,13 +28,13 @@ namespace ItalTech
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("ItalTechContext")));
+            //services.AddDbContext<ItalTechContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("ItalTechContext")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<ItalTechContext>();
             services.AddControllersWithViews();
 
             services.AddMvc();
@@ -46,6 +48,9 @@ namespace ItalTech
             string connectionString = Configuration.GetConnectionString("ItalTechContext");
             var dalStrartup = new Infrastruttura.Startup(Configuration);
             dalStrartup.ConfigureServices(services, connectionString);
+
+            services.AddScoped<IProgettazioneDal, ProgettazioneDal>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -66,16 +71,23 @@ namespace ItalTech
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
         }
     }
 }

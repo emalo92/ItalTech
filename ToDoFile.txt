@@ -6,6 +6,3 @@ Classe: PogettazioneDal
 Metodo: GetAllComponentiINProgetto (string codiceProdotto); // metodo che riceve in ingresso il codice del progetto e restituisce la lista dei componenti utilizzati per quel progetto
 
 
-
-x Nicola, guardati la classe ProdottoCase in Data/Modelli..
-Devi fare una classe del genere per ogni entità che abbiamo. Per creare le tabelle al momento facciamo così. Per i vincoli di chiave esterna poi me la vedo io.

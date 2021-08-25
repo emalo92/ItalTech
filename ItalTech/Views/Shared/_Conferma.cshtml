@@ -1,0 +1,39 @@
+﻿
+<div id="confermaId" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="titoloId" class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="testoId" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button id="btn_annullaId" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button id="btn_confermaId"type="button" class="btn btn-primary">Si</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Conferma(titolo, testo, confermaCallBack, annullaCallBack)
+    {
+        $("#titoloId").html(titolo);
+        $("#testoId").html(testo);
+        $("#confermaId").modal("show");
+
+        if (annullaCallBack != null) {
+            $("#btn_annullaId").click(function () {
+                $("#confermaId").modal("hide");
+                annullaCallBack();
+            });
+        }
+        $("#btn_confermaId").click(function () {
+            $("#confermaId").modal("hide");
+            confermaCallBack();
+        });
+    }
+</script>
