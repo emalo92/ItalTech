@@ -1,5 +1,6 @@
 using Infrastruttura;
 using Infrastruttura.Dal;
+using Infrastruttura.Data.Context;
 using ItalTech.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +50,8 @@ namespace ItalTech
             var dalStrartup = new Infrastruttura.Startup(Configuration);
             dalStrartup.ConfigureServices(services, connectionString);
 
-            services.AddScoped<IProgettazioneDal, ProgettazioneDal>();
+            services.AddScoped<IProgettazioneDal>(s =>
+                new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
 
         }
 
@@ -79,7 +81,7 @@ namespace ItalTech
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                name: "areas",
+                name: "MyArea",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(

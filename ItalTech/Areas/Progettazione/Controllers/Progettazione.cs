@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ItalTech.Areas.Progettazione.Controllers
 {
+    [Area("Progettazione")]
     public class Progettazione : Controller
     {
         public IActionResult Start()

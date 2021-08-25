@@ -8,5 +8,7 @@ namespace Infrastruttura.Models
 {
     public class Progetto
     {
+        public int Codice { get; set; }
+        public string Descrizione { get; set; }
     }
 }

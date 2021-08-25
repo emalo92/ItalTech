@@ -1,8 +1,60 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<div class="container">
+    <div class="">
+        <div class="text-center">
+            <h1>ItalTech</h1>
+            <h2>Facciamo un baffo alla DELL</h2>
+            <br />
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-secondary" asp-area="Progettazione" asp-controller="Progettazione" asp-action="Start">Guarda tutti i progetti</a>
+            }
+            else
+            {
+                <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">Iscriviti</a>
+            }
 
-<div class="text-center">
-    <h1 class="display-4">Benvenuti in ItalTech</h1>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-4">
+            <div class="card">
+                <img class="card-img-top" src="\img\Euro.jpg" alt="Card image cap">
+
+                <div class="card-body">
+                    <h5 class="card-title">Ultimi progetti</h5>
+                </div>
+                <div class="card-footer">
+                    <label class="card-text">Progetti</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <img class="card-img-top" src="\img\Euro.jpg" alt="Card image cap">
+
+                <div class="card-body">
+                    <h5 class="card-title">e meeeeee</h5>
+                </div>
+                <div class="card-footer">
+                    <label class="card-text">Buuuuu</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <img class="card-img-top" src="\img\Euro.jpg" alt="Card image cap">
+
+                <div class="card-body">
+                    <h5 class="card-title">casdiasdi</h5>
+                </div>
+                <div class="card-footer">
+                    <label class="card-text">ce la faremooooo</label>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-

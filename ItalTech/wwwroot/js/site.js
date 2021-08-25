@@ -1,4 +1,17 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function showLoading() {
+    document.getElementById("divPageLoading").style.display = "block";
+}
+function hideLoading() {
+    document.getElementById("divPageLoading").style.display = "none";
+}
 
-// Write your JavaScript code.
+
+function openSidebar() {
+    document.getElementById("mySidenav").style.width = "300px";
+    document.getElementById("main").style.marginLeft = "300px";
+}
+
+function closeSidebar() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
