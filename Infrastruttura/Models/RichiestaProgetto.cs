@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastruttura.Data.Modelli
+namespace Infrastruttura.Models
 {
     public class RichiestaProgetto
     {

@@ -5,4 +5,5 @@ ESEMPIO
 Classe: PogettazioneDal
 Metodo: GetAllComponentiINProgetto (string codiceProdotto); // metodo che riceve in ingresso il codice del progetto e restituisce la lista dei componenti utilizzati per quel progetto
 
-
+vorrei un paio di righe di spiegazione su richiesta progetto perchè vorrei studiare bene "l'interlocutore in progetto", si potrebbe collegare cliente con la classe richiesta progetto rendendo più facile l'entità progetto
+per quanto riguarda il Ruolo lo aggiungo come classe o come attributo?

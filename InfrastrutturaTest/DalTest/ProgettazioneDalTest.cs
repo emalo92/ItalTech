@@ -26,7 +26,7 @@ namespace InfrastrutturaTest
                     services.AddScoped<IMemoryCache, MemoryCache>();
 
                     services.AddScoped<IProgettazioneDal>(s =>
-                        new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>()));
+                        new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>(),connectionString));
                                           
                 });
 
