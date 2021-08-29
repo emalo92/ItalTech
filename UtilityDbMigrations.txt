@@ -9,7 +9,7 @@ Scaffold-DbContext "data source=.; initial catalog = ItalTech; persist security 
 Aggiungere Migration
 Add-Migration NOMEMIGRATION -OutputDir DIRECTORY -Context NOMECONTEXT
 Esempio:
-Add-Migration FirstMigration -OutputDir Data\Migrations -Context ItalTechContext
+Add-Migration PrimaMigrazione -OutputDir Data\Migrations -Context ItalTechDbContext
 
 Rimuovere ultima Migration
 remove-migration
@@ -17,11 +17,15 @@ remove-migration
 Per aggiornare il database da console NUGet:
 Update-Database -context NOMEDBCONTEXT
 Esempio:
-Update-Database -context ItalTechContext
+Update-Database -context ItalTechDbContext
 
 
-
-
+//////////**********Fate prima una compilazione di tutta la soluzione
+//////////**********Per creare il db nel vostro management dovete aprire la "console gestioni pacchetti" in "Gestione Pacchetti Nuget"
+//////////**********Assicuratevi che nel campo Progetto Predefinito ci sia Infrastruttura e non ItalTech
+//////////Questo passaggio va fatto solo se seguendo la sequenza il processo non va a buon fine la prima volta///////////**********Poi lanciate esattamente il comando che vedete nell'esempio di "Aggiungere Migration"
+//////////**********Infine lanciate il comando nell'esempio di "Per aggiornare il database da console NUGet"
+//////////**********Se qualcosa va storto poi ci sentiamo domani
 
 
 

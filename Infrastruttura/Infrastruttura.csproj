@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Context\" />
+    <Folder Include="Data\Migrations\" />
     <Folder Include="Mapper\" />
   </ItemGroup>
 
