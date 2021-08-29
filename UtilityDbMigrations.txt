@@ -31,7 +31,7 @@ Per generare tutte le tabelle del db e metterle nella cartella Models (il contex
 - Scaffold-DbContext "Server=.\SQLExpress;Database=AHE_8_STD;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 
 Per generare solo le tabelle elencate e metterle nella cartella Models\Produttivita, mentre il context avrà nome ProduttivitaDbContext e starà nella cartella Data:
-- Scaffold-DbContext "Server=.\SQLExpress;Database=AHE_8_STD;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\Produttivita -ContextDir Data -Context ProduttivitaDbContext -Tables "CNATUVER_PROD","CNATUVER_RESO"
+- Scaffold-DbContext "data source=.; initial catalog = ItalTech; persist security info=True; Integrated Security = SSPI;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data\Modelli -ContextDir Data\Context -Context ItalTechDbContext -Tables "tabelle che si vogliono separate da virgola"
 
 Qualora si volesse aggiungere solo una o più tabelle ad un contesto già esistente, le alternative sono due:
 1. o rifare lo scaffolding, così come sopra menzionato, con la riproposizione di tutte le tabelle che devono appartenere al context, ossia sia quelle già presenti che le nuove da aggiungere,

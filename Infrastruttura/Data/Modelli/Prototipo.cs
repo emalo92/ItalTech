@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#nullable disable
 
 namespace Infrastruttura.Data.Modelli
 {
-    public class Prototipo
+    public partial class Prototipo
     {
-        public int NumPrototipo { get; set; }
-        public int NumProgetto { get; set; }//progetto di riferimento del prototipo
-        public int CodiceTest { get; set; }
-        public DateTime Data { get; set; }
-        public bool Risultato { get; set; }
+        public Prototipo()
+        {
+            TestPrototipos = new HashSet<TestPrototipo>();
+        }
 
+        public int Numero { get; set; }
+        public int CodiceProgetto { get; set; }
+        public DateTime? Data { get; set; }
+        public string Descrizione { get; set; }
+        public string Modifiche { get; set; }
+        public bool? RisultatoTest { get; set; }
+        public string MotivoFallimento { get; set; }
+
+        public virtual Progetto CodiceProgettoNavigation { get; set; }
+        public virtual ICollection<TestPrototipo> TestPrototipos { get; set; }
     }
 }

@@ -1,28 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#nullable disable
 
 namespace Infrastruttura.Data.Modelli
 {
-    public class Progetto
+    public partial class Progetto
     {
-        public int NumProgetto { get; set; }
-        public DateTime Data { get; set; }
+        public Progetto()
+        {
+            AnalisiDiMercatoProgettis = new HashSet<AnalisiDiMercatoProgetti>();
+            Componentes = new HashSet<Componente>();
+            ProdottoAssemblatos = new HashSet<ProdottoAssemblato>();
+            ProdottoCases = new HashSet<ProdottoCase>();
+            Prototipos = new HashSet<Prototipo>();
+            RichiestaProgettos = new HashSet<RichiestaProgetto>();
+        }
+
+        public int Codice { get; set; }
+        public DateTime DataInizio { get; set; }
+        public DateTime? DataFine { get; set; }
+        public string NomeProgetto { get; set; }
         public string Descrizione { get; set; }
-        public string IdAziendale { get; set; }//chi redige il progetto
-        public decimal CostoLavoro { get; set; }
-        public decimal Costo { get; set; }// tipo un costo del progetto stesso (possibile preventivo)
-        public string Analisi { get; set; }
-        public int CodiceFornitura { get; set; }// componenti da utilizzare, posso sceglierne quanti ne voglio ?
+        public decimal? CostoPrevisto { get; set; }
+        public decimal? CostoFinale { get; set; }
+        public int? CodiceAnalisiMercato { get; set; }
+        public string Tipo { get; set; }
+        public string Cliente { get; set; }
+        public string ProjectManager { get; set; }
 
-        //da continuare dopo che capisco meglio ahaahha
-
-
-
-
-
-
+        public virtual Cliente ClienteNavigation { get; set; }
+        public virtual Impiegato ProjectManagerNavigation { get; set; }
+        public virtual ICollection<AnalisiDiMercatoProgetti> AnalisiDiMercatoProgettis { get; set; }
+        public virtual ICollection<Componente> Componentes { get; set; }
+        public virtual ICollection<ProdottoAssemblato> ProdottoAssemblatos { get; set; }
+        public virtual ICollection<ProdottoCase> ProdottoCases { get; set; }
+        public virtual ICollection<Prototipo> Prototipos { get; set; }
+        public virtual ICollection<RichiestaProgetto> RichiestaProgettos { get; set; }
     }
 }

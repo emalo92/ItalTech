@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#nullable disable
 
 namespace Infrastruttura.Data.Modelli
 {
-    public class Fornitore
+    public partial class Fornitore
     {
+        public Fornitore()
+        {
+            Fornituras = new HashSet<Fornitura>();
+        }
+
         public string PartitaIva { get; set; }
         public string Nome { get; set; }
-        public string NomeDitta { get; set; }
+        public string RagioneSociale { get; set; }
         public string Indirizzo { get; set; }
-        public int Telefono { get; set; }
+        public string Città { get; set; }
+        public string Cap { get; set; }
+        public string NumTelefono { get; set; }
         public string Email { get; set; }
+
+        public virtual ICollection<Fornitura> Fornituras { get; set; }
     }
 }
