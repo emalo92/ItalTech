@@ -52,7 +52,8 @@ namespace ItalTech
 
             services.AddScoped<IProgettazioneDal>(s =>
                 new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
-
+            services.AddScoped<ITestingDal>(s =>
+                new TestingDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

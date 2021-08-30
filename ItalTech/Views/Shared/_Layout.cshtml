@@ -104,12 +104,18 @@
             <partial name="_Conferma" />
             <partial name="_Alert" />
             <div class="row">
-                @{string colonnaAdmin = "container"; }
+                @{string colonnaAdmin = "container";
+                    var nomeController = ViewContext.RouteData.Values["controller"].ToString();
+                }
 
-                @if (ViewContext.RouteData.Values["controller"] != null && ViewContext.RouteData.Values["controller"].ToString() != "Home")
+                @if (ViewContext.RouteData.Values["controller"] != null && nomeController != "Home")
                 {
                     colonnaAdmin = "col-sm-8";
-                    <partial name="_Sidebar" />
+                    switch (nomeController)
+                    {
+                        case "Progettazione":<partial name="_SidebarProgettazione" />; break;
+                        case "Testing": <partial name="_SidebarTesting" />; break;
+                    }
                 }
                 <div class="@colonnaAdmin">
                     @RenderBody()
