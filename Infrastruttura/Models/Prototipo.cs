@@ -8,11 +8,13 @@ namespace Infrastruttura.Models
 {
     public class Prototipo
     {
-        public int NumPrototipo { get; set; }
-        public int NumProgetto { get; set; }//progetto di riferimento del prototipo
-        public int CodiceTest { get; set; }
-        public DateTime Data { get; set; }
-        public bool Risultato { get; set; }
+        public int Numero { get; set; }
+        public int CodiceProgetto { get; set; }
+        public DateTime? Data { get; set; }
+        public string Descrizione { get; set; }
+        public string Modifiche { get; set; }
+        public bool? RisultatoTest { get; set; }
+        public string MotivoFallimento { get; set; }
 
     }
 }

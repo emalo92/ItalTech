@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Infrastruttura.Models
 {
-    public class Prodotto
+    public class AspNetUserRole
     {
-        
+        public string UserId { get; set; }
+        public string RoleId { get; set; }
     }
 }

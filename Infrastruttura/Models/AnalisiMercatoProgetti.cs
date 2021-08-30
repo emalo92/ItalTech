@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace Infrastruttura.Models
 {
-    public class ProdottoCase
+    public class AnalisiMercatoProgetti
     {
         public int Codice { get; set; }
-        public int? Lotto { get; set; }
+        public string CodiceOperatore { get; set; }
+        public string NomeOperatore { get; set; }
         public int CodiceProgetto { get; set; }
-        public string Nome { get; set; }
+        public DateTime Datainizio { get; set; }
+        public DateTime? DataFine { get; set; }
         public string Descrizione { get; set; }
-        public decimal? Costo { get; set; }
-        public double? PesoKg { get; set; }
-        public string Colore { get; set; }
-        public int Quantita { get; set; }
+        public string Risultato { get; set; }
     }
 }

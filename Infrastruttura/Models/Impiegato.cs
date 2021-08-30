@@ -8,12 +8,15 @@ namespace Infrastruttura.Models
 {
     public class Impiegato
     {
-        public string IdAziendale { get; set; }
+        public string CodFiscale { get; set; }
+        public string UserId { get; set; }
         public string Nome { get; set; }
+        public string Cognome { get; set; }
+        public DateTime DataDiNascita { get; set; }
         public string Indirizzo { get; set; }
-        public int NumeroTelefono { get; set; }
-        public string Email { get; set; }
-        public string Competenze { get; set; }
+        public string Citta { get; set; }
+        public string Cap { get; set; }
+        public string AziendaId { get; set; }
 
     }
 }
