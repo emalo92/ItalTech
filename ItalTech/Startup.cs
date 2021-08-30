@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace ItalTech
                 new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
             services.AddScoped<ITestingDal>(s =>
                 new TestingDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
+                       
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

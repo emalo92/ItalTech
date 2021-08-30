@@ -1,5 +1,6 @@
 ﻿using Infrastruttura.Data.Context;
 using Infrastruttura.Models;
+using Infrastruttura.Models.Input;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,7 +27,7 @@ namespace Infrastruttura.Dal
             throw new NotImplementedException();
         }
 
-        public Task<List<Progetto>> GetAllProgetti()
+        public Task<List<Progetto>> GetAllProgetti(InputRicercaProgetti input)
         {
             //try
             //{
@@ -44,6 +45,11 @@ namespace Infrastruttura.Dal
             //}
             throw new NotImplementedException();
 
+        }
+
+        public Task<List<Progetto>> GetAllProgetti()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Progetto> GetProgetto(string codice)

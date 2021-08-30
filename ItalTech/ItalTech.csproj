@@ -38,7 +38,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Progettazione\Data\" />
-    <Folder Include="Areas\Progettazione\Models\" />
     <Folder Include="Data\" />
   </ItemGroup>
 
