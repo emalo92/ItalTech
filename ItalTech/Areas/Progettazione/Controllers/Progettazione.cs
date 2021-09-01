@@ -1,7 +1,7 @@
 ﻿using Infrastruttura;
-using Infrastruttura.Dal;
 using ItalTech.Areas.Progettazione.Models;
 using ItalTech.Mapper;
+using ItalTech.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -28,10 +28,10 @@ namespace ItalTech.Areas.Progettazione.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ArchivioProgetti()
+        public IActionResult ArchivioProgetti()
         {
             var input = new InputRicercaProgetti();
-            input.DataInizio = DateTime.Now;
+            //input.DataInizio = DateTime.Now;
             return View(input);
         }
 
@@ -42,6 +42,25 @@ namespace ItalTech.Areas.Progettazione.Controllers
             var result = resultDal.ToModel();
             ViewBag.ListaProgetti = result;
             return View(input);
+        }
+
+        public IActionResult CreaProgetto()
+        {            
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreaProgetto(Progetto progetto)
+        {
+            var result = await _progettazioneDal.SaveProgetto(progetto.ToDto(), TipoCrud.insert.ToDto());
+            string messaggio = result ? "Progetto salvato correttamente" : "Impossibile salvare il progetto";
+            ViewBag.Messaggio = messaggio;
+            return View(progetto);
+        }
+
+        public IActionResult ModificaProgetto()
+        {
+            return View();
         }
 
 

@@ -3,7 +3,7 @@
 @model InputRicercaProgetti
 
 @{
-    var listaProgetti = ViewBag.ListaProgetti; @*!= null ? ViewBag.ListaProgetti : null;*@
+    var listaProgetti = (List<Progetto>)ViewBag.ListaProgetti; @*!= null ? ViewBag.ListaProgetti : null;*@
 }
 
 <section class="bg-light">
@@ -47,8 +47,8 @@
 </section>
     @if (listaProgetti != null)
     {
-        <table class="table">
-            <thead>
+        <table class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
                     <th>Codice</th>
                     <th>Data Inizio</th>
@@ -56,11 +56,11 @@
                     <th>Nome Progetto</th>
                     <th>Descrizione</th>
                     <th>Costo Previsto</th>
-                    <th>CostoFinale</th>
-                    <th>Codice Analisi Di Mercato</th>
+                    <th>Costo Finale</th>
+                    <th>Analisi Mercato</th>
                     <th>Tipo</th>
                     <th>Cliente</th>
-                    <th>ProjectManager</th>
+                    <th>Project Manager</th>
                 </tr>
             </thead>
             <tbody>
@@ -72,7 +72,7 @@
                                 <label class="control-label">@elem.Codice</label>
                             </td>
                             <td>
-                                <label class="control-label">@elem.DataInizio</label>
+                                <label class="control-label">@elem.DataInizio.ToString("dd/MM/yyyy")</label>
                             </td>
                             <td>
                                 <label class="control-label">@elem.DataFine</label>
@@ -89,8 +89,8 @@
                             <td>
                                 <label class="control-label">@elem.CostoFinale</label>
                             </td>
-                            <td>
-                                <label class="control-label">@elem.CodiceAnalisiDiMercato</label>
+                            <td>                
+                                <label class="control-label">@elem.CodiceAnalisiMercato</label>                             
                             </td>
                             <td>
                                 <label class="control-label">@elem.Tipo</label>

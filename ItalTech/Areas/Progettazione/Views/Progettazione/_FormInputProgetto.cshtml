@@ -1,0 +1,56 @@
+﻿@using ItalTech.Areas.Progettazione.Models
+@model Progetto
+
+
+<div class="row mb-3">
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Codice"></label>
+        <input type="text" class="form-control" asp-for="Codice" readonly />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="DataInizio"></label>
+        <input type="date" class="form-control" asp-for="DataInizio" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="DataFine"></label>
+        <input type="date" class="form-control" asp-for="DataFine" />
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="NomeProgetto"></label>
+        <input type="text" class="form-control" asp-for="NomeProgetto" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Descrizione"></label>
+        <input type="text" class="form-control" asp-for="Descrizione" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Tipo"></label>
+        <input type="text" class="form-control" asp-for="Tipo" />
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="CodiceAnalisiMercato"></label>
+        <input type="text" class="form-control" asp-for="CodiceAnalisiMercato" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="CostoPrevisto"></label>
+        <input type="text" class="form-control" asp-for="CostoPrevisto" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="CostoFinale"></label>
+        <input type="text" class="form-control" asp-for="CostoFinale" />
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Cliente"></label>
+        <input type="text" class="form-control" asp-for="Cliente" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="ProjectManager"></label>
+        <input type="text" class="form-control" asp-for="ProjectManager" />
+    </div>
+</div>

@@ -9,7 +9,7 @@ namespace Infrastruttura.Models.Input
     public class InputRicercaProgetti
     {
         public int Codice { get; set; }
-        public DateTime DataInizio { get; set; }
+        public DateTime? DataInizio { get; set; }
         public string NomeProgetto { get; set; }
         public string Tipo { get; set; }
         public string Cliente { get; set; }

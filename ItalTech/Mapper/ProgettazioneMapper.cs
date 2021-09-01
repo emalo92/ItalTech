@@ -12,7 +12,35 @@ namespace ItalTech.Mapper
         {
             return new Progetto
             {
+                Cliente = progetto.Cliente,
+                Codice = progetto.Codice,
+                CodiceAnalisiMercato = progetto.CodiceAnalisiMercato,
+                CostoFinale = progetto.CostoFinale,
+                CostoPrevisto = progetto.CostoPrevisto,
+                DataFine = progetto.DataFine,
+                DataInizio = progetto.DataInizio,
+                Descrizione = progetto.Descrizione,
+                NomeProgetto = progetto.NomeProgetto,
+                ProjectManager = progetto.ProjectManager,
+                Tipo = progetto.Tipo
+            };
+        }
 
+        public static Infrastruttura.Models.Progetto ToDto(this Progetto progetto)
+        {
+            return new Infrastruttura.Models.Progetto
+            {
+                Cliente = progetto.Cliente,
+                Codice = progetto.Codice,
+                CodiceAnalisiMercato = progetto.CodiceAnalisiMercato,
+                CostoFinale = progetto.CostoFinale,
+                CostoPrevisto = progetto.CostoPrevisto,
+                DataFine = progetto.DataFine,
+                DataInizio = progetto.DataInizio,
+                Descrizione = progetto.Descrizione,
+                NomeProgetto = progetto.NomeProgetto,
+                ProjectManager = progetto.ProjectManager,
+                Tipo = progetto.Tipo
             };
         }
 
@@ -22,6 +50,16 @@ namespace ItalTech.Mapper
             foreach (var progetto in progettiDal)
             {
                 progetti.Add(progetto.ToModel());
+            }
+            return progetti;
+        }
+
+        public static List<Infrastruttura.Models.Progetto> ToModel(this List<Progetto> progettiDal)
+        {
+            var progetti = new List<Infrastruttura.Models.Progetto>();
+            foreach (var progetto in progettiDal)
+            {
+                progetti.Add(progetto.ToDto());
             }
             return progetti;
         }

@@ -32,8 +32,8 @@ namespace Infrastruttura.Dal
         public async Task<List<Progetto>> GetAllProgetti(InputRicercaProgetti input)
         {
             try
-            {
-                var query = context.Progettos.AsQueryable();
+            {                
+                var query = context.Progettos.AsNoTracking();
                 if (input.Codice != 0)
                 {
                     query = query.Where( x => x.Codice == input.Codice);
@@ -42,10 +42,10 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.NomeProgetto == input.NomeProgetto);
                 }
-                //if (input.DataInizio != null)
-                //{
-                //    query = query.Where(x => x.DataInizio == input.DataInizio);
-                //}
+                if (input.DataInizio != null)
+                {
+                    query = query.Where(x => x.DataInizio == input.DataInizio);
+                }
                 if (input.Cliente != null)
                 {
                     query = query.Where(x => x.Cliente == input.Cliente);
@@ -59,29 +59,14 @@ namespace Infrastruttura.Dal
                     query = query.Where(x => x.Tipo == input.Tipo);
                 }
 
-                var progetti = await query.OrderBy(x => x.NomeProgetto).ToListAsync();
+                var progetti = await query.ToListAsync();
                 return progetti.ToDto();
             }
             catch (Exception ex)
             {
                 throw new Exception("Impossibile trovare progetti");
             }
-            //try
-            //{
-            //    var progetti = await context.Progetto.Select(s => new Progetto
-            //    {
-            //        Codice = s.Codice,
-            //        Descrizione = s.Descrizione
-            //    }).ToListAsync();
-            //    return progetti;
-            //}
-            //catch (Exception ex)
-            //{
-            //    ex.Source = "CheckProgettoExist";
-            //    throw;
-            //}
-            throw new NotImplementedException();
-
+            
         }
 
         public Task<List<Progetto>> GetAllProgetti()
@@ -132,11 +117,12 @@ namespace Infrastruttura.Dal
             }
         }
 
-        public Task<bool> SaveProgetto(Progetto progetto, TipoCrud tipoCrud)
+        public async Task<bool> SaveProgetto(Progetto progetto, TipoCrud tipoCrud)
         {
             switch (tipoCrud)
             {
-                case TipoCrud.insert: break;
+                case TipoCrud.insert: await context.Progettos.AddAsync(progetto.ToEntity()); return await context.SaveChangesAsync()==1;
+                case TipoCrud.update: context.Progettos.Update(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
 
             }
 

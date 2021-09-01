@@ -505,8 +505,7 @@ namespace Infrastruttura.Data.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProjectManager)
-                    .IsRequired()
+                entity.Property(e => e.ProjectManager)                    
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
@@ -572,8 +571,7 @@ namespace Infrastruttura.Data.Context
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Operatore)
-                    .IsRequired()
+                entity.Property(e => e.Operatore)                    
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
