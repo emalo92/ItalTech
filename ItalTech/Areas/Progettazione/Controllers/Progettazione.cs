@@ -31,6 +31,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
         public async Task<IActionResult> ArchivioProgetti()
         {
             var input = new InputRicercaProgetti();
+            input.DataInizio = DateTime.Now;
             return View(input);
         }
 

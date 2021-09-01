@@ -1,6 +1,8 @@
 ﻿using Infrastruttura.Data.Context;
 using Infrastruttura.Models;
 using Infrastruttura.Models.Input;
+using Infrastruttura.Mapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -27,8 +29,43 @@ namespace Infrastruttura.Dal
             throw new NotImplementedException();
         }
 
-        public Task<List<Progetto>> GetAllProgetti(InputRicercaProgetti input)
+        public async Task<List<Progetto>> GetAllProgetti(InputRicercaProgetti input)
         {
+            try
+            {
+                var query = context.Progettos.AsQueryable();
+                if (input.Codice != 0)
+                {
+                    query = query.Where( x => x.Codice == input.Codice);
+                }
+                if (input.NomeProgetto != null)
+                {
+                    query = query.Where(x => x.NomeProgetto == input.NomeProgetto);
+                }
+                //if (input.DataInizio != null)
+                //{
+                //    query = query.Where(x => x.DataInizio == input.DataInizio);
+                //}
+                if (input.Cliente != null)
+                {
+                    query = query.Where(x => x.Cliente == input.Cliente);
+                }
+                if (input.ProjectManager != null)
+                {
+                    query = query.Where(x => x.ProjectManager == input.ProjectManager);
+                }
+                if (input.Tipo != null)
+                {
+                    query = query.Where(x => x.Tipo == input.Tipo);
+                }
+
+                var progetti = await query.OrderBy(x => x.NomeProgetto).ToListAsync();
+                return progetti.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare progetti");
+            }
             //try
             //{
             //    var progetti = await context.Progetto.Select(s => new Progetto
