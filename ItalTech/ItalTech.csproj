@@ -38,6 +38,9 @@
 
   <ItemGroup>
     <Folder Include="Areas\Progettazione\Data\" />
+    <Folder Include="Areas\Testing\Data\" />
+    <Folder Include="Areas\Testing\Models\" />
+    <Folder Include="Areas\Testing\Views\" />
     <Folder Include="Data\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
