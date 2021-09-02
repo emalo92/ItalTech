@@ -1,0 +1,116 @@
+﻿@using ItalTech.Areas.Progettazione.Models;
+
+@model InputRichiesteProgetti
+
+@{
+    var listaRichiesteProgetti = (List<Progetto>)ViewBag.ListaRichiesteProgetti; @*!= null ? ViewBag.ListaRichiesteProgetti : null;*@
+}
+
+<section class="bg-light">
+    <div class="container">
+        <form class="form-group" asp-action="RichiesteProgetti" method="post">
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                    <label asp-for="Codice"></label>
+                    <input type="text" class="form-control" asp-for="Codice" />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                    <label asp-for="NomeProgetto"></label>
+                    <input type="text" class="form-control" asp-for="NomeProgetto" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                    <label asp-for="DataDal"></label>
+                    <input type="date" class="form-control" asp-for="DataDal" />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                    <label asp-for="DataAl"></label>
+                    <input type="date" class="form-control" asp-for="DataAl" />
+                </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                        <label asp-for="Tipo"></label>
+                        <input type="text" class="form-control" asp-for="Tipo" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                        <label asp-for="ProjectManager"></label>
+                        <input type="text" class="form-control" asp-for="ProjectManager" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                        <label asp-for="Cliente"></label>
+                        <input type="text" class="form-control" asp-for="Cliente" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-right">
+                        <input class="btn btn-info" type="submit" value="Cerca" />
+                    </div>
+                </div>
+        </form>
+    </div>
+</section>
+@if (listaRichiesteProgetti != null)
+{
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Codice</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th>Nome Progetto</th>
+                <th>Descrizione</th>
+                <th>Costo Previsto</th>
+                <th>Costo Finale</th>
+                <th>Analisi Mercato</th>
+                <th>Tipo</th>
+                <th>Cliente</th>
+                <th>Project Manager</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var elem in listaRichiesteProgetti)
+                {
+                    <tr>
+                        <td>
+                            <label class="control-label">@elem.Codice</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.DataInizio.ToString("dd/MM/yyyy")</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.DataFine</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.NomeProgetto</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.Descrizione</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.CostoPrevisto</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.CostoFinale</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.CodiceAnalisiMercato</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.Tipo</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.Cliente</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.ProjectManager</label>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+}

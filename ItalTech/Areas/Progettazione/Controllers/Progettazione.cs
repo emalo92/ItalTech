@@ -34,6 +34,10 @@ namespace ItalTech.Areas.Progettazione.Controllers
             //input.DataInizio = DateTime.Now;
             return View(input);
         }
+        public IActionResult RichiesteProgetto()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> ArchivioProgetti(InputRicercaProgetti input)
@@ -41,6 +45,15 @@ namespace ItalTech.Areas.Progettazione.Controllers
             var resultDal = await _progettazioneDal.GetAllProgetti(input.ToDto());
             var result = resultDal.ToModel();
             ViewBag.ListaProgetti = result;
+            return View(input);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RichiesteProgetto(InputRichiesteProgetti input)
+        {
+            var resultDal = await _progettazioneDal.GetAllProgetti(input.ToDto());
+            var result = resultDal.ToModel();
+            ViewBag.ListaRichiesteProgetti = result;
             return View(input);
         }
 
