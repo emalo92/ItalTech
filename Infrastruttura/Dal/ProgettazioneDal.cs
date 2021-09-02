@@ -74,6 +74,11 @@ namespace Infrastruttura.Dal
             throw new NotImplementedException();
         }
 
+        public Task<List<Progetto>> GetAllProgetti(InputRichiesteProgetti input)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Progetto> GetProgetto(string codice)
         {
             try
