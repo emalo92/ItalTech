@@ -69,7 +69,55 @@ namespace Infrastruttura.Dal
 
         }
 
-        
+        public async Task<List<TestProdottoAssemblato>> GetAllTestProdottiAssemblati(InputRicercaTestProdottiAssemblati input)
+        {
+            try
+            {
+                var query = context.TestProdottoAssemblatos.AsNoTracking();
+                if (input.CodiceTest != 0)
+                {
+                    query = query.Where(x => x.CodiceTest == input.CodiceTest);
+                }
+                if (input.CodiceProdottoAssemblato != 0)
+                {
+                    query = query.Where(x => x.CodiceProdottoAssemblato== input.CodiceProdottoAssemblato);
+                }
+
+                var test= await query.ToListAsync();
+                return test.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare progetti Assemblati");
+            }
+
+            
+            
+        }
+        public async Task<List<TestProdottoCase>> GetAllTestProdottiCase(InputRicercaTestProdottiCase input)
+        {
+            try
+            {
+                var query = context.TestProdottoCases.AsNoTracking();
+                if (input.CodiceProdottoCase != 0)
+                {
+                    query = query.Where(x => x.CodiceProdottoCase == input.CodiceProdottoCase);
+                }
+                if (input.CodiceTest!= 0)
+                {
+                    query = query.Where(x => x.CodiceTest== input.CodiceTest);
+                }
+
+                var test = await query.ToListAsync();
+                return test.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare i Case");
+            }
+
+        }
+
     }
-    
+
 }

@@ -48,5 +48,59 @@ namespace Infrastruttura.Mapper
             }
             return tst;
         }
+
+        public static TestProdottoCase ToDto(this Data.Modelli.TestProdottoCase testprodcase) 
+        {
+            return new TestProdottoCase { 
+                  CodiceProdottoCase = testprodcase.CodiceProdottoCase,
+                  CodiceTest = testprodcase.CodiceTest,
+            };
+        }
+
+        public static Data.Modelli.TestProdottoCase ToEntity(this TestProdottoCase testprodcase) 
+        {
+            return  new Data.Modelli.TestProdottoCase {
+                CodiceProdottoCase = testprodcase.CodiceProdottoCase,
+                CodiceTest = testprodcase.CodiceTest,
+            };
+        }
+
+        public static List<TestProdottoCase> ToDto(this List<Data.Modelli.TestProdottoCase> testprodcase) 
+        {
+            List<TestProdottoCase> tpc = new();
+            foreach(var testpc in testprodcase )
+            {
+                tpc.Add(testpc.ToDto());
+            }
+            return tpc;
+        }
+
+        public static TestProdottoAssemblato ToDto(this Data.Modelli.TestProdottoAssemblato testprodass)
+        {
+            return new TestProdottoAssemblato
+            {
+                CodiceProdottoAssemblato = testprodass.CodiceProdottoAssemblato,
+                CodiceTest = testprodass.CodiceTest,
+            };
+        }
+
+        public static Data.Modelli.TestProdottoAssemblato ToEntity(this TestProdottoAssemblato testprodass)
+        {
+            return new Data.Modelli.TestProdottoAssemblato
+            {
+                CodiceProdottoAssemblato = testprodass.CodiceProdottoAssemblato,
+                CodiceTest = testprodass.CodiceTest,
+            };
+        }
+
+        public static List<TestProdottoAssemblato> ToDto(this List<Data.Modelli.TestProdottoAssemblato> testprodass)
+        {
+            List<TestProdottoAssemblato> tpa = new();
+            foreach (var testpa in testprodass)
+            {
+                tpa.Add(testpa.ToDto());
+            }
+            return tpa;
+        }
     }
 }
