@@ -1,4 +1,5 @@
 ﻿using Infrastruttura.Models;
+using Infrastruttura.Models.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;

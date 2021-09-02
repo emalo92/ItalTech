@@ -1,13 +1,12 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastruttura.Models
+namespace Infrastruttura.Models.Input
 {
-    public class Test
+    public class InputRicercaTest
     {
         public int Codice { get; set; }
         public string Tipo { get; set; }
@@ -17,6 +16,5 @@ namespace Infrastruttura.Models
         public int? QuantitaPassati { get; set; }
         public int? QuantitaFalliti { get; set; }
         public string Operatore { get; set; }
-
     }
 }

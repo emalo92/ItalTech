@@ -73,6 +73,7 @@ namespace Infrastruttura.Dal
         {
             throw new NotImplementedException();
         }
+           
 
         public async Task<Progetto> GetProgetto(string codice)
         {
@@ -117,6 +118,7 @@ namespace Infrastruttura.Dal
             }
         }
 
+        
         public async Task<bool> SaveProgetto(Progetto progetto, TipoCrud tipoCrud)
         {
             switch (tipoCrud)
