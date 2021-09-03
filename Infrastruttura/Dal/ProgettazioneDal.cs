@@ -73,6 +73,7 @@ namespace Infrastruttura.Dal
         {
             throw new NotImplementedException();
         }
+           
 
         public Task<List<Progetto>> GetAllProgetti(InputRichiesteProgetti input)
         {
@@ -122,6 +123,7 @@ namespace Infrastruttura.Dal
             }
         }
 
+        
         public async Task<bool> SaveProgetto(Progetto progetto, TipoCrud tipoCrud)
         {
             switch (tipoCrud)
