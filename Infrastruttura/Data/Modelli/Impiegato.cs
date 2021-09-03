@@ -20,7 +20,7 @@ namespace Infrastruttura.Data.Modelli
         public string UserId { get; set; }
         public string Nome { get; set; }
         public string Cognome { get; set; }
-        public DateTime DataDiNascita { get; set; }
+        public DateTime? DataDiNascita { get; set; }
         public string Indirizzo { get; set; }
         public string Citta { get; set; }
         public string Cap { get; set; }

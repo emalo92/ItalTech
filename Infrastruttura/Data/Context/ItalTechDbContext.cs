@@ -291,7 +291,7 @@ namespace Infrastruttura.Data.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CodiceFornitore)
+                entity.Property(e => e.PartitaIva)
                     .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
@@ -320,7 +320,7 @@ namespace Infrastruttura.Data.Context
 
                 entity.HasOne(d => d.CodiceFornitoreNavigation)
                     .WithMany(p => p.Fornituras)
-                    .HasForeignKey(d => d.CodiceFornitore)
+                    .HasForeignKey(d => d.PartitaIva)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Fornitura_Fornitura");
             });

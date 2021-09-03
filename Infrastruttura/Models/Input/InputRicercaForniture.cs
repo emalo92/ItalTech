@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastruttura.Models
+namespace Infrastruttura.Models.Input
 {
-    public class Fornitura
+    public class InputRicercaForniture
     {
         public string Codice { get; set; }
         public string Nome { get; set; }

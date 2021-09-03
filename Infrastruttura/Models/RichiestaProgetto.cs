@@ -9,15 +9,13 @@ namespace Infrastruttura.Models
     public class RichiestaProgetto
     {
         public int Codice { get; set; }
-
         public int? CodiceProgetto { get; set; }
-
+        public string Tipo { get; set; }
         public string Descrizione { get; set; }
-
-        public string EsitoStudio { get; set; }
-
+        public bool? EsitoStudio { get; set; }
         public decimal? Budget { get; set; }
-
+        public string Cliente { get; set; }
+        public string Operatore { get; set; }
 
     }
 }

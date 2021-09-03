@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastruttura.Models
+namespace Infrastruttura.Models.Input
 {
-    public class Impiegato
+    public class InputRicercaImpiegati
     {
         public string CodFiscale { get; set; }
         public string UserId { get; set; }
