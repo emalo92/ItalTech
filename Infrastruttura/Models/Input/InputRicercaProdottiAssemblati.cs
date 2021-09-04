@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Infrastruttura.Models.Input
 {
-    public class InputRicercaProdottiCase
+    public class InputRicercaProdottiAssemblati
     {
         public int Codice { get; set; }
         public int? Lotto { get; set; }
@@ -14,8 +14,8 @@ namespace Infrastruttura.Models.Input
         public string Nome { get; set; }
         public string Descrizione { get; set; }
         public decimal? Costo { get; set; }
-        public double? PesoKg { get; set; }
-        public string Colore { get; set; }
+        public string FasciaDiMercato { get; set; }
+        public double? Peso { get; set; }
         public int Quantita { get; set; }
     }
 }

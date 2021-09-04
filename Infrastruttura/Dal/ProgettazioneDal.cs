@@ -317,6 +317,281 @@ namespace Infrastruttura.Dal
                 throw new Exception("Impossibile trovare forniture");
             }
         }
+        public async Task<List<ProdottoCase>> GetAllProdottiCase(InputRicercaProdottiCase input)
+        {
+            try
+            {
+                var query = context.ProdottoCases.AsNoTracking();
+
+                if (input.Codice!= 0)
+                {
+                    query = query.Where(x => x.Codice == input.Codice);
+                }
+                if (input.Nome != null)
+                {
+                    query = query.Where(x => x.Nome == input.Nome);
+                }
+                if (input.CodiceProgetto != 0)
+                {
+                    query = query.Where(x => x.CodiceProgetto == input.CodiceProgetto);
+                }
+                if (input.Costo != null)
+                {
+                    query = query.Where(x => x.Costo == input.Costo
+                    );
+                }
+                if (input.Colore != null)
+                {
+                    query = query.Where(x => x.Colore == input.Colore);
+                }
+                if (input.Lotto != null)
+                {
+                    query = query.Where(x => x.Lotto == input.Lotto);
+                }
+                if (input.Descrizione != null)
+                {
+                    query = query.Where(x => x.Descrizione == input.Descrizione);
+                }
+                if (input.PesoKg != 0)
+                {
+                    query = query.Where(x => x.PesoKg == input.PesoKg);
+                }
+                if (input.Quantita != 0)
+                {
+                    query = query.Where(x => x.Quantita == input.Quantita);
+                }
+
+                var prodottocase = await query.ToListAsync();
+                return prodottocase.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare forniture");
+            }
+        }
+        public async Task<List<ProdottoAssemblato>> GetAllProdottiAssemblati(InputRicercaProdottiAssemblati input)
+        {
+            try
+            {
+                var query = context.ProdottoAssemblatos.AsNoTracking();
+
+                if (input.Codice != 0)
+                {
+                    query = query.Where(x => x.Codice == input.Codice);
+                }
+                if (input.Nome != null)
+                {
+                    query = query.Where(x => x.Nome == input.Nome);
+                }
+                if (input.CodiceProgetto != 0)
+                {
+                    query = query.Where(x => x.CodiceProgetto == input.CodiceProgetto);
+                }
+                if (input.Costo != null)
+                {
+                    query = query.Where(x => x.Costo == input.Costo
+                    );
+                }
+                if (input.FasciaDiMercato != null)
+                {
+                    query = query.Where(x => x.FasciaDiMercato == input.FasciaDiMercato);
+                }
+                if (input.Lotto != null)
+                {
+                    query = query.Where(x => x.Lotto == input.Lotto);
+                }
+                if (input.Descrizione != null)
+                {
+                    query = query.Where(x => x.Descrizione == input.Descrizione);
+                }
+                if (input.Peso != 0)
+                {
+                    query = query.Where(x => x.Peso == input.Peso);
+                }
+                if (input.Quantita != 0)
+                {
+                    query = query.Where(x => x.Quantita == input.Quantita);
+                }
+
+                var prodottoassemblato = await query.ToListAsync();
+                return prodottoassemblato.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare forniture");
+            }
+        }
+        public async Task<List<Componente>> GetAllComponenti(InputRicercaComponenti input)
+        {
+            try
+            {
+                var query = context.Componentes.AsNoTracking();
+
+                if (input.CodiceProgetto != 0)
+                {
+                    query = query.Where(x => x.CodiceProgetto == input.CodiceProgetto);
+                }
+                if (input.CodiceFornitura != null)
+                {
+                    query = query.Where(x => x.CodiceFornitura == input.CodiceFornitura);
+                }
+                if (input.NumPezzi != 0)
+                {
+                    query = query.Where(x => x.NumPezzi == input.NumPezzi);
+                }
+                
+                var componente = await query.ToListAsync();
+                return componente.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare forniture");
+            }
+        }
+        public async Task<List<Ordini>> GetAllOrdini(InputRicercaOrdini input)
+        {
+            try
+            {
+                var query = context.Ordinis.AsNoTracking();
+
+                if (input.Codice != 0)
+                {
+                    query = query.Where(x => x.Codice== input.Codice);
+                }
+                if (input.DataCreazione!= null)
+                {
+                    query = query.Where(x => x.DataCreazione == input.DataCreazione);
+                }
+                if (input.DataInvio != null)
+                {
+                    query = query.Where(x => x.DataInvio == input.DataInvio);
+                }
+                if(input.Operatore != null)
+                {
+                    query = query.Where(x => x.Operatore == input.Operatore);
+                }
+
+                var ordine  = await query.ToListAsync();
+                return ordine.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare forniture");
+            }
+        }
+        public async Task<List<OrdineForniture>> GetAllOrdiniForniture(InputRicercaOrdiniForniture input)
+        {
+            try
+            {
+                var query = context.OrdineFornitures.AsNoTracking();
+
+                if (input.CodiceOrdine != 0)
+                {
+                    query = query.Where(x => x.CodiceOrdine == input.CodiceOrdine);
+                }
+                if (input.CodiceFornitura != null)
+                {
+                    query = query.Where(x => x.CodiceFornitura == input.CodiceFornitura);
+                }
+                if (input.Quantità != 0)
+                {
+                    query = query.Where(x => x.Quantità == input.Quantità);
+                }
+
+                var ordineforniture = await query.ToListAsync();
+                return ordineforniture.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare forniture");
+            }
+        }
+        public async Task<List<Prototipo>> GetAllPrototipi(InputRicercaPrototipi input)
+        {
+            try
+            {
+                var query = context.Prototipos.AsNoTracking();
+
+                if (input.Numero!= 0)
+                {
+                    query = query.Where(x => x.Numero == input.Numero);
+                }
+                if (input.CodiceProgetto != 0)
+                {
+                    query = query.Where(x => x.CodiceProgetto == input.CodiceProgetto);
+                }
+                if (input.Data != null)
+                {
+                    query = query.Where(x => x.Data== input.Data);
+                }
+                if (input.Descrizione != null)
+                {
+                    query = query.Where(x => x.Descrizione == input.Descrizione);
+                }
+                if (input.Modifiche != null)
+                {
+                    query = query.Where(x => x.Modifiche == input.Modifiche);
+                }
+                if (input.MotivoFallimento != null)
+                {
+                    query = query.Where(x => x.MotivoFallimento == input.MotivoFallimento);
+                }
+                if (input.RisultatoTest!= null)
+                {
+                    query = query.Where(x => x.RisultatoTest == input.RisultatoTest);
+                }
+
+                var prototipo = await query.ToListAsync();
+                return prototipo.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare forniture");
+            }
+        }
+        public async Task<List<Cliente>> GetAllClienti(InputRicercaClienti input)
+        {
+            try
+            {
+                var query = context.Clientes.AsNoTracking();
+
+                if (input.CodFiscale != null)
+                {
+                    query = query.Where(x => x.CodFiscale == input.CodFiscale);
+                }
+                if (input.Nome!= null)
+                {
+                    query = query.Where(x => x.Nome== input.Nome);
+                }
+                if (input.Cognome != null)
+                {
+                    query = query.Where(x => x.Cognome == input.Cognome);
+                }
+                if (input.Indirizzo!= null)
+                {
+                    query = query.Where(x => x.Indirizzo == input.Indirizzo);
+                }
+                if (input.DataDiNascita != null)
+                {
+                    query = query.Where(x => x.DataDiNascita == input.DataDiNascita);
+                }
+                if (input.Citta != null)
+                {
+                    query = query.Where(x => x.Citta == input.Citta);
+                }
+                if (input.Cap!= null)
+                {
+                    query = query.Where(x => x.Cap == input.Cap);
+                }
+                
+                var cliente = await query.ToListAsync();
+                return cliente.ToDto();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare forniture");
+            }
+        }
 
         public async Task<bool> SaveProgetto(Progetto progetto, TipoCrud tipoCrud)
         {
@@ -329,5 +604,7 @@ namespace Infrastruttura.Dal
 
             throw new NotImplementedException();
         }
+
+        
     }
 }

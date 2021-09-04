@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastruttura.Models
+namespace Infrastruttura.Models.Input
 {
-    public class Ordini
+    public class InputRicercaOrdini
     {
         public int Codice { get; set; }
         public DateTime? DataCreazione { get; set; }
