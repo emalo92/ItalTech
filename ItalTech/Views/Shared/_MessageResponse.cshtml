@@ -1,0 +1,23 @@
+﻿@using ItalTech.Utility;
+
+@{
+    var responseMessage = ViewMessage.GetResponse(this);
+    string classe = "";
+    if(responseMessage != null)
+    {
+        classe = responseMessage.IsSucces ? "alert-info" : "alert-danger";
+    }
+}
+
+
+@if (responseMessage != null)
+{
+<div class="alert @classe alert-dismissable mt-3 text-center" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    @Html.Raw(responseMessage.Message)
+</div>
+}
+
+
