@@ -236,11 +236,11 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.Descrizione == input.Descrizione);
                 }
-                if (input.CostoPerPezzo != null)
+                if (input.CostoPerPezzo != 0)
                 {
                     query = query.Where(x => x.CostoPerPezzo == input.CostoPerPezzo);
                 }
-                if (input.CostoAlKg != null)
+                if (input.CostoAlKg != 0)
                 {
                     query = query.Where(x => x.CostoAlKg == input.CostoAlKg);
                 }
