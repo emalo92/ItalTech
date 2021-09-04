@@ -1,0 +1,216 @@
+﻿@using ItalTech.Models.TableToExport
+@using ItalTech.Models.Paginate;
+@using ItalTech.ExtensionMethods;
+@model Table
+
+@{
+    Pagination pagination = (Pagination)ViewBag.Pagination;
+    if (pagination == null)
+    {
+        pagination = new Pagination();
+        pagination.Route = new Route();
+        pagination.IsPaginated = false;
+    }
+
+    var urlToRefreshPage = "/" + pagination.Route.Area + "/" + pagination.Route.Controller + "/" + pagination.Route.Action + "?";
+    var classSizeModal = ViewBag.SizeModal;
+    var styleMaxWidth = "";
+    if(classSizeModal == "modal-ultraxl")
+    {
+        classSizeModal = "modal-xl";
+        styleMaxWidth = " max-width:1440px; ";
+            }
+    var idRowTable = 0;
+
+    var columnNameForJson = "'" + Model.ColumnNames.Select(c => GetSafeStringColumn(c)).Aggregate((a, b) => a + "','" + b) + "'";
+
+    var columnNotVisibile = Model.ColumnNames.Where(c => c.StartsWith("NotVisible_")).ToList();
+    var indexColumnNotVisibile = columnNotVisibile.Select(x => Model.ColumnNames.IndexOf(x) + 1).ToList();
+
+    var isFiltered = ViewBag.ExistsValueFilter != null ? (bool)ViewBag.ExistsValueFilter : false;
+    var titleLabelSearchFilter = ViewBag.LabelSearchFilter;
+    var inputSearched = ViewBag.InputSearchFilter;
+
+    var javascriptMethod = string.IsNullOrEmpty(pagination.JavascriptNavigationMethod) ? "" : pagination.JavascriptNavigationMethod;
+    var parameterNameSearchFilter = ViewBag.ParameterNameSearchFilter;
+    var parameterValueSearchFilter = ViewBag.ParameterValueSearchFilter;
+}
+@functions
+{
+    private string GetSafeStringColumn(string val)
+    {
+        val = val.Trim().Replace(" ", "").Replace("#", "").Replace(".", "").Replace(",", "").Replace("°", "").
+            Replace(":", "").Replace(";", "").Replace("%", "").Replace("\"", "").Replace("(", "").Replace(")", "");
+        return val;
+    }
+}
+
+<style>
+    .table th {
+        border-top: 0px;
+    }
+    @if (isFiltered) {
+        <text>.table thead th:hover {
+            background-color: #7aa62d !important;
+            cursor: pointer;
+        }
+        </text>
+     }
+
+</style>
+
+
+<div id="GenericTableId" class="" role="dialog">
+    <div id="ModalGenericTableId" class="modal-dialog  @classSizeModal border-primary shadow" role="document" style="height: 200px; @styleMaxWidth">
+        <div class="modal-content border-primary ">
+            <partial name="_LocalMessageResponse" />
+            <div class="card-header">
+                <h5 class="modal-title">
+                    <span>@Model.Title</span>
+                    <button type="button" class="close btn btn-secondary btn-sm" aria-label="Close" onclick="clearGenericTable();">
+                    <span aria-hidden="true">&times;</span>
+                    </button> 
+                </h5>
+            </div>
+            @if (isFiltered)
+            {
+                <section>
+                    <div class="p-2 bg-light shadow text-left">
+                        Filtra per: 
+                        <label label_safe="" id="labelSearchFilter" style="font-weight: bold">@titleLabelSearchFilter</label>
+                        <input type="text" id="inputSearchFilter" onkeyup="filterValues()" value="@inputSearched" />
+                         (clicca su una colonna per cambiare il campo di filtro)
+                    </div>
+                </section>
+            }
+            <div id="GenericTableBody" class="modal-body sizeGenericTable" style="padding:0rem">
+                <table class="table text-nowrap" id="tableId">
+                    <thead class="thead-light" style="position: sticky;top:0;">
+                        <tr>
+                            @foreach (var columnName in Model.ColumnNames)
+                            {
+                                var stile = "";
+                                if (columnName.StartsWith("NotVisible_"))
+                                {
+                                    stile = "style=display:none";
+                                }
+                                <th @stile class="valuesColumn" scope="col" onclick="changeLabelSearchFilter('@columnName','@GetSafeStringColumn(columnName)')">@columnName</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var list in Model.Elements)
+                        {
+                            idRowTable = idRowTable + 1;
+                            var idItem = 0;
+                            <tr id="IdRowTable_@idRowTable" onclick="SelectRowGenericTable('@idRowTable')" style="cursor:pointer">
+                                @foreach (var item in list)
+                                {
+                                    idItem = idItem + 1;
+                                    var stile = "";
+                                    if (indexColumnNotVisibile.Contains(idItem))
+                                    {
+                                        stile = "style=display:none";
+                                    }
+                                    <td @stile class="valuesRow_@idRowTable" id="IdItem_@idRowTable-@idItem">@item</td>
+                                }
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer" style="display:block">
+                @if (pagination.IsPaginated)
+                {
+                    <div>
+                        <partial name="_PaginationBarPartial" model="@pagination" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var mainDivContainerGenericTable = "";
+    var divContainerGenericTable = "";
+    var eventPopupGenericTable = "";
+    var callbackMethod;
+    function setContainerGenericTable(mainDivContainer, divContainer, eventPopup, method) {
+        mainDivContainerGenericTable = mainDivContainer;
+        divContainerGenericTable = divContainer;
+        eventPopupGenericTable = eventPopup;
+        callbackMethod = method;
+        valuesSelected = null;
+    }
+
+    function clearGenericTable() {
+        $("#" + divContainerGenericTable).html('');
+        $("#" + mainDivContainerGenericTable).hide();
+        dispatchClosedPopupCustomEventWithCallback(eventPopupGenericTable, callbackMethod, valuesSelected);
+    }
+
+    var selectedRowsId = "";
+    var valuesSelected;
+    function SelectRowGenericTable(id) {
+        var backGroundClass = "bg-info";
+        if (selectedRowsId != "") {
+            $("#IdRowTable_" + selectedRowsId).removeClass(backGroundClass);
+        }
+        selectedRowsId = id;
+        $("#IdRowTable_" + id).addClass(backGroundClass);
+
+        var keysColumns = new Array(@Html.Raw(columnNameForJson));
+        var valuesItem = document.getElementById("IdRowTable_" + id).getElementsByTagName('td');
+        var resultString  = '';
+        for (var i = 0; i < keysColumns.length; i++) {
+            resultString += '"' + keysColumns[i] + '"' + ":" + '"' + getSafeValue(valuesItem[i].innerHTML) + '"' + ", ";
+        }
+        resultString = resultString.replace(/,(?=[^,]*$)/, '');
+        resultString = "{ " + resultString + " }";
+        valuesSelected = JSON.parse(resultString);
+
+        clearGenericTable();
+    }
+    function getSafeValue(val) {
+        return val.replace(/"/g, '\\"');
+    }
+
+    function changeLabelSearchFilter(val,valSafe) {
+        $("#labelSearchFilter").text(val);
+        $("#labelSearchFilter").attr("label_safe", valSafe);
+        $("#inputSearchFilter").val('');
+        $("#inputSearchFilter").focus();
+    }
+
+    function filterValues() {
+        var label = $("#labelSearchFilter").attr("label_safe");
+        if (label == "") {
+            label = $("#labelSearchFilter").text();
+        }
+        var input = $("#inputSearchFilter").val();
+
+        var url = '@Html.Raw(urlToRefreshPage)' + "&" + '@parameterNameSearchFilter' + "=" + label + "&" + '@parameterValueSearchFilter' + "=" + input ;
+        @if(javascriptMethod != "")
+        {
+            <text>@javascriptMethod (url);</text>
+        }
+    }
+
+
+    $(function () {
+        dispatchOpenPopupCustomEvent('GenericTable');
+
+        @if(isFiltered) {
+         <text>
+                var input = $("#inputSearchFilter")
+                var len = input.val().length;
+                input[0].focus();
+                input[0].setSelectionRange(len, len);
+        </text>
+        }
+    })
+
+
+</script>

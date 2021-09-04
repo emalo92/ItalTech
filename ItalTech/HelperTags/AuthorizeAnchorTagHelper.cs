@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 
-namespace WebApp.HelperTags
+namespace ItalTech.HelperTags
 {
     /// <summary>
     /// Tag Anchor che viene visualizzato solo se l'utente corrente ha il ruolo richiesto, definito nella proprietà Role

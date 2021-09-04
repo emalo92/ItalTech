@@ -1,0 +1,77 @@
+﻿<div id="MyCustomModalConfirm" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span id="MyCustomModalConfirmTitle"></span></h5>
+            </div>
+            <div id="MyCustomModalConfirmBody" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button id="MyCustomModalConfirmAnnulla" type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                <button id="MyCustomModalConfirmConferma" type="button" class="btn btn-info">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var oldConfirmCallback = null;
+    var oldCancelCallback = null;
+
+    function myCustomModalConfirmShow(title, body, confirmCallback, cancelCallback) {
+        myCustomModalConfirmShow(title, body, confirmCallback, cancelCallback, "Ok", "Annulla");
+    }
+
+    function myCustomModalConfirmShow(title, body, confirmCallback, cancelCallback, valTrue, valFalse) {
+        $("#MyCustomModalConfirmTitle").html(title);
+        $("#MyCustomModalConfirmBody").html(body);
+        $("#MyCustomModalConfirmConferma").html(valTrue);
+        $("#MyCustomModalConfirmAnnulla").html(valFalse);
+        $("#MyCustomModalConfirm").modal("show");
+
+        if (oldConfirmCallback != null && oldConfirmCallback != confirmCallback) {
+            removeOldEventConfirm();
+        }
+        if (oldConfirmCallback == null) {
+            oldConfirmCallback = confirmCallback;
+            document.getElementById("MyCustomModalConfirmConferma").addEventListener("click", clickCustomModalConfirmYes);
+        }
+
+        if (cancelCallback != null) {
+            if (oldCancelCallback != null) {
+                if (oldCancelCallback == cancelCallback) {
+                    return;
+                }
+                else {
+                    removeOldEventCancel();
+                }
+            }
+            oldCancelCallback = cancelCallback;
+            document.getElementById("MyCustomModalConfirmAnnulla").addEventListener("click", clickCustomModalConfirmNo);
+        }
+        else if (oldCancelCallback != null) {
+            removeOldEventCancel();
+        }
+    }
+
+    function clickCustomModalConfirmYes() {
+        $("#MyCustomModalConfirm").modal("hide");
+        oldConfirmCallback();
+    }
+
+    function clickCustomModalConfirmNo() {
+        $("#MyCustomModalConfirm").modal("hide");
+        oldCancelCallback();
+    }
+
+    function removeOldEventConfirm() {
+        document.getElementById("MyCustomModalConfirmConferma").removeEventListener("click", clickCustomModalConfirmYes, false);
+        oldConfirmCallback = null;
+    }
+
+    function removeOldEventCancel() {
+        document.getElementById("MyCustomModalConfirmAnnulla").removeEventListener("click", clickCustomModalConfirmNo, false);
+        oldCancelCallback = null;
+    }
+</script>

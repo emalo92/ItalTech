@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{845EA8C7-B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{E277A21F-7334-4FBE-9F10-35576EF0BE85}"
 	ProjectSection(SolutionItems) = preProject
+		SqlQuery_2.sql = SqlQuery_2.sql
 		ToDoFile.txt = ToDoFile.txt
 		UtilityDbMigrations.txt = UtilityDbMigrations.txt
 	EndProjectSection

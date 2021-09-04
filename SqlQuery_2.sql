@@ -1,0 +1,15 @@
+﻿INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'1', N'SuperAdmin', N'SUPERADMIN', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'2', N'Admin', N'ADMIN', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'3', N'Presidente', N'PRESIDENTE', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'4', N'AmministrativoDelegato', N'AMMINISTRATOREDELEGATO', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'5', N'ProductManager', N'PRODUCTMANAGER', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'6', N'ProcessManager', N'PROCESSMANAGER', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'7', N'ProjectManager', N'PROJECTMANAGER', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'8', N'Segretario', N'SEGRETARIO', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'9', N'Analista', N'ANALISTA', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'10', N'Ingegnere', N'INGEGNERE', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'11', N'ResponsabileFormazione', N'RESPONSABILEFORMAZIONE', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'12', N'Impiegato', N'IMPIEGATO', NULL)
+INSERT INTO dbo.AspNetRoles([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'13', N'Operaio', N'OPERAIO', NULL)
+
+
