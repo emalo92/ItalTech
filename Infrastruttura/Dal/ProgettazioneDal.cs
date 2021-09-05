@@ -62,7 +62,7 @@ namespace Infrastruttura.Dal
                 var progetti = await query.ToListAsync();
                 return progetti.ToDto();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Impossibile trovare progetti");
             }
@@ -71,7 +71,8 @@ namespace Infrastruttura.Dal
 
         public Task<List<Progetto>> GetAllProgetti()
         {
-            throw new NotImplementedException();
+            InputRicercaProgetti input = new();
+            return GetAllProgetti(input);
         }
            
 

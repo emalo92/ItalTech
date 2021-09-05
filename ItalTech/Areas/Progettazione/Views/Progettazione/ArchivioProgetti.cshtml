@@ -6,6 +6,8 @@
     var listaProgetti = (List<Progetto>)ViewBag.ListaProgetti; @*!= null ? ViewBag.ListaProgetti : null;*@
 }
 
+<h3 class="text-center text-secondary">Archivio Progetti</h3>
+
 <section class="bg-light">
     <div class="container">
         <form class="form-group" asp-action="ArchivioProgetti" method="post">
@@ -45,66 +47,66 @@
         </form>
     </div>
 </section>
-    @if (listaProgetti != null)
-    {
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Codice</th>
-                    <th>Data Inizio</th>
-                    <th>Data Fine</th>
-                    <th>Nome Progetto</th>
-                    <th>Descrizione</th>
-                    <th>Costo Previsto</th>
-                    <th>Costo Finale</th>
-                    <th>Analisi Mercato</th>
-                    <th>Tipo</th>
-                    <th>Cliente</th>
-                    <th>Project Manager</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach (var elem in listaProgetti)
-                    {
-                        <tr>
-                            <td>
-                                <label class="control-label">@elem.Codice</label>
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.DataInizio.ToString("dd/MM/yyyy")</label>
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.DataFine</label>
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.NomeProgetto</label>
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.Descrizione</label>
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.CostoPrevisto</label>
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.CostoFinale</label>
-                            </td>
-                            <td>                
-                                <label class="control-label">@elem.CodiceAnalisiMercato</label>                             
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.Tipo</label>
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.Cliente</label>
-                            </td>
-                            <td>
-                                <label class="control-label">@elem.ProjectManager</label>
-                            </td>
-                        </tr>
-                    }
+@if (listaProgetti != null)
+{
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Codice</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th>Nome Progetto</th>
+                <th>Descrizione</th>
+                <th>Costo Previsto</th>
+                <th>Costo Finale</th>
+                <th>Analisi Mercato</th>
+                <th>Tipo</th>
+                <th>Cliente</th>
+                <th>Project Manager</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var elem in listaProgetti)
+                {
+                    <tr>
+                        <td>
+                            <label class="control-label">@elem.Codice</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.DataInizio.ToString("dd/MM/yyyy")</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.DataFine</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.NomeProgetto</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.Descrizione</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.CostoPrevisto</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.CostoFinale</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.CodiceAnalisiMercato</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.Tipo</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.Cliente</label>
+                        </td>
+                        <td>
+                            <label class="control-label">@elem.ProjectManager</label>
+                        </td>
+                    </tr>
                 }
+            }
 
-            </tbody>
-        </table>
-    }
+        </tbody>
+    </table>
+}

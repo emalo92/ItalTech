@@ -1,16 +1,23 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="~/lib/chartjs/momentjs/moment.min.js"></script> @*N.B: moment.js dev'essere eseguito prima di chart.js*@
+    <script src="https://kit.fontawesome.com/f07dfe0dda.js" crossorigin="anonymous"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ItalTech</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+    <div id="divPageLoading" class="positionFixed" style="display:none">
+        <div class="loading-content ">
+            <div class="spinner-border " role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            Loading...
+        </div>
+    </div>
     @*<header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container">
@@ -132,6 +139,16 @@
         </div>
     </footer>
 
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/ajax/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/lib/FoolProf/mvcfoolprof.core.js"></script>
+    <script src="~/lib/FoolProf/mvcfoolprof.jquery.validation.js"></script>
+    <script src="~/lib/FoolProf/mvcfoolprof.unobtrusive.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

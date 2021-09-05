@@ -1,0 +1,138 @@
+﻿@using ItalTech.Areas.Progettazione.Models
+@model Progetto
+
+<h3 class="text-center text-secondary">Modifica Progetto</h3>
+
+<div>
+    <div id="divPanelCheck" class="row p-4">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-1 text-right">
+            <div class="input-group">
+                <label class="mt-1 mr-2">Codice Progetto: </label>
+                <input id="idInputCodiceCheck" class="form-control" value="" />
+                <div id="divAllProgetti" class="input-group-append">
+                    <button id="buttonViewCodice" title="Fornisce la lista dei progetti esistenti" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllProgetti('/Progettazione/Progettazione/GetAllProgettiModal')">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-1 col-sm-12 mb-1 text-right">
+            <label id="btnOkCheck" class="mr-1">
+                <button type="button" class="btn btn-secondary btn-sm" style="width:85px" title="Verifica se esiste il codice del progetto inserito e lo carica" onclick="checkProgettoExists()"><i class="fa fa-check"></i> Verifica</button>
+            </label>
+        </div>
+    </div>
+</div>
+
+<section class="bg-light">
+    <div id="divFormProgetto" class="container" style="display:none">
+        <form class="form-group" asp-action="ModificaProgetto" method="post">
+            <partial name="_FormInputProgetto" model="@Model" />
+            <div class="row p-2">
+                <div class="col-lg-10 col-md-10 col-sm-12 text-right">
+                    <input class="btn btn-info" type="submit" value="Salva" />
+                </div>
+                <div class="col-lg-1 col-md-2 col-sm-12 text-right">
+                    <input class="btn btn-info" type="button" onclick="removeProgetto()" value="Rimuovi" />
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<div id="Div_DynamicViewAllProgetti" class="positionFixed setDarkBackground" style="display:none">
+    <div class="finestraPopup">
+        <div id="Div_DynamicView_ContainerAllProgetti">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var callbackGenericTable;  //viene definita in GenericTable
+    function showDynamicViewAllProgetti(url) {
+        $("#Div_DynamicView_ContainerAllProgetti").load(url);        
+        $("#Div_DynamicViewAllProgetti").show();
+        dispatchOpenPopupCustomEvent('ViewAllProgettiModal');        
+        if (callbackGenericTable !== undefined) {
+            
+            document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllProgetti), false);
+        }
+    }
+    document.addEventListener('openPopup_CustomEvent', (event) => {
+        if (event.Sender === "GenericTable") {            
+            call_setContainerGenericTableProgetti();
+        }
+    }, false)
+
+    function call_setContainerGenericTableProgetti() {
+        setContainerGenericTable('Div_DynamicViewAllProgetti', 'Div_DynamicView_ContainerAllProgetti', 'ViewAllProgettiModal', callbackGetValueSelectedProgetti);
+    }
+    function callbackGetValueSelectedProgetti(selectedValues) {
+        setSelectedValuesProgetti(selectedValues);
+    }
+    function setSelectedValuesProgetti(values) {
+        if (values == null) {
+            return false;
+        }
+
+        $("#idInputCodice").val(values.Codice);
+        $("#idInputDataInizio").val(values.DataInizio);
+        $("#idInputDataFine").val(values.DataFine);
+        $("#idInputNomeProgetto").val(values.NomeProgetto);
+        $("#idInputDescrizione").val(values.Descrizione);
+        $("#idInputTipo").val(values.Tipo);
+        $("#idInputCodiceAnalisiMercato").val(values.CodiceAnalisiMercato);
+        $("#idInputCostoPrevisto").val(values.CostoPrevisto);
+        $("#idInputCostoFinale").val(values.CostoFinale);
+        $("#idInputCliente").val(values.Cliente);
+        $("#idInputProjectManager").val(values.ProjectManager);
+        $('#divPanelCheck').css('display', 'none');
+        $('#divFormProgetto').css('display', 'flex');
+    }
+
+    function checkProgettoExists() {
+        var codiceProgetto = $('#idInputCodiceCheck').val();
+        if (codiceProgetto == "" || codiceProgetto == undefined) {
+            myCustomModalAlertShow("Dati incompleti", "Inserire il Codice Progetto da verificare");
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/Progettazione/Progettazione/GetProgetto?codice=" + codiceProgetto,
+            contentType: "application/json",
+            success: function (response) {
+                if (!response.isSucces) {
+                    if (response.message != null && response.message != undefined && response.message != '') {
+                        myCustomModalAlertShow("Dati non validi", response.message);
+                    }
+                    else {
+                        myCustomModalAlertShow("Dati non validi", response);
+                    }
+                }
+                else {
+                    if (response.result == null) {
+                        myCustomModalAlertShow("Attenzione", response.message);
+                    }
+                    else {
+                        $("#idInputCodice").val(response.result.codice);
+                        $("#idInputDataInizio").val(response.result.dataInizio);
+                        $("#idInputDataFine").val(response.result.dataFine);
+                        $("#idInputNomeProgetto").val(response.result.nomeProgetto);
+                        $("#idInputDescrizione").val(response.result.descrizione);
+                        $("#idInputTipo").val(response.result.tipo);
+                        $("#idInputCodiceAnalisiMercato").val(response.result.codiceAnalisiMercato);
+                        $("#idInputCostoPrevisto").val(response.result.costoPrevisto);
+                        $("#idInputCostoFinale").val(response.result.costoFinale);
+                        $("#idInputCliente").val(response.result.cliente);
+                        $("#idInputProjectManager").val(response.result.projectManager);
+                        $('#divPanelCheck').css('display', 'none');
+                        $('#divFormProgetto').css('display', 'flex');
+                    }
+                }
+            },
+            error(jqXHR, textStatus) {
+                myCustomModalAlertShow("Errore generico", textStatus);
+            }
+        });
+    }</script>
