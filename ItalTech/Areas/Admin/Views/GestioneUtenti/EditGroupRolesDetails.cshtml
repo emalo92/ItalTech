@@ -1,0 +1,8 @@
+﻿@using ItalTech.Areas.Admin.Models.RolesGroups
+@{ 
+    var gruppoRuoli = (GroupsMaster)ViewBag.GruppoRuoli;
+}
+<h4>Gestione ruoli gruppo @gruppoRuoli.Name</h4>
+
+<partial name="_RolesTable" />
+

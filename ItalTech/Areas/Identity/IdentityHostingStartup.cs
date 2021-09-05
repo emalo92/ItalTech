@@ -1,6 +1,5 @@
 ﻿using System;
 using ItalTech.Areas.Identity.Data;
-using ItalTech.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -20,7 +19,7 @@ namespace ItalTech.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("ItalTechContext")));
 
-                services.AddDefaultIdentity<ItalTechUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddIdentity<ItalTechUser, ItalTechRole>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<ItalTechContext>();
             });
         }

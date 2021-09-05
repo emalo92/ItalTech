@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Progettazione\Data\" />
     <Folder Include="Areas\Testing\Data\" />
     <Folder Include="Areas\Testing\Models\" />

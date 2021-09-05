@@ -1,0 +1,118 @@
+﻿@using ItalTech.Areas.Admin.Models.RolesGroups
+@model List<GroupsMaster>
+@{
+    var frecciaSu = "<i class=\"fas fa-long-arrow-alt-up\"></i>";
+    var frecciaGiu = "<i class=\"fas fa-long-arrow-alt-down\"></i>";
+
+    var orderBy = (string)ViewBag.OrderBy;
+    var isDesc = ViewBag.IsDesc != null ? (bool)ViewBag.IsDesc : false;
+
+    var frecciaNome = orderBy != "Nome" ? "" : isDesc ? frecciaGiu : frecciaSu;
+    var frecciaDescriz = orderBy != "Descrizione" ? "" : isDesc ? frecciaGiu : frecciaSu;
+    var frecciaDisabled = orderBy != "Disabilitato" ? "" : isDesc ? frecciaGiu : frecciaSu;
+    var frecciaAssociati = orderBy != "Associati" ? "" : isDesc ? frecciaGiu : frecciaSu;
+
+    List<GroupsMaster> lista = Model;
+    if (orderBy != null)
+    {
+        lista = OrderBySelez(lista, orderBy, isDesc);
+    }
+}
+<style>
+    .table th {
+        border-top: 0px;
+    }
+
+    .table thead th:hover {
+        background-color: #7aa62d !important;
+        cursor: pointer;
+    }
+</style>
+
+<h4>Lista Gruppi di ruoli  <a asp-area="Admin" asp-controller="Gestione" asp-action="EditGroupRoles" class="btn btn-outline-primary btn-sm">Crea nuovo gruppo</a> </h4>
+
+
+
+<div class="table-responsive-xl text-nowrap" style="overflow-x: auto; overflow-y: auto; max-height: 700px;">
+    <table id="tableGiacenza" class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" onclick="OrderBy('Nome')" title="Ordina per Nome">@Html.Raw(frecciaNome) Nome</th>
+                <th scope="col" onclick="OrderBy('Descrizione')" title="Ordina per Descrizione">@Html.Raw(frecciaDescriz) Descrizione</th>
+                <th scope="col" onclick="OrderBy('Associati')" title="Ordina per Descrizione">@Html.Raw(frecciaAssociati) Num utenti associati</th>
+                <th scope="col" onclick="OrderBy('Disabilitato')" title="Ordina per Disabilitato">@Html.Raw(frecciaDisabled) Disabilitato</th>
+                <th scope="col" style="cursor:default">Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in lista)
+            {
+                var classDisabledText = r.Disabled ? "disabledText" : "";
+            <tr class="@classDisabledText">
+                <td>@r.Name</td>
+                <td>@r.Description</td>
+                <td style="text-align:center">@r.AssociatedUsers.Count</td>
+                <td style="text-align:center">@(r.Disabled ? "SI" : "")</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-area="Admin" asp-controller="Gestione" asp-action="EditGroupRolesDetails" asp-route-groupId="@r.Id" title="Gestione dei ruoli del gruppo">Ruoli</a>
+                    <a class="btn btn-primary btn-sm" asp-area="Admin" asp-controller="Gestione" asp-action="EditGroupRoles" asp-route-groupId="@r.Id" asp-route-numUsers="@r.AssociatedUsers.Count" title="Modifica i dati del gruppo"><i class="fas fa-edit"></i> Modifica</a>
+                    <a class="btn btn-danger btn-sm" onclick="ConfermaDelete(@r.Id, '@r.Name', @r.AssociatedUsers.Count)" title="Elimina il gruppo"><i class="far fa-trash-alt"></i> Elimina</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    function OrderBy(column) {
+        if (column !== '@orderBy') {
+            var isDesc = false;
+        }
+        else {
+            var isDesc = !@isDesc.ToString().ToLower();
+        }
+        document.location.href = "/Admin/Gestione/AllGroupRoles?orderBy=" + column + "&isDesc=" + isDesc;
+    }
+
+    var groupId = 0;
+    function ConfermaDelete(idGroup, name, numUserAssociated) {
+        groupId = idGroup;
+        var titolo = "";
+        var msg = "";
+        if (numUserAssociated == 0) {
+            titolo = "Eliminazione gruppo di ruoli '" + name + "'";
+            msg = "Il gruppo di ruoli selezionato verrà eliminato. Confermi?"
+        }
+        else {
+            titolo = "Eliminazione gruppo di ruoli '" + name + "' con " + numUserAssociated + " utenti associati";
+            msg = "Il gruppo di ruoli selezionato è associato a degli utenti. Cancellando il gruppo verranno agiornati i ruoli degli utenti associati. Confermi?"
+        }
+        myCustomModalConfirmShow(titolo, msg, OkElimina, null);
+    }
+
+    function OkElimina() {
+        document.location.href = "/Admin/Gestione/DeleteGroupRoles?groupId=" + groupId;
+    }
+</script>
+
+
+@functions{
+    List<GroupsMaster> OrderBySelez(List<GroupsMaster> list, string orderBy, bool isDesc)
+    {
+        IEnumerable<GroupsMaster> query = null;
+        switch (orderBy)
+        {
+            case "Nome":
+                query = isDesc ? list.OrderByDescending(l => l.Name) : list.OrderBy(l => l.Name);
+                break;
+            case "Descrizione":
+                query = isDesc ? list.OrderByDescending(l => l.Description) : list.OrderBy(l => l.Description);
+                break;
+            case "Disabilitato":
+                query = isDesc ? list.OrderByDescending(l => l.Disabled) : list.OrderBy(l => l.Disabled);
+                break;
+        }
+        return query != null ? query.ToList() : list;
+    }
+}

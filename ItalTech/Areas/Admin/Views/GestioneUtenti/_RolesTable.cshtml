@@ -1,0 +1,136 @@
+﻿@using ItalTech.Areas.Admin.Models
+@using ItalTech.Areas.Admin.Models.RolesGroups
+@model List<RoleViewModel>
+
+@{
+    var gruppoRuoli = (GroupsMaster)ViewBag.GruppoRuoli;
+    var listaRuoliAssociati = gruppoRuoli.GroupsDetails == null ? new List<string>() : gruppoRuoli.GroupsDetails.Select(d => d.RoleId.ToString()).ToList();
+    var orderBy = (string)ViewBag.OrderBy;
+    var isDesc = ViewBag.IsDesc != null ? (bool)ViewBag.IsDesc : false;
+
+    List<RoleViewModel> lista = Model;
+    if (orderBy != null)
+    {
+        lista = OrderBySelez(lista, orderBy, isDesc, listaRuoliAssociati);
+    }
+    var frecciaSu = "<i class=\"fas fa-long-arrow-alt-up\"></i>";
+    var frecciaGiu = "<i class=\"fas fa-long-arrow-alt-down\"></i>";
+
+    var frecciaSelez = orderBy != "Selez" ? "" : isDesc ? frecciaGiu : frecciaSu;
+    var frecciaRuolo = orderBy != "Ruolo" ? "" : isDesc ? frecciaGiu : frecciaSu;
+    var frecciaMenu = orderBy != "Menu" ? "" : isDesc ? frecciaGiu : frecciaSu;
+    var frecciaSubMenu1 = orderBy != "SubMenu1" ? "" : isDesc ? frecciaGiu : frecciaSu;
+    var frecciaSubMenu2 = orderBy != "SubMenu2" ? "" : isDesc ? frecciaGiu : frecciaSu;
+    var frecciaDescrizione = orderBy != "Descrizione" ? "" : isDesc ? frecciaGiu : frecciaSu;
+}
+
+
+<style>
+    .table th {
+        border-top: 0px;
+    }
+
+    .table thead th:hover {
+        background-color: #7aa62d !important;
+        cursor: pointer;
+    }
+</style>
+
+<form method="post" asp-area="Admin" asp-controller="Gestione" asp-action="EditGroupRolesDetails">
+    <input type="hidden" name="groupId" value="@gruppoRuoli.Id" />
+    <div class="form-check">
+        <div class="table-responsive-xl text-nowrap" style="overflow-x: auto; overflow-y: auto; max-height: 700px;">
+            <table id="tableGiacenza" class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th text-align:center" scope="col" onclick="OrderBy('Selez')" title="Ordina per selezionati">@Html.Raw(frecciaSelez) Selez</th>
+                        <th scope="col" onclick="OrderBy('Ruolo')" title="Ordina per ruolo">@Html.Raw(frecciaRuolo) Ruolo</th>
+                        <th scope="col" onclick="OrderBy('Menu')" title="Ordina per menu principale">@Html.Raw(frecciaMenu) Menu principale</th>
+                        <th scope="col" onclick="OrderBy('SubMenu1')" title="Ordina per primo sottomenu">@Html.Raw(frecciaSubMenu1) Primo sottomenu</th>
+                        <th scope="col" onclick="OrderBy('SubMenu2')" title="Ordina per secondo sottomenu">@Html.Raw(frecciaSubMenu2) Secondo sottomenu</th>
+                        <th scope="col" onclick="OrderBy('Descrizione')" title="Ordina per descrizione">@Html.Raw(frecciaDescrizione) Descrizione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in lista)
+                    {
+                        var selected = listaRuoliAssociati.Contains(r.RoleId);
+                        var classTr = selected ? "font-weight-bold" : "";
+                        var checkedAttr = selected ? " checked " : "";
+                        if (r.RoleName == ItalTech.Models.RoleNames.SuperAdmin)
+                        {
+                            continue;
+                        }
+                        <tr class="@classTr">
+                            <td style="text-align:center">
+                                <input name="roles" type="checkbox" id="@r.RoleId" class="checkbox-item" value="@r.RoleId" @checkedAttr>
+                            </td>
+                            <td>@r.RoleName</td>
+                            <td>@r.AssociatedMenu</td>
+                            <td>@r.AssociatedSubMenu1</td>
+                            <td>@r.AssociatedSubMenu2</td>
+                            <td title="@r.RoleDescription">@r.RoleDescription</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <input type="submit" value="Salva" class="btn btn-primary" title="Associa i ruoli selezionati al gruppo @gruppoRuoli.Name" />
+        <a asp-area="Admin" asp-controller="Gestione" asp-action="AllGroupRoles" class="btn btn-primary" title="Esce senza salvare">Annulla</a>
+    </div>
+</form>
+
+<script type="text/javascript">
+    function OrderBy(column) {
+        if (column !== '@orderBy') {
+            var isDesc = false;
+        }
+        else {
+            var isDesc = !@isDesc.ToString().ToLower();
+        }
+        document.location.href = "/Admin/Gestione/EditGroupRolesDetails?groupId=@gruppoRuoli.Id&orderBy=" + column + "&isDesc=" + isDesc;
+    }
+</script>
+
+
+
+
+@functions{
+    List<RoleViewModel> OrderBySelez(List<RoleViewModel> list, string orderBy, bool isDesc, List<string> associatedRolesId)
+    {
+        IEnumerable<RoleViewModel> query = null;
+        switch (orderBy)
+        {
+            case "Selez":
+                if (associatedRolesId == null)
+                {
+                    return list;
+                }
+                else
+                {
+                    var notSelected = list.Where(l => !associatedRolesId.Contains(l.RoleId)).OrderBy(n => n.RoleName);
+                    var selected = list.Where(l => associatedRolesId.Contains(l.RoleId)).OrderBy(n => n.RoleName);
+                    query = isDesc ? notSelected.Union(selected) : selected.Union(notSelected);
+                }
+                break;
+            case "Ruolo":
+                query = isDesc ? list.OrderByDescending(l => l.RoleName) : list.OrderBy(l => l.RoleName);
+                break;
+            case "Menu":
+                query = isDesc ? list.OrderByDescending(l => l.AssociatedMenu) : list.OrderBy(l => l.AssociatedMenu);
+                break;
+            case "SubMenu1":
+                query = isDesc ? list.OrderByDescending(l => l.AssociatedSubMenu1) : list.OrderBy(l => l.AssociatedSubMenu1);
+                break;
+            case "SubMenu2":
+                query = isDesc ? list.OrderByDescending(l => l.AssociatedSubMenu2) : list.OrderBy(l => l.AssociatedSubMenu2);
+                break;
+            case "Descrizione":
+                query = isDesc ? list.OrderByDescending(l => l.RoleDescription) : list.OrderBy(l => l.RoleDescription);
+                break;
+        }
+        return query != null ? query.ToList() : list;
+    }
+}

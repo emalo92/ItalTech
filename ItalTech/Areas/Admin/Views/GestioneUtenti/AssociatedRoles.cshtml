@@ -1,0 +1,59 @@
+﻿@using ItalTech.Areas.Admin.Models
+
+@{
+    var userRoles = (UserViewModel)ViewBag.AspNetUserRoles;
+}
+
+
+
+
+<h4>Utente @userRoles.Username - Gestione ruoli</h4>
+
+<form asp-area="Admin" asp-controller="Gestione" asp-action="AssociateRolesPostNew">
+    <input type="hidden" name="userId" value="@userRoles.UserId" />
+    <section>
+        <div class="mb-1 p-2 bg-light shadow">
+            <div class="row">
+                <div class="col-5">
+                    <h5>Gruppi di ruoli associati: @ViewBag.UserGroups.Count</h5>
+                </div>
+                <div class="col-5">
+                    <h5>Ruoli singoli associati: @ViewBag.UserSingleRoles.Count</h5>
+                </div>
+                <div class="col-2">
+                    <a asp-area="Admin" asp-controller="Gestione" asp-action="Index" class="btn btn-primary" title="Esce senza salvare">Annulla</a>
+                    <button type="submit" class="btn btn-primary" title="Salva le modifiche apportate all'utente @userRoles.Username"><i class="fas fa-save"></i> Salva</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <label class="shadow">
+        <button type="button" class="btn btn-primary btn-sm" title="Associa un gruppo di ruoli all'utente" onclick="ShowTableAllGroupRoles()"><i class="fas fa-plus"></i> Aggiungi gruppo</button>
+    </label>
+    <label class="shadow">
+        <button type="button" class="btn btn-primary btn-sm" onclick="ShowTableAllRoles()" title="Associa un ruolo all'utente"><i class="fas fa-plus"></i> Aggiungi ruolo</button>
+    </label>
+    <label class="shadow">
+        <button type="button" class="btn btn-primary btn-sm" onclick="ShowUserRolesDetail()" title="Visualizza dettaglio di tutti i ruoli correntemente associati"><i class="fas fa-clipboard-list"></i> Dettaglio</button>
+    </label>
+    <partial name="_UserGroupsTable" model="@ViewBag.UserGroups" />
+
+    <partial name="_UserRolesTable" model="@ViewBag.UserSingleRoles" />
+</form>
+
+<div id="Div_DynamicViewUserRolesDetail" class="positionFixed setDarkBackground" style="display:none">
+    <div id="DIV_TableUserRolesDetail">
+    </div>
+</div>
+
+<script type="text/javascript">
+    function ShowUserRolesDetail() {
+        $("#DIV_TableUserRolesDetail").load("/Admin/Gestione/GetUserRolesDetail?idUser=@userRoles.UserId");
+        $("#Div_DynamicViewUserRolesDetail").show();
+    }
+
+    function RefreshUserRolesDetail(column, isDesc) {
+        $("#DIV_TableUserRolesDetail").load("/Admin/Gestione/GetUserRolesDetail?idUser=@userRoles.UserId&orderBy=" + column + "&isDesc=" + isDesc);
+    }
+</script>
+

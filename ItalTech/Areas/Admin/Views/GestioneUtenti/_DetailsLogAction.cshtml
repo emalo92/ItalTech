@@ -1,0 +1,23 @@
+﻿<div id="Div_DetailsLogAction" class="positionFixed" style="display:none">
+    <div class="centerDetailLogAction">
+        <div class="card border-primary mb-3 shadow detailSize">
+            <div class="card-header">
+                Dettaglio azione
+                <button type="button" class="close" aria-label="Close" onclick="hideDettagliAzione()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div id="Div_DetailJson" class="text-primary">
+                <textarea id="myTextArea" class="text-warning bg-dark" rows="20" style="width:100%">
+
+                </textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function hideDettagliAzione(obj) {
+        $("#Div_DetailsLogAction").hide();
+    }
+</script>

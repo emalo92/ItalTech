@@ -82,13 +82,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="GestioneUtenti" asp-action="Index">Admin</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="Progettazione" asp-controller="Progettazione" asp-action="Start">Progettazione</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="" asp-action="">Test</a>
+                            <a class="nav-link text-light" asp-area="Test" asp-controller="Test" asp-action="Index">Test</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -116,6 +116,7 @@
                     {
                         case "Progettazione":<partial name="_SidebarProgettazione" />; break;
                         case "Testing": <partial name="_SidebarTesting" />; break;
+                        case "GestioneUtenti": <partial name="_SidebarAdmin" />; break;
                     }
                 }
                 <div class="@colonnaAdmin">

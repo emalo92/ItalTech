@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ItalTech.Data
+namespace ItalTech.Areas.Identity.Data
 {
-    public class ItalTechContext : IdentityDbContext<ItalTechUser>
+    public class ItalTechContext : IdentityDbContext<ItalTechUser, ItalTechRole, string>
     {
         public ItalTechContext(DbContextOptions<ItalTechContext> options)
             : base(options)
@@ -23,5 +23,7 @@ namespace ItalTech.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+
     }
 }

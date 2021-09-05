@@ -1,0 +1,105 @@
+﻿@using ItalTech.Areas.Admin.Models.RolesGroups
+@using ItalTech.Models.TableToExport
+@model List<UserGroups>
+
+@{ 
+    var allGroups = (List<GroupsMaster>)ViewBag.AllGroupsRoles;
+}
+
+        <div class="table-responsive-xl " style="overflow-x: auto; overflow-y: auto; max-height: 700px;">
+            <table id="TableUserGroup" class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" style="width:20%">Nome gruppo</th>
+                        <th scope="col" style="width:70%">Descrizione gruppo</th>
+                        <th scope="col" style="text-align:center; width:10%">Azione</th>
+                    </tr>
+                </thead>
+                <tbody id="TableUserGroup_Body">
+                    @foreach (var r in Model)
+                    {
+                        var group = allGroups.Where(g => g.Id == r.IdGroup).SingleOrDefault();
+                        var disabled = group != null && group.Disabled;
+                        var classDisabled = disabled ? "disabledText" : "";
+                        <tr id="rowGroupRole_@r.IdGroup" class="@classDisabled">
+                            <td style="width:20%">@r.GroupName</td>
+                            <td style="width:70%">@r.GroupDescription</td>
+                            <td style="text-align:center; width:10%"><button type="button" class="btn btn-danger btn-sm" onclick="RemoveGroupRoles(@r.IdGroup)" title="Rimuove il gruppo" /><i class="far fa-trash-alt" ></i></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div id="DIV_InputGroupRolesContainer">
+                @{ 
+                    var counter = 0;
+                }
+                @foreach (var r in Model)
+                {
+                    <input id="inputGroupRole_@r.IdGroup" type="hidden" name="groupRoles[@counter]" value="@r.IdGroup" />
+                    counter++;
+                }
+            </div>
+        </div>
+
+        <div id="Div_DynamicViewAllAllGroupRoles" class="positionFixed setDarkBackground" style="display:none">
+            <div id="DIV_TableAllGroupRoles">
+            </div>
+        </div>
+            
+
+        <script type="text/javascript">
+            var senderAddElement = null; //Questa variabile è definita anche in _UserRoleTable
+            function ShowTableAllGroupRoles() {
+                senderAddElement = "Groups";
+                    $("#DIV_TableAllGroupRoles").load("/Admin/Gestione/GetTableAllGroupRoles");
+                    $("#Div_DynamicViewAllAllGroupRoles").show();
+                    dispatchOpenPopupCustomEvent('ViewAllAllGroupRoles');
+                }
+
+                document.addEventListener('openPopup_CustomEvent', (event) => {
+                    if (event.Sender === "GenericTable" && senderAddElement === 'Groups') {
+                        call_setContainerGenericTableGruppiRuoli();
+                    }
+                }, false);
+
+                function call_setContainerGenericTableGruppiRuoli() {
+                    setContainerGenericTable('Div_DynamicViewAllAllGroupRoles', 'DIV_TableAllGroupRoles', 'ViewAllAllGroupRoles', callbackGetValueSelectedGruppoRuoli);
+                }
+
+                var countRowsTableGroupRoles = @counter;
+                function callbackGetValueSelectedGruppoRuoli(selectedValues) {
+                    if (selectedValues == null)
+                        return;
+                    var idGroup = selectedValues.NotVisible_Id;
+                    if (isGroupRolesAlreadyInTable(idGroup))
+                        return;
+                    var rowTable = '<tr id="rowGroupRole_' + idGroup + '">';
+                    rowTable += '<td style="width:20%">' + selectedValues.Nome + '</td><td style="width:70%">' + selectedValues.Descrizione + '</td>';
+                    rowTable += '<td style="text-align:center; width:10%"><button type="button" class="btn btn-danger btn-sm" title="Rimuove il gruppo" onclick="RemoveGroupRoles(' + idGroup + ')" /><i class="far fa-trash-alt" ></i></td>';
+                    rowTable += '</tr>';
+                    var inputTable = '<input type="hidden" id="inputGroupRole_' + idGroup + '" name="groupRoles[' + countRowsTableGroupRoles + ']" value="' + idGroup + '" />';
+                    $("#TableUserGroup_Body").append(rowTable);
+                    $("#DIV_InputGroupRolesContainer").append(inputTable);
+                    countRowsTableGroupRoles++;
+                }
+
+            function isGroupRolesAlreadyInTable(idGroup) {
+                    var elements = $("#DIV_InputGroupRolesContainer").children();
+                    for (var i = 0; i < elements.length; ++i) {
+                        var id = elements[i].id;
+                        if (idGroup === id.replace("inputGroupRole_", "")) {
+                            myCustomModalAlertShow("Gruppo già inserito", "Il gruppo di ruoli selezionato risulta già presente tra le associazioni dell'utente");
+                            return true;
+                        }
+                    }
+                    return false;
+            }
+
+            function RemoveGroupRoles(idGroup) {
+                var elem = $("#inputGroupRole_" + idGroup);
+                var id = elem.attr('id');
+                elem.val('-1');
+                elem.attr('id', id + 'removed');
+                $("#rowGroupRole_" + idGroup).remove();
+            }
+        </script>

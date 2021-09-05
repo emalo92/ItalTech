@@ -1,0 +1,75 @@
+﻿@model ResultPaginated<ItalTech.Areas.Admin.Models.UserViewModel>
+@using ItalTech.Models.Paginate;
+
+@{ 
+    var dict = Model == null ? null : Model.Pagination == null ? null : Model.Pagination.ParametriRicerca;
+    var currentSearch = dict == null ? null : (string)dict["username"]; ;
+    var currentPage = Model == null ? 1 : Model.Pagination.CurrentPage;
+}
+
+<div class="row mb-3">
+    <div  class="col-md-8 ">
+        <h4>
+            @ViewData["Title"]
+            <a class="btn btn-outline-primary btn-sm" asp-area="Admin" asp-controller="Gestione" asp-action="CreateUser"> Crea nuovo utente</a>
+        </h4>
+    </div>
+
+    <div class="input-group col-md-4 d-flex align-items-center">
+        <form asp-area="Admin" asp-controller="Gestione" asp-action="Index" method="get">
+            <div class="input-group">
+                <input type="text" name="username" class="form-control" placeholder="Cerca Username..." value="@currentSearch">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary">Cerca</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<table class="table table-responsive-xl">
+    <thead class="thead-light">
+        <tr>
+            <th style="width:10%" scope="col">Username</th>
+            <th style="width:35%" scope="col">Ruoli</th>
+            <th style="width:15%" scope="col">Ultimo accesso</th>
+            <th style="width:30%" scope="col">Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var u in Model.Result)
+        {
+            var classDisabledText = u.UserDisabled || DateTime.Now > u.AccountExpired ? "disabledText" : "";
+
+            <tr>
+                <td class=@classDisabledText>@u.Username</td>
+                <td class=@classDisabledText>
+                    @if (u.Roles != null)
+                    {
+                        @string.Join(", ", u.Roles.Select(r => r.RoleName).ToList());
+                    }
+                </td>
+                <td class=@classDisabledText>
+                    @if(u.LastLogin.HasValue)
+                    {
+                        @u.LastLogin.Value.ToString("dd/MM/yyyy HH:mm")
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-area="Admin" asp-controller="Gestione" asp-action="AssociatedRoles" asp-route-userId="@u.UserId" title="Gestione dei ruoli dell'utente">Ruoli</a>
+                    <a class="btn btn-primary btn-sm" asp-area="Admin" asp-controller="Gestione" asp-action="UserDetails" asp-route-userId="@u.UserId" title="Dettagli dell'utente">Dettaglio</a>
+                    @if (u.Username != User.Identity.Name)
+                    {
+                    <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Gestione" asp-action="ChangeUserPassword" asp-route-username="@u.Username" asp-route-userId="@u.UserId" title="Cambia password all'utente">Reset Password</a>
+                    <a class="btn btn-@((u.UserDisabled) ? "danger" : "outline-danger" ) btn-sm" asp-area="Admin" asp-controller="Gestione" asp-action="DisableUser" asp-route-userId="@u.UserId" asp-route-userDisabled="@(!u.UserDisabled)" asp-route-searchUsername="@currentSearch" asp-route-currentPage="@currentPage" title="Abilita/disabilita l'utente">@((u.UserDisabled) ? "Abilita" : "Disabilita") </a>
+                    }
+                </td>
+            </tr>
+        }*@
+    </tbody>
+</table>
+
+@*<div>
+    <partial name="_PaginationBarPartial" model="@Model.Pagination" />
+</div>*@

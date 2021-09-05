@@ -1,0 +1,70 @@
+﻿@using ItalTech.Areas.Admin.Models.RolesGroups
+@model GroupsMaster
+@{
+    var title = Model == null ? "Creazione nuovo gruppo" : "Modifica gruppo";
+    var disabled = Model != null ? Model.Disabled : false;
+    var isCheched = disabled ? "checked" : "";
+    var testoDisabled = disabled ? "Selezionare per abilitare il gruppo" : "Selezionare per disabilitare il gruppo";
+    var numUserAssociated = ViewBag.NumUsersAssociates == null ? 0 : (int)ViewBag.NumUsersAssociates;
+    var oldDisabled = Model == null ? true : Model.Disabled;
+}
+
+<h4>@title</h4>
+
+<form id="FormSaveGroup" method="post"  >
+    <input type="hidden" name="Id" value="@Model?.Id" />
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Name" class="font-weight-bold"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="font-weight-bold"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            @if (Model != null && Model.Id > 0)
+            {
+                <div class="form-group">
+                    <label asp-for="Disabled" class="font-weight-bold"></label>
+                    <div>
+                        <input id="GroupDisabled" type="checkbox" asp-for="Disabled" title="@testoDisabled" />
+                    </div>
+                    <span asp-validation-for="Disabled" class="text-danger"></span>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="submit" value="Salva" class="btn btn-primary" id="submitId" title="Salva le modifiche" onclick="return GetConfirmSave();" />
+                <a asp-area="Admin" asp-controller="Gestione" asp-action="AllGroupRoles" class="btn btn-primary" title="Annula le modifiche">Annulla</a>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    function GetConfirmSave() {
+        if (@numUserAssociated > 0 && isDisabledChanged()) {
+            myCustomModalConfirmShow("Questa modifica impatta @numUserAssociated utenti", "Il gruppo ha degli utenti associati. La modifica al flag Disabled comporta l'aggiornamento dei ruoli degli utenti associati. Procedere?", okSaveConfirm, null);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function isDisabledChanged() {
+        var oldDisabled = @oldDisabled.ToString().ToLower();
+        var newDisabled = $("#GroupDisabled").is(':checked');
+        return oldDisabled !== newDisabled;
+    }
+
+    function okSaveConfirm() {
+        document.getElementById("FormSaveGroup").submit();
+    }
+</script>
+

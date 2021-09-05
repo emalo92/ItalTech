@@ -1,7 +1,10 @@
 using Infrastruttura;
 using Infrastruttura.Dal;
 using Infrastruttura.Data.Context;
-using ItalTech.Data;
+using ItalTech.Areas.Identity.Data;
+using ItalTech.Areas.Identity.Data.DAL;
+using ItalTech.ExtensionMethods;
+using ItalTech.Manager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,15 +50,26 @@ namespace ItalTech
             services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
 
+
+
             string connectionString = Configuration.GetConnectionString("ItalTechContext");
             var dalStrartup = new Infrastruttura.Startup(Configuration);
             dalStrartup.ConfigureServices(services, connectionString);
+
+            services.AddDbContext<ItalTechAppContext>(options => options.UseSqlServer(connectionString));
+
+            Config config = services.ConfigureStartupConfig<Config>(Configuration.GetSection("AppSettings"));
 
             services.AddScoped<IProgettazioneDal>(s =>
                 new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
             services.AddScoped<ITestingDal>(s =>
                 new TestingDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
-                       
+            services.AddScoped<IIdentityDal>(s =>
+                new IdentityDal(s.GetRequiredService<ItalTechAppContext>(), s.GetRequiredService<ItalTechContext>()));
+            services.AddScoped<IAdminManager>(s =>
+            new AdminManager(config, s.GetRequiredService<UserManager<ItalTechUser>>(),
+                             s.GetRequiredService<RoleManager<ItalTechRole>>(), s.GetRequiredService<IIdentityDal>()));
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -94,5 +108,8 @@ namespace ItalTech
             });
 
         }
+
+        
+        
     }
 }

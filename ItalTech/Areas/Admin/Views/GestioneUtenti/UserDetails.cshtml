@@ -1,0 +1,93 @@
+﻿@using ItalTech.Areas.Identity.Data
+@model ItalTechUser  
+@{
+    ViewData["Title"] = "UserDetails";
+    var accountExpiredChecked = Model.AccountExpiration != null ? "checked" : "";
+    var inputAccountExpiredDisabled = Model.AccountExpiration == null ? "disabled" : null;
+}
+
+<h4>Dettaglio utente</h4>
+
+<form method="post" id="formUserDetails" onsubmit="return checkAccountExpiredDate()">
+    <input type="hidden" name="Id" value="@Model.Id"/>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="UserName" class="font-weight-bold"></label>
+                <input asp-for="UserName" class="form-control" readonly="readonly" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="font-weight-bold"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="PhoneNumber" class="font-weight-bold"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="CreationDate" class="font-weight-bold"></label>
+                <input asp-for="CreationDate" asp-format="{0:yyyy-MM-ddTHH':'mm}" class="form-control" readonly="readonly" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastLogin" class="font-weight-bold"></label>
+                <input asp-for="LastLogin" asp-format="{0:yyyy-MM-ddTHH':'mm}" class="form-control" readonly="readonly" />
+                <span asp-validation-for="LastLogin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkBoxAccountExpiration" onclick="resetDatePicker('dateAccountExpirationId')" @accountExpiredChecked title="Abilita/disabilita scadenza utente">
+                    <label class="form-check-label" for="checkBoxAccountExpiration" id="labelAccountExpiration">Abilita scadenza utente</label>
+                </div>
+                <label asp-for="AccountExpiration" class="font-weight-bold"></label>
+                <input id="dateAccountExpirationId" asp-for="AccountExpiration" asp-format="{0:yyyy-MM-ddTHH':'mm}" class="form-control" disabled="@inputAccountExpiredDisabled"/>
+                <span asp-validation-for="AccountExpiration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NextPasswordUpdate" class="font-weight-bold"></label>
+                <input asp-for="NextPasswordUpdate" asp-format="{0:yyyy-MM-ddTHH':'mm}" class="form-control" />
+                <span asp-validation-for="NextPasswordUpdate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="submit" value="Salva" class="btn btn-primary" id="submitId"/>
+                <a asp-area="Admin" asp-controller="Gestione" asp-action="Index" class="btn btn-primary">Annulla</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    var oldData;
+    function resetDatePicker(divDatePicker) {
+        //document.getElementById(divDatePicker).disabled = !document.getElementById("checkBoxAccountExpiration").checked;
+        if (!document.getElementById("checkBoxAccountExpiration").checked) {
+            oldData = document.getElementById(divDatePicker).value;
+            document.getElementById(divDatePicker).value = "";
+            document.getElementById(divDatePicker).disabled = true;
+        }
+        else {
+            document.getElementById(divDatePicker).value = oldData;
+            document.getElementById(divDatePicker).disabled = false;
+        }        
+    }
+
+    function checkAccountExpiredDate() {
+        var accountChecked = document.getElementById("checkBoxAccountExpiration").checked;
+        var valueAccoutExpired = document.getElementById("dateAccountExpirationId").value;
+        if (accountChecked == true && valueAccoutExpired == "")
+        {
+            myCustomModalAlertShow("Dati incompleti", "Valorizzare la data di scadenza utente");
+            return false;
+        }
+    }
+
+
+</script>

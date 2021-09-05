@@ -1,0 +1,105 @@
+﻿@using ItalTech.Areas.Admin.Models.RolesGroups
+@using ItalTech.Models.TableToExport
+@model List<UserRoles>
+
+@*<section>
+    <div class="row mb-1 p-2 bg-light shadow">
+    </div>
+</section>*@
+
+<div class="table-responsive-xl " style="overflow-x: auto; overflow-y: auto; max-height: 700px;">
+    <table id="TableUserRoles" class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" style="width:20%">Nome ruolo</th>
+                <th scope="col" style="width:50%">Descrizione ruolo</th>
+                <th scope="col" style="width:20%">Menu</th>
+                <th scope="col" style="text-align:center; width:10%">Azione</th>
+            </tr>
+        </thead>
+        <tbody id="TableUserRoles_Body">
+            @foreach (var r in Model)
+            {
+            <tr id="rowRole_@r.IdRole">
+                <td>@r.RoleName</td>
+                <td>@r.RoleDescription</td>
+                <td>@r.RoleMenu</td>
+                <td style="text-align:center; width:10%"><button type="button" class="btn btn-danger btn-sm" onclick="RemoveRoles(@r.IdRole)" title="Rimuove il ruolo" /><i class="far fa-trash-alt"></i></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div id="DIV_InputRolesContainer">
+        @{
+            var counter = 0;
+        }
+        @foreach (var r in Model)
+        {
+            <input id="inputRole_@r.IdRole" type="hidden" name="roles[@counter]" value="@r.IdRole" />
+            counter++;
+        }
+    </div>
+</div>
+
+<div id="Div_DynamicViewAllAllRoles" class="positionFixed setDarkBackground" style="display:none">
+    <div id="DIV_TableAllRoles">
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var senderAddElement = null; //Questa variabile è definita anche in _UserGroupTable
+    function ShowTableAllRoles() {
+        senderAddElement = "Roles";
+                    $("#DIV_TableAllRoles").load("/Admin/Gestione/GetTableAllRoles");
+                    $("#Div_DynamicViewAllAllRoles").show();
+                    dispatchOpenPopupCustomEvent('ViewAllAllRoles');
+                }
+
+                document.addEventListener('openPopup_CustomEvent', (event) => {
+                    if (event.Sender === "GenericTable" && senderAddElement === 'Roles') {
+                        call_setContainerGenericTableRuoli();
+                    }
+                }, false);
+
+    function call_setContainerGenericTableRuoli() {
+                    setContainerGenericTable('Div_DynamicViewAllAllRoles', 'DIV_TableAllRoles', 'ViewAllAllRoles', callbackGetValueSelectedRuoli);
+                }
+
+                var countRowsTableRoles = @counter;
+    function callbackGetValueSelectedRuoli(selectedValues) {
+                    if (selectedValues == null)
+                        return;
+                    var idRole = selectedValues.NotVisible_Id;
+                    if (isRolesAlreadyInTable(idRole))
+                        return;
+        var rowTable = '<tr id="rowRole_' + idRole + '">';
+        rowTable += '<td style="width:20%">' + selectedValues.Nome + '</td><td style="width:50%">' + selectedValues.Descrizione + '</td><td style="width:20%">' + selectedValues.Menuprincipale + '</td>';
+        rowTable += '<td style="text-align:center; width:10%"><button type="button" class="btn btn-danger btn-sm" title="Rimuove il ruolo" onclick="RemoveRoles(' + idRole + ')" /><i class="far fa-trash-alt" ></i></td>';
+                    rowTable += '</tr>';
+        var inputTable = '<input type="hidden" id="inputRole_' + idRole + '" name="roles[' + countRowsTableRoles + ']" value="' + idRole + '" />';
+        $("#TableUserRoles_Body").append(rowTable);
+        $("#DIV_InputRolesContainer").append(inputTable);
+        countRowsTableRoles++;
+                }
+
+    function isRolesAlreadyInTable(idRole) {
+        var elements = $("#DIV_InputRolesContainer").children();
+                    for (var i = 0; i < elements.length; ++i) {
+                        var id = elements[i].id;
+                        if (idRole === id.replace("inputRole_", "")) {
+                            myCustomModalAlertShow("Ruolo già inserito", "Il ruolo selezionato risulta già presente tra le associazioni dell'utente");
+                            return true;
+                        }
+                    }
+                    return false;
+            }
+
+    function RemoveRoles(idRole) {
+        var elem = $("#inputRole_" + idRole);
+        var id = elem.attr('id');
+        elem.val('-1');
+        elem.attr('id', id + 'removed');
+                $("#rowRole_" + idRole).remove();
+            }
+</script>
