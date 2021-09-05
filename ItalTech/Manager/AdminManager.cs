@@ -51,7 +51,7 @@ namespace ItalTech.Manager
             {
                 return _userManager.Users.Count();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return -1;
             }
@@ -70,7 +70,7 @@ namespace ItalTech.Manager
                 var result = await _userManager.AddToRolesAsync(user, roles);
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -109,7 +109,7 @@ namespace ItalTech.Manager
                         {
                             await _userManager.DeleteAsync(user);
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             return new Response<IdentityResult>
                             {
@@ -132,7 +132,7 @@ namespace ItalTech.Manager
                     Result = null
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<IdentityResult>
                 {
@@ -172,7 +172,7 @@ namespace ItalTech.Manager
                     Result = result
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<IdentityResult>
                 {
@@ -199,7 +199,7 @@ namespace ItalTech.Manager
                     Result = allUsers
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<ResultPaginated<UserViewModel>>
                 {
@@ -231,7 +231,7 @@ namespace ItalTech.Manager
                     Result = rolesUser
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<UserViewModel>
                 {
@@ -279,7 +279,7 @@ namespace ItalTech.Manager
                     Result = allRoles
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<List<RoleViewModel>>
                 {
@@ -326,7 +326,7 @@ namespace ItalTech.Manager
                     {
                         await _userManager.RemoveFromRolesAsync(user, oldRoles);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         return new Response<IdentityResult>
                         {
@@ -364,7 +364,7 @@ namespace ItalTech.Manager
                     Result = null
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<IdentityResult>
                 {
@@ -424,7 +424,7 @@ namespace ItalTech.Manager
                     Result = false
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<bool>
                 {
@@ -466,7 +466,7 @@ namespace ItalTech.Manager
                     Result = null
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<IdentityResult>
                 {
@@ -493,7 +493,7 @@ namespace ItalTech.Manager
                     Result = user
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<ItalTechUser>
                 {
@@ -570,7 +570,7 @@ namespace ItalTech.Manager
                     Result = oldUser
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<ItalTechUser>
                 {
@@ -650,7 +650,7 @@ namespace ItalTech.Manager
                     oldDetails.Where(o => o.RoleId == roleId).Select(o => o.Id).Single() : 
                     0;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return 0;
             }

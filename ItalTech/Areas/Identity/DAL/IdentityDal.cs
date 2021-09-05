@@ -38,7 +38,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Result = result
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response<int>
                 {
@@ -78,7 +78,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 await context.SaveChangesAsync();
                 return gruppo.Id;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -97,7 +97,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Message = "Ruoli modificati correttamente"
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response
                 {
@@ -117,7 +117,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 context.UpdateRange(details);
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -134,7 +134,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Result = groups
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response<List<GroupsMaster>>
                 {
@@ -151,7 +151,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 var groups = await context.GroupsMaster.AsNoTracking().OrderBy(g => g.Name).ToListAsync();
                 return groups;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -170,7 +170,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Result = details
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response<GroupsMaster>
                 {
@@ -189,7 +189,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     throw new Exception($"None group found for id = {groupId}");
                 return group;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -208,7 +208,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Result = details
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response<List<GroupsDetail>>
                 {
@@ -227,7 +227,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 var details = await context.GroupsDetail.AsNoTracking().Where(d => groupIds.Contains(d.GroupId)).ToListAsync();
                 return details;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -245,7 +245,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     IsSucces = true
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response
                 {
@@ -263,7 +263,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 context.Remove(group);
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -282,7 +282,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Result = result
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response<List<UserGroups>>
                 {
@@ -299,7 +299,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 var userGroups = await context.UserGroups.AsNoTracking().Where(u => u.IdUser == userId).ToListAsync();
                 return userGroups;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -319,7 +319,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     IsSucces = true
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response
                 {
@@ -337,7 +337,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 context.Remove(userGroup);
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -356,7 +356,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Message = "Gruppi di ruoli associati correttamente all'utente"
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response
                 {
@@ -376,7 +376,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 context.UpdateRange(userGroups);
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -395,7 +395,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Result = result
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response<List<UserRoles>>
                 {
@@ -412,7 +412,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 var userRoles = await context.UserWithRoles.AsNoTracking().Where(u => u.IdUser == userId).ToListAsync();
                 return userRoles;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -431,7 +431,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Result = users
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response<List<string>>
                 {
@@ -450,7 +450,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 var users = await context.UserGroups.AsNoTracking().Where(u => u.IdGroup == groupId).Select(u => u.IdUser).ToListAsync();
                 return users;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -469,7 +469,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                     Message = "Ruoli associati correttamente all'utente"
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return await Task.FromResult(new Response
                 {
@@ -489,7 +489,7 @@ namespace ItalTech.Areas.Identity.Data.DAL
                 context.UpdateRange(userRoles);
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

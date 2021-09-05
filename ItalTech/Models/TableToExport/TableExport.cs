@@ -48,7 +48,6 @@ namespace ItalTech.Models.TableToExport
 
             var newTab = new TableExport() { Title = this.Title, IsShowTitle = true };
             newTab.Columns = new List<Column>();
-            var count = 0;
             foreach (var col in Columns.Where(c => c.ColumnConfiguration.IsSelected.HasValue && c.ColumnConfiguration.IsSelected.Value).OrderBy(c => c.ColumnConfiguration.CurrentIndexOrder.Value))
             {
                 //var colElements = col.Split(',');
