@@ -74,12 +74,7 @@ namespace Infrastruttura.Dal
             InputRicercaProgetti input = new();
             return GetAllProgetti(input);
         }
-           
 
-        public Task<List<Progetto>> GetAllProgetti(InputRichiesteProgetti input)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<Progetto> GetProgetto(string codice)
         {
@@ -123,8 +118,13 @@ namespace Infrastruttura.Dal
                 throw;
             }
         }
+        public Task<List<RichiestaProgetto>> GetAllRichiesteProgetti()
+        {
+            InputRicercaRichiesteProgetti input = new();
+            return GetAllRichiesteProgetti(input);
+        }
 
-        public async Task<List<RichiestaProgetto>> GetAllRicercaRichiesteProgetti(InputRicercaRichiesteProgetti input) 
+        public async Task<List<RichiestaProgetto>> GetAllRichiesteProgetti(InputRicercaRichiesteProgetti input) 
         {
             try
             {
@@ -169,6 +169,11 @@ namespace Infrastruttura.Dal
             {
                 throw new Exception("Impossibile trovare richieste progetti");
             }
+        }
+        public Task<List<Impiegato>> GetAllImpiegati()
+        {
+            InputRicercaImpiegati input = new();
+            return GetAllImpiegati(input);
         }
         public async Task<List<Impiegato>> GetAllImpiegati(InputRicercaImpiegati input)
         {
@@ -220,6 +225,11 @@ namespace Infrastruttura.Dal
                 throw new Exception("Impossibile trovare impiegati");
             }
         }
+        public Task<List<Fornitura>> GetAllForniture()
+        {
+            InputRicercaForniture input = new();
+            return GetAllForniture(input);
+        }
         public async Task<List<Fornitura>> GetAllForniture(InputRicercaForniture input)
         {
             try
@@ -270,7 +280,11 @@ namespace Infrastruttura.Dal
                 throw new Exception("Impossibile trovare forniture");
             }
         }
-
+        public Task<List<Fornitore>> GetAllFornitori()
+        {
+            InputRicercaFornitori input = new();
+            return GetAllFornitori(input);
+        }
         public async Task<List<Fornitore>> GetAllFornitori(InputRicercaFornitori input)
         {
             try
@@ -315,9 +329,15 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new Exception("Impossibile trovare forniture");
+                throw new Exception("Impossibile trovare fornitori");
             }
         }
+        public Task<List<ProdottoCase>> GetAllProdottiCase()
+        {
+            InputRicercaProdottiCase input = new();
+            return GetAllProdottiCase(input);
+        }
+
         public async Task<List<ProdottoCase>> GetAllProdottiCase(InputRicercaProdottiCase input)
         {
             try
@@ -367,8 +387,14 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new Exception("Impossibile trovare forniture");
+                throw new Exception("Impossibile trovare i case");
             }
+        }
+
+        public Task<List<ProdottoAssemblato>> GetAllProdottiAssemblati()
+        {
+            InputRicercaProdottiAssemblati input = new();
+            return GetAllProdottiAssemblati(input);
         }
         public async Task<List<ProdottoAssemblato>> GetAllProdottiAssemblati(InputRicercaProdottiAssemblati input)
         {
@@ -419,8 +445,14 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new Exception("Impossibile trovare forniture");
+                throw new Exception("Impossibile trovare gli assemblati");
             }
+        }
+
+        public Task<List<Componente>> GetAllComponenti()
+        {
+            InputRicercaComponenti input = new();
+            return GetAllComponenti(input);
         }
         public async Task<List<Componente>> GetAllComponenti(InputRicercaComponenti input)
         {
@@ -446,8 +478,13 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new Exception("Impossibile trovare forniture");
+                throw new Exception("Impossibile trovare componenti");
             }
+        }
+        public Task<List<Ordini>> GetAllOrdini()
+        {
+            InputRicercaOrdini input = new();
+            return GetAllOrdini(input);
         }
         public async Task<List<Ordini>> GetAllOrdini(InputRicercaOrdini input)
         {
@@ -477,9 +514,15 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new Exception("Impossibile trovare forniture");
+                throw new Exception("Impossibile trovare ordini");
             }
         }
+        public Task<List<OrdineForniture>> GetAllOrdiniForniture()
+        {
+            InputRicercaOrdiniForniture input = new();
+            return GetAllOrdiniForniture(input);
+        }
+
         public async Task<List<OrdineForniture>> GetAllOrdiniForniture(InputRicercaOrdiniForniture input)
         {
             try
@@ -504,8 +547,13 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new Exception("Impossibile trovare forniture");
+                throw new Exception("Impossibile trovare gli ordini di forniture");
             }
+        }
+        public Task<List<Prototipo>> GetAllPrototipi()
+        {
+            InputRicercaPrototipi input = new();
+            return GetAllPrototipi(input);
         }
         public async Task<List<Prototipo>> GetAllPrototipi(InputRicercaPrototipi input)
         {
@@ -547,8 +595,13 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new Exception("Impossibile trovare forniture");
+                throw new Exception("Impossibile trovare prototipi");
             }
+        }
+        public Task<List<Cliente>> GetAllClienti()
+        {
+            InputRicercaClienti input = new();
+            return GetAllClienti(input);
         }
         public async Task<List<Cliente>> GetAllClienti(InputRicercaClienti input)
         {
@@ -590,7 +643,7 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new Exception("Impossibile trovare forniture");
+                throw new Exception("Impossibile trovare clienti");
             }
         }
 
@@ -598,14 +651,12 @@ namespace Infrastruttura.Dal
         {
             switch (tipoCrud)
             {
-                case TipoCrud.insert: await context.Progettos.AddAsync(progetto.ToEntity()); return await context.SaveChangesAsync()==1;
+                case TipoCrud.insert: await context.Progettos.AddAsync(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
                 case TipoCrud.update: context.Progettos.Update(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
 
             }
 
             throw new NotImplementedException();
         }
-
-        
     }
 }

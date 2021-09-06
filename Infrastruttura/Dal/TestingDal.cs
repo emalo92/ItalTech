@@ -21,6 +21,12 @@ namespace Infrastruttura.Dal
             this.connectionString = connectionString;
         }
 
+        public  Task<List<Test>> GetAllTest()
+        {
+            InputRicercaTest input = new();
+            return GetAllTest(input);
+        }
+
         public async Task<List<Test>> GetAllTest(InputRicercaTest input)
         {
             try
@@ -69,6 +75,12 @@ namespace Infrastruttura.Dal
 
         }
 
+        public  Task<List<TestProdottoAssemblato>> GetAllTestProdottiAssemblati() 
+        {
+            InputRicercaTestProdottiAssemblati input = new();
+            return GetAllTestProdottiAssemblati(input);
+        }
+
         public async Task<List<TestProdottoAssemblato>> GetAllTestProdottiAssemblati(InputRicercaTestProdottiAssemblati input)
         {
             try
@@ -94,6 +106,11 @@ namespace Infrastruttura.Dal
             
             
         }
+        public Task<List<TestProdottoCase>> GetAllTestProdottiCase()
+        {
+            InputRicercaTestProdottiCase input = new();
+            return GetAllTestProdottiCase(input);
+        }
         public async Task<List<TestProdottoCase>> GetAllTestProdottiCase(InputRicercaTestProdottiCase input)
         {
             try
@@ -118,6 +135,7 @@ namespace Infrastruttura.Dal
 
         }
 
+      
     }
 
 }
