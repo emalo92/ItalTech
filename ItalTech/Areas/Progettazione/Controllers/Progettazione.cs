@@ -143,11 +143,11 @@ namespace ItalTech.Areas.Progettazione.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RichiesteProgetto(InputRichiesteProgetti input)
+        public async Task<IActionResult> RichiesteProgetto(InputRicercaRichiesteProgetti input)
         {
-            var resultDal = await _progettazioneDal.GetAllProgetti(input.ToDto());
-            var result = resultDal.ToModel();
-            ViewBag.ListaRichiesteProgetti = result;
+            var resultDal = await _progettazioneDal.GetAllRichiesteProgetti(input.ToDto());
+            //var result = resultDal.ToModel();
+            //ViewBag.ListaRichiesteProgetti = result;
             return View(input);
         }
 

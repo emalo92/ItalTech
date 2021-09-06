@@ -1,6 +1,6 @@
 ﻿@using ItalTech.Areas.Progettazione.Models;
 
-@model InputRichiesteProgetti
+@model InputRicercaRichiesteProgetti
 
 @{
     var listaRichiesteProgetti = (List<Progetto>)ViewBag.ListaRichiesteProgetti; @*!= null ? ViewBag.ListaRichiesteProgetti : null;*@
@@ -15,8 +15,8 @@
                     <input type="text" class="form-control" asp-for="Codice" />
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="NomeProgetto"></label>
-                    <input type="text" class="form-control" asp-for="NomeProgetto" />
+                    <label asp-for="CodiceProgetto"></label>
+                    <input type="text" class="form-control" asp-for="CodiceProgetto" />
                 </div>
             </div>
             <div class="row mb-3">

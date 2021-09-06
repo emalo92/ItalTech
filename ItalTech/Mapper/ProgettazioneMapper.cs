@@ -76,17 +76,15 @@ namespace ItalTech.Mapper
                 Tipo = input.Tipo
             };
         }
-        public static Infrastruttura.Models.Input.InputRichiesteProgetti ToDto(this InputRichiesteProgetti input)
+        public static Infrastruttura.Models.Input.InputRicercaRichiesteProgetti ToDto(this InputRicercaRichiesteProgetti input)
         {
-            return new Infrastruttura.Models.Input.InputRichiesteProgetti
+            return new Infrastruttura.Models.Input.InputRicercaRichiesteProgetti
             {
                 Cliente = input.Cliente,
                 Codice = input.Codice,
-                NomeProgetto = input.NomeProgetto,
-                ProjectManager = input.ProjectManager,
+                CodiceProgetto = input.CodiceProgetto,
+                Operatore = input.ProjectManager,
                 Tipo = input.Tipo,
-                DataDal = input.DataDal,
-                DataAl = input.DataAl,
             };
         }
     }
