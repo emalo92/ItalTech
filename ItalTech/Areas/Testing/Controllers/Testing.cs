@@ -19,7 +19,7 @@ namespace ItalTech.Areas.Testing.Controllers
             _logger = logger;
             _testingDal = testingDal;
         }
-        public IActionResult Index()
+        public IActionResult IndexTest()
         {
             return View();
         }
