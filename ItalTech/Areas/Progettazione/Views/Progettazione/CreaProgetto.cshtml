@@ -5,13 +5,19 @@
 
 <section class="bg-light">
     <div class="container">
-        <form class="form-group" asp-action="CreaProgetto" method="post">
+        <form id="idFormProgetto" class="form-group" asp-action="CreaProgetto" method="post">
             <partial name="_FormInputProgetto" model="@Model" />
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 text-right">
-                    <input class="btn btn-info" type="submit" value="Salva" />
+                    <input class="btn btn-info" type="button" value="Salva" onclick="salva()" />
                 </div>
             </div>
         </form>
     </div>
 </section>
+
+<script type="text/javascript">
+    function salva() {
+        document.getElementById("idFormProgetto").submit();
+    }
+</script>
