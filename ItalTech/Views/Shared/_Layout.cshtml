@@ -10,14 +10,6 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <div id="divPageLoading" class="positionFixed" style="display:none">
-        <div class="loading-content ">
-            <div class="spinner-border " role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            Loading...
-        </div>
-    </div>
     @*<header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container">
@@ -126,9 +118,17 @@
                         case "GestioneUtenti": <partial name="_SidebarAdmin" />; break;
                     }
                 }
-                <div class="@colonnaAdmin">
-                    @RenderBody()
+            <div class="@colonnaAdmin">
+                <div id="divPageLoading" class="positionFixed" style="display:none">
+                    <div class="loading-content ">
+                        <div class="spinner-border " role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        Loading...
+                    </div>
                 </div>
+                @RenderBody()
+            </div>
             </div>
         </main>
     </div>

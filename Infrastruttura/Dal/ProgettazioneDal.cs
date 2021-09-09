@@ -2,23 +2,24 @@
 using Infrastruttura.Models;
 using Infrastruttura.Models.Input;
 using Infrastruttura.Mapper;
+using Infrastruttura.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
-using System.Text;
+
 using System.Threading.Tasks;
+using System.Data;
 
 namespace Infrastruttura.Dal
 {
     public class ProgettazioneDal : IProgettazioneDal
     {
-        private ItalTechDbContext context;
-        string connectionString;
-        
-        public ProgettazioneDal (ItalTechDbContext context, string connectionString)
+        private readonly ItalTechDbContext context;
+        readonly string connectionString;
+
+        public ProgettazioneDal(ItalTechDbContext context, string connectionString)
         {
             this.context = context;
             this.connectionString = connectionString;
@@ -32,11 +33,11 @@ namespace Infrastruttura.Dal
         public async Task<List<Progetto>> GetAllProgetti(InputRicercaProgetti input)
         {
             try
-            {                
+            {
                 var query = context.Progettos.AsNoTracking();
                 if (input.Codice != 0)
                 {
-                    query = query.Where( x => x.Codice == input.Codice);
+                    query = query.Where(x => x.Codice == input.Codice);
                 }
                 if (input.NomeProgetto != null)
                 {
@@ -66,7 +67,7 @@ namespace Infrastruttura.Dal
             {
                 throw new Exception("Impossibile trovare progetti");
             }
-            
+
         }
 
         public Task<List<Progetto>> GetAllProgetti()
@@ -74,8 +75,6 @@ namespace Infrastruttura.Dal
             InputRicercaProgetti input = new();
             return GetAllProgetti(input);
         }
-
-
         public async Task<Progetto> GetProgetto(string codice)
         {
             try
@@ -85,37 +84,41 @@ namespace Infrastruttura.Dal
                 command.Connection = sqlConn;
                 string query = "";
 
-                query = @" SELECT Codice, Descrizione 
-                            FROM Progetto
-                            WHERE Codice == @Cod
-                            GROUP BY Codice";
+                query = @"SELECT Codice, Descrizione, DataInizio, DataFine, NomeProgetto, CostoPrevisto, CostoFinale, Tipo, CodiceAnalisiMercato, ProjectManager, Cliente 
+                            FROM Progetto 
+                            WHERE Codice = @Cod";
 
-                command.Parameters.Add(new SqlParameter("@Cod", codice));
+                command.Parameters.Add(new SqlParameter("@Cod", int.Parse(codice)));
 
                 command.CommandText = query;
 
                 sqlConn.Open();
-                using var reader = await command.ExecuteReaderAsync();
+                using var reader = await command.ExecuteReaderAsync(CommandBehavior.SingleRow);
 
                 var progetti = new List<Progetto>();
 
-                while (reader.Read())
+                var a = reader.Read();
+
+                var progetto = new Progetto
                 {
-                    var progetto = new Progetto
-                    {
-                        Codice = reader.GetInt32("Codice"),
-                        Descrizione = reader.GetString("Descrizione")
-                    };
-
-                    progetti.Add(progetto);
-
-                }
-                return progetti[0];
+                    Codice = reader.GetSafeInt("Codice").Value,
+                    Descrizione = reader.GetSafeString("Descrizione"),
+                    DataInizio = reader.GetSafeDateTime("DataInizio").Value,
+                    DataFine = reader.GetSafeDateTime("DataFine"),
+                    NomeProgetto = reader.GetSafeString("NomeProgetto"),
+                    CostoPrevisto = reader.GetSafeDecimal("CostoPrevisto"),
+                    CostoFinale = reader.GetSafeDecimal("CostoFinale"),
+                    Tipo = reader.GetSafeString("Tipo"),
+                    CodiceAnalisiMercato = reader.GetSafeInt("CodiceAnalisiMercato"),
+                    Cliente = reader.GetSafeString("Cliente"),
+                    ProjectManager = reader.GetSafeString("ProjectManager")
+                };
+                return progetto;
             }
+
             catch (Exception ex)
             {
-                ex.Source = "impossibile trovare progetti con il codice selezionato";
-                throw;
+                throw new Exception("Impossibile trovare progetti con il codice selezionato");
             }
         }
         public Task<List<RichiestaProgetto>> GetAllRichiesteProgetti()
@@ -123,8 +126,7 @@ namespace Infrastruttura.Dal
             InputRicercaRichiesteProgetti input = new();
             return GetAllRichiesteProgetti(input);
         }
-
-        public async Task<List<RichiestaProgetto>> GetAllRichiesteProgetti(InputRicercaRichiesteProgetti input) 
+        public async Task<List<RichiestaProgetto>> GetAllRichiesteProgetti(InputRicercaRichiesteProgetti input)
         {
             try
             {
@@ -137,7 +139,7 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.CodiceProgetto == input.CodiceProgetto);
                 }
-                if (input.Tipo != null) 
+                if (input.Tipo != null)
                 {
                     query = query.Where(x => x.Tipo == input.Tipo);
                 }
@@ -153,7 +155,7 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.EsitoStudio == input.EsitoStudio);
                 }
-                if(input.Cliente != null)
+                if (input.Cliente != null)
                 {
                     query = query.Where(x => x.Cliente == input.Cliente);
                 }
@@ -196,7 +198,7 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.Cognome == input.Cognome);
                 }
-                if (input.DataDiNascita != null )
+                if (input.DataDiNascita != null)
                 {
                     query = query.Where(x => x.DataDiNascita == input.DataDiNascita);
                 }
@@ -210,7 +212,7 @@ namespace Infrastruttura.Dal
                 }
                 if (input.Cap != null)
                 {
-                    query = query.Where(x => x.Cap== input.Cap);
+                    query = query.Where(x => x.Cap == input.Cap);
                 }
                 if (input.AziendaId != null)
                 {
@@ -235,9 +237,9 @@ namespace Infrastruttura.Dal
             try
             {
                 var query = context.Fornituras.AsNoTracking();
-                if (input.Codice!= null)
+                if (input.Codice != null)
                 {
-                    query = query.Where(x => x.Codice== input.Codice);
+                    query = query.Where(x => x.Codice == input.Codice);
                 }
                 if (input.Nome != null)
                 {
@@ -344,7 +346,7 @@ namespace Infrastruttura.Dal
             {
                 var query = context.ProdottoCases.AsNoTracking();
 
-                if (input.Codice!= 0)
+                if (input.Codice != 0)
                 {
                     query = query.Where(x => x.Codice == input.Codice);
                 }
@@ -472,7 +474,7 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.NumPezzi == input.NumPezzi);
                 }
-                
+
                 var componente = await query.ToListAsync();
                 return componente.ToDto();
             }
@@ -494,9 +496,9 @@ namespace Infrastruttura.Dal
 
                 if (input.Codice != 0)
                 {
-                    query = query.Where(x => x.Codice== input.Codice);
+                    query = query.Where(x => x.Codice == input.Codice);
                 }
-                if (input.DataCreazione!= null)
+                if (input.DataCreazione != null)
                 {
                     query = query.Where(x => x.DataCreazione == input.DataCreazione);
                 }
@@ -504,12 +506,12 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.DataInvio == input.DataInvio);
                 }
-                if(input.Operatore != null)
+                if (input.Operatore != null)
                 {
                     query = query.Where(x => x.Operatore == input.Operatore);
                 }
 
-                var ordine  = await query.ToListAsync();
+                var ordine = await query.ToListAsync();
                 return ordine.ToDto();
             }
             catch (Exception ex)
@@ -561,7 +563,7 @@ namespace Infrastruttura.Dal
             {
                 var query = context.Prototipos.AsNoTracking();
 
-                if (input.Numero!= 0)
+                if (input.Numero != 0)
                 {
                     query = query.Where(x => x.Numero == input.Numero);
                 }
@@ -571,7 +573,7 @@ namespace Infrastruttura.Dal
                 }
                 if (input.Data != null)
                 {
-                    query = query.Where(x => x.Data== input.Data);
+                    query = query.Where(x => x.Data == input.Data);
                 }
                 if (input.Descrizione != null)
                 {
@@ -585,7 +587,7 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.MotivoFallimento == input.MotivoFallimento);
                 }
-                if (input.RisultatoTest!= null)
+                if (input.RisultatoTest != null)
                 {
                     query = query.Where(x => x.RisultatoTest == input.RisultatoTest);
                 }
@@ -613,15 +615,15 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.CodFiscale == input.CodFiscale);
                 }
-                if (input.Nome!= null)
+                if (input.Nome != null)
                 {
-                    query = query.Where(x => x.Nome== input.Nome);
+                    query = query.Where(x => x.Nome == input.Nome);
                 }
                 if (input.Cognome != null)
                 {
                     query = query.Where(x => x.Cognome == input.Cognome);
                 }
-                if (input.Indirizzo!= null)
+                if (input.Indirizzo != null)
                 {
                     query = query.Where(x => x.Indirizzo == input.Indirizzo);
                 }
@@ -633,11 +635,11 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.Citta == input.Citta);
                 }
-                if (input.Cap!= null)
+                if (input.Cap != null)
                 {
                     query = query.Where(x => x.Cap == input.Cap);
                 }
-                
+
                 var cliente = await query.ToListAsync();
                 return cliente.ToDto();
             }

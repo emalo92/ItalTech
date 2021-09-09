@@ -116,7 +116,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
 
                 ViewBag.SizeModal = "modal-xl";
                 return PartialView("_GenericTable", genericTable);
-                
+
             }
             catch (Exception ex)
             {
@@ -127,17 +127,37 @@ namespace ItalTech.Areas.Progettazione.Controllers
             }
         }
 
-        public async Task<IActionResult> GetProgettoAsync(string codice)
+        public async Task<JsonResult> GetProgettoAsync(string codice)
         {
-            return View();
+            try
+            {
+                var resultDal = await _progettazioneDal.GetProgetto(codice);
+                var result = resultDal.ToModel();
+                var response = new Response
+                {
+                    IsSucces = result != null,
+                    Message = result != null ? "" : "Nessun progetto trovato",
+                    Result = result
+                };              
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                return Json(response);
+            }
         }
 
-            //public async Task<IActionResult> GetAllComponenti ()
-            //{
+        //public async Task<IActionResult> GetAllComponenti ()
+        //{
 
-            //}
+        //}
 
-            public IActionResult RichiesteProgetto()
+        public IActionResult RichiesteProgetto()
         {
             return View();
         }
