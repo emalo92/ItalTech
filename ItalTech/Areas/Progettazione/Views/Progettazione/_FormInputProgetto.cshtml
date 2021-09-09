@@ -22,8 +22,8 @@
         <input id="idInputNomeProgetto" type="text" class="form-control" asp-for="NomeProgetto" />
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-        <label asp-for="Descrizione"></label>
-        <input id="idInputDescrizione" type="text" class="form-control" asp-for="Descrizione" />
+        <label asp-for="Cliente"></label>
+        <input id="idInputCliente" type="text" class="form-control" asp-for="Cliente" />
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="Tipo"></label>
@@ -46,11 +46,11 @@
 </div>
 <div class="row mb-3">
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-        <label asp-for="Cliente"></label>
-        <input id="idInputCliente" type="text" class="form-control" asp-for="Cliente" />
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="ProjectManager"></label>
         <input id="idInputProjectManager" type="text" class="form-control" asp-for="ProjectManager" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Descrizione"></label>
+        <textarea class="form-control" id="idInputDescrizione" rows="3" asp-for="Descrizione"></textarea>
     </div>
 </div>
