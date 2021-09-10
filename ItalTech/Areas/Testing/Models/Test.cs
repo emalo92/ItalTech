@@ -16,7 +16,7 @@ namespace ItalTech.Areas.Testing.Models
         public string Tipo { get; set; }
 
         [Display(Name = "Valori di Riferimento")]
-        public string Valoridiriferimento { get; set; }
+        public string ValoriDiRiferimento { get; set; }
 
         [Display(Name = "Operatore")]
         public string Operatore { get; set; }
@@ -25,10 +25,10 @@ namespace ItalTech.Areas.Testing.Models
         public int QuantitaEseguiti { get; set; }
 
         [Display(Name = "Test Superati")]
-        public int QuantitaPasssati { get; set; }
+        public int QuantitaPassati { get; set; }
 
         [Display(Name = "Test Falliti")]
-        public int QuantitàFalliti { get; set; }
+        public int QuantitaFalliti { get; set; }
 
         [Display(Name = "Descrizione")]
         public string Descrizione { get; set; }
