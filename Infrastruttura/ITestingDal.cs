@@ -17,5 +17,7 @@ namespace Infrastruttura
         Task<List<TestProdottoCase>> GetAllTestProdottiCase();
         Task<List<TestProdottoCase>> GetAllTestProdottiCase(InputRicercaTestProdottiCase input);
 
+        Task<bool> SaveTest(Test test, TipoCrud tipoCrud);
+
     }
 }

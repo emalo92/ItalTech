@@ -9,6 +9,20 @@ namespace Infrastruttura.Mapper
 {
    public static class TestingMapper
     {
+        public static Test ToDto(this Test test)
+        {
+            return new Test
+            {
+                Codice = test.Codice,
+                Tipo = test.Tipo,
+                ValoriDiRiferimento = test.ValoriDiRiferimento,
+                Descrizione = test.Descrizione,
+                QuantitaEseguiti = test.QuantitaEseguiti,
+                QuantitaPassati = test.QuantitaPassati,
+                QuantitaFalliti = test.QuantitaFalliti,
+                Operatore = test.Operatore,
+            };
+        }
         public static Test ToDto(this Data.Modelli.Test test)
         {
             return new Test

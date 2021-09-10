@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ItalTech.Areas.Testing.Models
 {
-    public class Testing
+    public class Test
     {
         [Display(Name = "Codice")]
         public int Codice { get; set; }
@@ -29,6 +29,9 @@ namespace ItalTech.Areas.Testing.Models
 
         [Display(Name = "Test Falliti")]
         public int QuantitàFalliti { get; set; }
+
+        [Display(Name = "Descrizione")]
+        public string Descrizione { get; set; }
 
     }
 }

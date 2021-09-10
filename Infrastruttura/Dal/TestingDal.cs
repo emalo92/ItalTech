@@ -134,8 +134,25 @@ namespace Infrastruttura.Dal
             }
 
         }
+        public async Task<bool> SaveTest(Test test, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Tests.AddAsync(test.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Tests.Update(test.ToEntity()); return await context.SaveChangesAsync() == 1;
 
-      
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+
     }
 
 }
