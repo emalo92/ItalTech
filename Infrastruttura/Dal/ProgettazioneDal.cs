@@ -651,14 +651,21 @@ namespace Infrastruttura.Dal
 
         public async Task<bool> SaveProgetto(Progetto progetto, TipoCrud tipoCrud)
         {
-            switch (tipoCrud)
+            try
             {
-                case TipoCrud.insert: await context.Progettos.AddAsync(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
-                case TipoCrud.update: context.Progettos.Update(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Progettos.AddAsync(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Progettos.Update(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
 
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
             }
 
-            throw new NotImplementedException();
         }
     }
 }

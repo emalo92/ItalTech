@@ -1,7 +1,6 @@
 ﻿@using ItalTech.Areas.Progettazione.Models
 @model Progetto
 
-
 <div class="row mb-3">
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="Codice"></label>
@@ -9,11 +8,11 @@
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="DataInizio"></label>
-        <input id="idInputDataInizio" type="date" class="form-control" asp-for="DataInizio" />
+        <input id="idInputDataInizio" type="datetime-local" class="form-control" asp-for="DataInizio" />
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="DataFine"></label>
-        <input id="idInputDataFine" type="date" class="form-control" asp-for="DataFine" />
+        <input id="idInputDataFine" type="datetime-local" class="form-control" asp-for="DataFine" />
     </div>
 </div>
 <div class="row mb-3">

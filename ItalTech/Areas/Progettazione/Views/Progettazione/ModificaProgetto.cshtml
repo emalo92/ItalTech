@@ -26,11 +26,11 @@
 
 <section class="bg-light">
     <div id="divFormProgetto" class="container" style="display:none">
-        <form class="form-group" asp-action="ModificaProgetto" method="post">
+        <form id="idFormModificaProgetto" class="form-group" asp-action="ModificaProgetto" method="post">
             <partial name="_FormInputProgetto" model="@Model" />
             <div class="row p-2">
                 <div class="col-lg-10 col-md-10 col-sm-12 text-right">
-                    <input class="btn btn-info" type="submit" value="Salva" />
+                    <input class="btn btn-info" type="submit" value="Salva" onclick="salva()"/>
                 </div>
                 <div class="col-lg-1 col-md-2 col-sm-12 text-right">
                     <input class="btn btn-info" type="button" onclick="removeProgetto()" value="Rimuovi" />
@@ -49,6 +49,11 @@
 </div>
 
 <script>
+
+    function salva() {
+        document.getElementById("idFormModificaProgetto").submit();
+    }
+
     var callbackGenericTable;  //viene definita in GenericTable
     function showDynamicViewAllProgetti(url) {
         $("#Div_DynamicView_ContainerAllProgetti").load(url);        

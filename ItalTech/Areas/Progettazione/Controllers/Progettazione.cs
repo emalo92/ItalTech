@@ -187,7 +187,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
                     IsSucces = result,
                     Message = result ? "Progetto salvato correttamente" : "Impossibile salvare il progetto"
                 };
-                ViewMessage.ShowLocal(this, response);
+                ViewMessage.Show(this, response);
                 return View(progetto);
             }
             catch (Exception ex)
