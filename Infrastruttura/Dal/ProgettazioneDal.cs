@@ -657,6 +657,7 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.Progettos.AddAsync(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.Progettos.Update(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.Progettos.Remove(progetto.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;
@@ -675,6 +676,7 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.Fornitores.AddAsync(fornitore.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.Fornitores.Update(fornitore.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.Fornitores.Remove(fornitore.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;
@@ -693,6 +695,7 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.Fornituras.AddAsync(fornitura.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.Fornituras.Update(fornitura.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.Fornituras.Remove(fornitura.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;
@@ -711,6 +714,7 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.Clientes.AddAsync(cliente.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.Clientes.Update(cliente.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.Clientes.Remove(cliente.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;
@@ -729,6 +733,7 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.Componentes.AddAsync(componente.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.Componentes.Update(componente.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.Componentes.Remove(componente.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;
@@ -789,6 +794,7 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.OrdineFornitures.AddAsync(ord.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.OrdineFornitures.Update(ord.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.OrdineFornitures.Remove(ord.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;
@@ -807,6 +813,7 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.ProdottoAssemblatos.AddAsync(prodottoAssemblato.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.ProdottoAssemblatos.Update(prodottoAssemblato.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.ProdottoAssemblatos.Remove(prodottoAssemblato.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;
@@ -823,8 +830,9 @@ namespace Infrastruttura.Dal
             {
                 switch (tipoCrud)
                 {
-                    case TipoCrud.insert: await context.ProdottoAssemblatos.AddAsync(prodottocase.ToEntity()); return await context.SaveChangesAsync() == 1;
-                    case TipoCrud.update: context.ProdottoAssemblatos.Update(prodottocase.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.insert: await context.ProdottoCases.AddAsync(prodottocase.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.ProdottoCases.Update(prodottocase.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.ProdottoCases.Remove(prodottocase.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;
@@ -861,6 +869,7 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.RichiestaProgettos.AddAsync(richiestaProgetto.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.RichiestaProgettos.Update(richiestaProgetto.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.RichiestaProgettos.Remove(richiestaProgetto.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
                 throw new Exception(); ;

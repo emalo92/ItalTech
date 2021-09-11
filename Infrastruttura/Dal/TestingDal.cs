@@ -142,9 +142,10 @@ namespace Infrastruttura.Dal
                 {
                     case TipoCrud.insert: await context.Tests.AddAsync(test.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.Tests.Update(test.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.Tests.Remove(test.ToEntity()); return await context.SaveChangesAsync() == 1;
 
-                }
-                throw new Exception(); ;
+               }
+                throw new Exception(); 
             }
             catch (Exception ex)
             {
@@ -152,6 +153,31 @@ namespace Infrastruttura.Dal
             }
 
         }
+        public async Task<bool> SaveTestProdottoAssemblato(int codiceTest, int codiceProdottoAssemblato, TipoCrud tipoCrud)
+        {
+            try
+            {
+                var testProdAss = new TestProdottoAssemblato
+                {
+                    CodiceTest = codiceTest,
+                    CodiceProdottoAssemblato = codiceProdottoAssemblato
+                };
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.TestProdottoAssemblatos.AddAsync(testProdAss.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.TestProdottoAssemblatos.Update(testProdAss.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.TestProdottoAssemblatos.Remove(testProdAss.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il salvataggio in DB");
+            }
+
+        }
+        
 
     }
 
