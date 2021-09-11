@@ -102,5 +102,34 @@ namespace Infrastruttura.Mapper
             }
             return tpa;
         }
+        public static TestPrototipo ToDto(this Data.Modelli.TestPrototipo testprototipo)
+        {
+            return new TestPrototipo
+            {
+                CodiceProgetto = testprototipo.CodiceProgetto,
+                CodiceTest = testprototipo.CodiceTest,
+                NumPrototipo = testprototipo.NumPrototipo
+            };
+        }
+
+        public static Data.Modelli.TestPrototipo ToEntity(this TestPrototipo testprototipo)
+        {
+            return new Data.Modelli.TestPrototipo
+            {
+                CodiceProgetto = testprototipo.CodiceProgetto,
+                CodiceTest = testprototipo.CodiceTest,
+                NumPrototipo = testprototipo.NumPrototipo
+            };
+        }
+
+        public static List<TestPrototipo> ToDto(this List<Data.Modelli.TestPrototipo> testprototipo)
+        {
+            List<TestPrototipo> tp= new();
+            foreach (var testp in testprototipo)
+            {
+                tp.Add(testp.ToDto());
+            }
+            return tp;
+        }
     }
 }

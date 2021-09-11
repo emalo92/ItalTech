@@ -169,7 +169,7 @@ namespace Infrastruttura.Dal
                     case TipoCrud.delete: context.TestProdottoAssemblatos.Remove(testProdAss.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
-                throw new Exception(); ;
+                throw new Exception();
             }
             catch (Exception ex)
             {
@@ -177,8 +177,57 @@ namespace Infrastruttura.Dal
             }
 
         }
-        
 
+        public async Task<bool> SaveTestProdottoCase(int codiceTest, int codiceProdottoCase, TipoCrud tipoCrud)
+        {
+            try
+            {
+                var testProdCase = new TestProdottoCase
+                {
+                    CodiceTest = codiceTest,
+                    CodiceProdottoCase = codiceProdottoCase
+                     
+                };
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.TestProdottoCases.AddAsync(testProdCase.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.TestProdottoCases.Update(testProdCase.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.TestProdottoCases.Remove(testProdCase.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il salvataggio in DB");
+            }
+        }
+
+        public async Task<bool> SaveTestPrototipo(int codiceTest, int codiceProgetto, int numPrototipo, TipoCrud tipoCrud)
+        {
+            try
+            {
+                var testProtot = new TestPrototipo
+                {
+                    CodiceTest = codiceTest,
+                    CodiceProgetto = codiceProgetto,
+                    NumPrototipo = numPrototipo
+                };
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.TestPrototipos.AddAsync(testProtot.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.TestPrototipos.Update(testProtot.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.delete: context.TestPrototipos.Remove(testProtot.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); 
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il salvataggio in DB");
+            }
+        }
     }
 
 }

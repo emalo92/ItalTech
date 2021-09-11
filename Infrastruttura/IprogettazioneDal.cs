@@ -36,7 +36,7 @@ namespace Infrastruttura
         Task<List<Cliente>> GetAllClienti();
         Task<List<Cliente>> GetAllClienti(InputRicercaClienti input);
         Task<bool> SaveFornitore(Fornitore fornitore,TipoCrud tipoCrud);
-        Task<bool> SaveForniture(Fornitura fornitura, TipoCrud tipoCrud);
+        Task<bool> SaveFornitura(Fornitura fornitura, TipoCrud tipoCrud);
         Task<bool> SaveCliente(Cliente cliente, TipoCrud tipoCrud);
         Task<bool> SaveComponente(Componente componente, TipoCrud tipoCrud);
         Task<bool> SaveImpiegato(Impiegato impiegato, TipoCrud tipoCrud);

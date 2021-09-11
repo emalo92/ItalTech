@@ -19,6 +19,8 @@ namespace Infrastruttura
 
         Task<bool> SaveTest(Test test, TipoCrud tipoCrud);
         Task<bool> SaveTestProdottoAssemblato(int codiceTest, int codiceProdottoAssemblato, TipoCrud tipoCrud);
+        Task<bool> SaveTestProdottoCase(int codiceTest, int codiceProdottoCase, TipoCrud tipoCrud);
+        Task<bool> SaveTestPrototipo(int codiceTest, int codiceProgetto,int numPrototipo, TipoCrud tipoCrud);
 
     }
 }

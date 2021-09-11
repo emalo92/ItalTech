@@ -15,6 +15,7 @@ namespace InfrastrutturaTest
     public class ProgettazioneDalTest
     {
         private IProgettazioneDal _sut;
+        private ITestingDal _sutTest;
         private static string connectionString = "data source=.; initial catalog = ItalTech; persist security info=True; Integrated Security = SSPI;";
         private IHost _host = null;
         private ItalTechDbContext context;
@@ -30,6 +31,9 @@ namespace InfrastrutturaTest
 
                     services.AddScoped<IProgettazioneDal>(s =>
                         new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
+
+                    services.AddScoped<ITestingDal>(s =>
+                       new TestingDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
 
                 });
 
@@ -54,11 +58,12 @@ namespace InfrastrutturaTest
         {
             context = _host.Services.CreateScope().ServiceProvider.GetRequiredService<ItalTechDbContext>();
             _sut = _host.Services.GetService<IProgettazioneDal>();
+            _sutTest = _host.Services.GetService<ITestingDal>();
         }
         //data mese giorno anno
         [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
+        [TestCase("Cnsncl91r18g317k", "Nicola", "Cunsolo", "10/18/1991", "Cosenza", "Via Giulio Cesare", "87036")]
         //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]//mettete i vostri dati
-        //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
         public async Task ClientePopulationAsync(string codiceFiscale, string nome, string cognome, DateTime dataDiNascita, string citta, string indirizzo, string cap)
         {
             var cliente = new Cliente
@@ -77,7 +82,7 @@ namespace InfrastrutturaTest
         }
 
         [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000001")]
-        //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000002")]//mettete i vostri dati
+        [TestCase("Cnsncl91r18g317k", "Nicola", "Cunsolo", "10/18/1991", "Cosenza", "Via Giulio Cesare", "87036", "0000000002")]
         //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000003")]
         public async Task ImpiegatoPopulationAsync(string codiceFiscale, string nome, string cognome, DateTime dataDiNascita, string citta, string indirizzo, string cap, string aziendaId)
         {
@@ -113,6 +118,42 @@ namespace InfrastrutturaTest
                 Email = email
             };
             var result = await _sut.SaveFornitore(fornitore, TipoCrud.insert);
+            Assert.IsTrue(result);
+        }
+
+        //riempire campi
+        public async Task ForniturePopulationAsync(string codice, string nome,string descrizione, decimal costoAlKg, decimal costoPerPezzo, string PartitaIva, int quantita, string settoredeposito, string tipo)
+        {
+            var fornitura = new Fornitura
+            {
+                   Codice = codice,
+                   Nome = nome,
+                   Descrizione = descrizione,
+                   CostoAlKg = costoAlKg,
+                   CostoPerPezzo = costoPerPezzo,
+                   PartitaIva = PartitaIva,
+                   Quantita = quantita,
+                   SettoreDeposito = settoredeposito,
+                   Tipo = tipo
+            };
+            var result = await _sut.SaveFornitura(fornitura, TipoCrud.insert);
+            Assert.IsTrue(result);
+        }
+        //riempire campi
+        public async Task TestPopulationAsync(int codice, string descrizione, string valorediRiferimento, int quantitaEseguiti, int quantitaPassati, int quantitaFalliti, string operatore, string tipo)
+        {
+            var test = new Test
+            {
+                Codice = codice,
+                Descrizione = descrizione,
+                ValoriDiRiferimento = valorediRiferimento,
+                QuantitaEseguiti = quantitaEseguiti,
+                QuantitaFalliti = quantitaFalliti,
+                QuantitaPassati = quantitaPassati,
+                Operatore = operatore,
+                Tipo = tipo
+            };
+            var result = await _sutTest.SaveTest(test, TipoCrud.insert);
             Assert.IsTrue(result);
         }
     }
