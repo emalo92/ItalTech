@@ -663,7 +663,7 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new Exception("Errore durante il salvataggio in DB");
             }
 
         }
@@ -681,7 +681,7 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new Exception("Errore durante il salvataggio in DB");
             }
 
         }
@@ -699,7 +699,7 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new Exception("Errore durante il salvataggio in DB");
             }
 
         }
@@ -717,7 +717,7 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new Exception("Errore durante il salvataggio in DB");
             }
 
         }
@@ -735,7 +735,7 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new Exception("Errore durante il salvataggio in DB");
             }
 
         }
@@ -753,9 +753,9 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
-            }
+                throw new Exception("Errore durante il salvataggio in DB");
 
+            }
         }
         public async Task<bool> SaveOrdini(Ordini ordini, TipoCrud tipoCrud)
         {
@@ -771,7 +771,31 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new Exception("Errore durante il salvataggio in DB");
+            }
+
+        }
+        public async Task<bool> SaveOrdineForniture(int codiceOrdine, string codiceForniture, int quantita, TipoCrud tipoCrud)
+        {
+            try
+            {
+                var ord = new OrdineForniture
+                {
+                    CodiceOrdine = codiceOrdine,
+                    CodiceFornitura = codiceForniture,
+                    Quantità = quantita
+                };
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.OrdineFornitures.AddAsync(ord.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.OrdineFornitures.Update(ord.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il salvataggio in DB");
             }
 
         }
@@ -789,9 +813,64 @@ namespace Infrastruttura.Dal
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new Exception("Errore durante il salvataggio in DB");
             }
 
         }
+        public async Task<bool> SaveProdottoCase(ProdottoCase prodottocase, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.ProdottoAssemblatos.AddAsync(prodottocase.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.ProdottoAssemblatos.Update(prodottocase.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il salvataggio in DB");
+            }
+
+        }
+        public async Task<bool> SavePrototipo(Prototipo prototipo, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Prototipos.AddAsync(prototipo.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Prototipos.Update(prototipo.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il salvataggio in DB");
+            }
+
+        }
+        public async Task<bool> SaveRichiestaProgetto(RichiestaProgetto richiestaProgetto, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.RichiestaProgettos.AddAsync(richiestaProgetto.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.RichiestaProgettos.Update(richiestaProgetto.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il salvataggio in DB");
+            }
+
+        }
+        
     }
 }

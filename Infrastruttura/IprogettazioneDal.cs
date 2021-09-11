@@ -41,9 +41,10 @@ namespace Infrastruttura
         Task<bool> SaveComponente(Componente componente, TipoCrud tipoCrud);
         Task<bool> SaveImpiegato(Impiegato impiegato, TipoCrud tipoCrud);
         Task<bool> SaveOrdini(Ordini ordini, TipoCrud tipoCrud);
+        Task<bool> SaveOrdineFornuture(Ordini ordini, TipoCrud tipoCrud);
         Task<bool> SaveProdottoAssemblato(ProdottoAssemblato prodottoAssemblato, TipoCrud tipoCrud);
-
-
-
+        Task<bool> SaveProdottoCase(ProdottoCase prodottocase, TipoCrud tipoCrud);
+        Task<bool> SavePrototipo(Prototipo prototipo, TipoCrud tipoCrud);
+        Task<bool> SaveRichiestaProgetto(RichiestaProgetto richiestaProgetto, TipoCrud tipoCrud);
     }
 }

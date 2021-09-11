@@ -444,12 +444,13 @@ namespace Infrastruttura.Mapper
         }
         public static List<Cliente> ToDto(this List<Data.Modelli.Cliente> cliente)
         {
-            List<Cliente> client = new();
+            List<Cliente> clien = new();
             foreach (var cli in cliente)
             {
-                client.Add(cli.ToDto());
+                clien.Add(cli.ToDto());
             }
-            return client;
+            return clien;
         }
+
     }
 }
