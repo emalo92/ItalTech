@@ -4,7 +4,7 @@
 <div class="row mb-3">
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="Codice"></label>
-        <input id="idInputCodice" type="text" class="form-control" asp-for="Codice" readonly />
+        <input title="Il codice viene inserito automaticamente" id="idInputCodice" type="text" class="form-control" asp-for="Codice" readonly />
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="DataInizio"></label>
@@ -21,8 +21,8 @@
         <input id="idInputNomeProgetto" type="text" class="form-control" asp-for="NomeProgetto" />
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-        <label asp-for="Cliente"></label>
-        <input id="idInputCliente" type="text" class="form-control" asp-for="Cliente" />
+        <label asp-for="CodiceAnalisiMercato"></label>
+        <input id="idInputCodiceAnalisiMercato" type="text" class="form-control" asp-for="CodiceAnalisiMercato" />
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="Tipo"></label>
@@ -34,10 +34,6 @@
 </div>
 <div class="row mb-3">
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-        <label asp-for="CodiceAnalisiMercato"></label>
-        <input id="idInputCodiceAnalisiMercato" type="text" class="form-control" asp-for="CodiceAnalisiMercato" />
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="CostoPrevisto"></label>
         <input id="idInputCostoPrevisto" type="text" class="form-control" asp-for="CostoPrevisto" />
     </div>
@@ -45,11 +41,15 @@
         <label asp-for="CostoFinale"></label>
         <input id="idInputCostoFinale" type="text" class="form-control" asp-for="CostoFinale" />
     </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Descrizione"></label>
+        <textarea class="form-control" id="idInputDescrizione" rows="3" asp-for="Descrizione"></textarea>
+    </div>
 </div>
 <div class="row mb-3">
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-        <div class="input-group mt-5">
-            <label asp-for="ProjectManager" class="mt-1 mr-2" ></label>
+        <div class="input-group mt-3">
+            <label asp-for="ProjectManager" class="mt-1 mr-2"></label>
             <input asp-for="ProjectManager" id="idInputProjectManager" readonly class="form-control" />
             <div id="divAllImpiegati" class="input-group-append">
                 <button id="buttonViewSelezioneImpiegati" type="button" title="Fornisce la lista degli impiegati esistenti" class="btn btn-primary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllImpiegati('/Progettazione/Progettazione/GetAllImpiegatiModal')">
@@ -59,14 +59,31 @@
         </div>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-        <label asp-for="Descrizione"></label>
-        <textarea class="form-control" id="idInputDescrizione" rows="3" asp-for="Descrizione"></textarea>
+        <div class="input-group mt-3">
+            <label asp-for="Cliente" class="mt-1 mr-2"></label>
+            <input asp-for="Cliente" id="idInputCliente" readonly class="form-control" />
+            <div id="divAllCliente" class="input-group-append">
+                <button id="buttonViewSelezioneCliente" type="button" title="Fornisce la lista dei clienti esistenti" class="btn btn-primary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllClienti('/Progettazione/Progettazione/GetAllClientiModal')">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
+
+<partial name="_FormModificaComponenti">
 
 <div id="Div_DynamicViewAllImpiegati" class="positionFixed setDarkBackground" style="display:none">
     <div class="finestraPopup">
         <div id="Div_DynamicView_ContainerAllImpiegati">
+
+        </div>
+    </div>
+</div>
+
+<div id="Div_DynamicViewAllClienti" class="positionFixed setDarkBackground" style="display:none">
+    <div class="finestraPopup">
+        <div id="Div_DynamicView_ContainerAllClienti">
 
         </div>
     </div>
@@ -95,6 +112,30 @@
             return false;
         }
         $("#idInputProjectManager").val(valuesImpiegati.AziendaID);
+    }
+
+    var callbackGenericTableClienti;
+    function showDynamicViewAllClienti(url) {
+        checkOpenGenericTable = "Clienti";
+        $("#Div_DynamicView_ContainerAllClienti").load(url);
+        $("#Div_DynamicViewAllClienti").show();
+        dispatchOpenPopupCustomEvent('ViewAllClientiModal');
+        if (callbackGenericTable !== undefined) {
+            document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllClienti), false);
+        }
+    }
+
+    function call_setContainerGenericTableClienti() {
+        setContainerGenericTable('Div_DynamicViewAllClienti', 'Div_DynamicView_ContainerAllClienti', 'ViewAllClientiModal', callbackGetValueSelectedClienti);
+    }
+    function callbackGetValueSelectedClienti(selectedValuesClienti) {
+        setSelectedValuesClienti(selectedValuesClienti);
+    }
+    function setSelectedValuesClienti(valuesClienti) {
+        if (valuesClienti == null) {
+            return false;
+        }
+        $("#idInputCliente").val(valuesClienti.CodiceFiscale);
     }
 
 </script>
