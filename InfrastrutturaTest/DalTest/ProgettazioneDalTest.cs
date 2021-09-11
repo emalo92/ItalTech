@@ -1,11 +1,14 @@
 using Infrastruttura;
 using Infrastruttura.Dal;
 using Infrastruttura.Data.Context;
+using Infrastruttura.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
+using System;
+using System.Threading.Tasks;
 
 namespace InfrastrutturaTest
 {
@@ -26,14 +29,14 @@ namespace InfrastrutturaTest
                     services.AddScoped<IMemoryCache, MemoryCache>();
 
                     services.AddScoped<IProgettazioneDal>(s =>
-                        new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>(),connectionString));
-                                          
+                        new ProgettazioneDal(s.GetRequiredService<ItalTechDbContext>(), connectionString));
+
                 });
 
         [OneTimeSetUp]
         public void Init()
         {
-        
+            _host = CreateHostBuilder().Build();
         }
 
         [OneTimeTearDown]
@@ -52,11 +55,65 @@ namespace InfrastrutturaTest
             context = _host.Services.CreateScope().ServiceProvider.GetRequiredService<ItalTechDbContext>();
             _sut = _host.Services.GetService<IProgettazioneDal>();
         }
-
-        [Test]
-        public void Test1()
+        //data mese giorno anno
+        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
+        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]//mettete i vostri dati
+        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
+        public async Task ClientePopulationAsync(string codiceFiscale, string nome, string cognome, DateTime dataDiNascita, string citta, string indirizzo, string cap)
         {
-            Assert.Pass();
+            var cliente = new Cliente
+            {
+                CodFiscale = codiceFiscale.ToUpper(),
+                Nome = nome,
+                Cognome = cognome,
+                DataDiNascita = dataDiNascita,
+                Citta = citta,
+                Indirizzo = indirizzo,
+                Cap = cap
+            };
+            var a = cliente;
+            //var result = await _sut.SaveCliente();
+            //Assert.IsTrue(result);
+        }
+
+        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000001")]
+        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000002")]//mettete i vostri dati
+        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000003")]
+        public async Task ImpiegatoPopulationAsync(string codiceFiscale, string nome, string cognome, DateTime dataDiNascita, string citta, string indirizzo, string cap, string aziendaId)
+        {
+            var impiegato = new Impiegato
+            {
+                CodFiscale = codiceFiscale.ToUpper(),
+                Nome = nome,
+                Cognome = cognome,
+                DataDiNascita = dataDiNascita,
+                Citta = citta,
+                Indirizzo = indirizzo,
+                Cap = cap,
+                AziendaId = aziendaId
+            };
+            var result = await _sut.SaveImpiegato(impiegato, TipoCrud.insert);
+            Assert.IsTrue(result);
+        }
+
+        [TestCase("02749384123", "Intel", "Intel Corporation", "Cosenza", "viale parco", "87100", "0984123456", "intelcosenza@intel.com")]
+        [TestCase("02749384124", "Nvidia", "NvidiaCorporation", "Cosenza", "viale cosmai", "87100", "0984123457", "nvidiacosenza@nvidia.com")]
+        [TestCase("02749384125", "Pvc", "Pvc&co", "Cosenza", "viale crati", "87100", "0984123458", "pvccosenza@gmail.com")]
+        public async Task FornitorePopulationAsync(string partitaIva, string nome, string ragioneSociale, string citta, string indirizzo, string cap, string numTelefono, string email)
+        {
+            var fornitore = new Fornitore
+            {
+                PartitaIva = partitaIva,
+                Nome = nome,
+                RagioneSociale = ragioneSociale,
+                Città = citta,
+                Indirizzo = indirizzo,
+                Cap = cap,
+                NumTelefono = numTelefono,
+                Email = email
+            };
+            //var result = await _sut.SaveFornitore();
+            //Assert.IsTrue(result);
         }
     }
 }
