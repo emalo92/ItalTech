@@ -57,8 +57,8 @@ namespace InfrastrutturaTest
         }
         //data mese giorno anno
         [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
-        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]//mettete i vostri dati
-        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
+        //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]//mettete i vostri dati
+        //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
         public async Task ClientePopulationAsync(string codiceFiscale, string nome, string cognome, DateTime dataDiNascita, string citta, string indirizzo, string cap)
         {
             var cliente = new Cliente
@@ -72,13 +72,13 @@ namespace InfrastrutturaTest
                 Cap = cap
             };
             var a = cliente;
-            //var result = await _sut.SaveCliente();
-            //Assert.IsTrue(result);
+            var result = await _sut.SaveCliente(cliente, TipoCrud.insert);
+            Assert.IsTrue(result);
         }
 
         [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000001")]
-        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000002")]//mettete i vostri dati
-        [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000003")]
+        //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000002")]//mettete i vostri dati
+        //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000003")]
         public async Task ImpiegatoPopulationAsync(string codiceFiscale, string nome, string cognome, DateTime dataDiNascita, string citta, string indirizzo, string cap, string aziendaId)
         {
             var impiegato = new Impiegato
@@ -112,8 +112,8 @@ namespace InfrastrutturaTest
                 NumTelefono = numTelefono,
                 Email = email
             };
-            //var result = await _sut.SaveFornitore();
-            //Assert.IsTrue(result);
+            var result = await _sut.SaveFornitore(fornitore, TipoCrud.insert);
+            Assert.IsTrue(result);
         }
     }
 }
