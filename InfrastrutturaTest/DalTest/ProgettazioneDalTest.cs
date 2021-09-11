@@ -60,10 +60,10 @@ namespace InfrastrutturaTest
             _sut = _host.Services.GetService<IProgettazioneDal>();
             _sutTest = _host.Services.GetService<ITestingDal>();
         }
-        //data mese giorno anno
+        
         [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
         [TestCase("Cnsncl91r18g317k", "Nicola", "Cunsolo", "10/18/1991", "Cosenza", "Via Giulio Cesare", "87036")]
-        //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]//mettete i vostri dati
+        [TestCase("mlnlgu91p05c002l", "Luigi", "Maiolino", "09/05/1991", "Cassano all'Ionio", "Via Pietro Mancini", "87040")]
         public async Task ClientePopulationAsync(string codiceFiscale, string nome, string cognome, DateTime dataDiNascita, string citta, string indirizzo, string cap)
         {
             var cliente = new Cliente
@@ -83,7 +83,7 @@ namespace InfrastrutturaTest
 
         [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000001")]
         [TestCase("Cnsncl91r18g317k", "Nicola", "Cunsolo", "10/18/1991", "Cosenza", "Via Giulio Cesare", "87036", "0000000002")]
-        //[TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100", "0000000003")]
+        [TestCase("mlnlgu91p05c002l", "Luigi", "Maiolino", "09/05/1991", "Cassano all'Ionio", "Via Pietro Mancini", "87040", "0000000003")]
         public async Task ImpiegatoPopulationAsync(string codiceFiscale, string nome, string cognome, DateTime dataDiNascita, string citta, string indirizzo, string cap, string aziendaId)
         {
             var impiegato = new Impiegato

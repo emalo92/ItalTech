@@ -3,32 +3,14 @@
 
 <h3 class="text-center text-secondary">Inserisci nuovo Test</h3>
 
+
 <section class="bg-light">
-    <div class="container">
+    <div id="divFormTest" class="container">
         <form id="idFormTest" class="form-group" asp-action="CreaTest" method="post">
-            <div class="row mb-3">
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="Codice">Codice Test</label>
-                    <input id="idInputCodiceTest" type="text" class="form-control" asp-for="Codice" readonly />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="Tipo">Nome Test</label>
-                    <input id="idInputNomeTest" type="text" class="form-control" asp-for="Tipo" />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="Operatore">Operatore</label>
-                    <input id="idInputOperatore" type="text" class="form-control" asp-for="Operatore" />
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="Descrizione"></label>
-                    <textarea class="form-control" id="idInputDescrizione" rows="3" width="100%" asp-for="Descrizione"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 text-right">
-                    <input class="btn btn-info" type="button" value="Salva" onclick="salvaTest()" />
+            <partial name="_FormInputTest" model="@Model" />
+            <div class="row p-2">
+                <div class="col-lg-10 col-md-10 col-sm-12 text-right">
+                    <input class="btn btn-info" type="submit" value="Salva" onclick="salvaTest()" />
                 </div>
             </div>
         </form>

@@ -1,0 +1,29 @@
+﻿@using ItalTech.Areas.Testing.Models
+@model Test
+
+<section class="bg-light">
+    <div class="container">
+        <form id="idFormTest" class="form-group" asp-action="CreaTest" method="post">
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                    <label asp-for="Codice">Codice Test</label>
+                    <input title="Codice inserito automaticamente" id="idInputCodiceTest" type="text" class="form-control" asp-for="Codice" readonly />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                    <label asp-for="Tipo">Nome Test</label>
+                    <input id="idInputNomeTest" type="text" class="form-control" asp-for="Tipo" />
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                    <label asp-for="Operatore">Operatore</label>
+                    <input id="idInputOperatore" type="text" class="form-control" asp-for="Operatore" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                    <label asp-for="Descrizione"></label>
+                    <textarea class="form-control" id="idInputDescrizione" rows="3" width="100%" asp-for="Descrizione"></textarea>
+                </div>
+            </div>
+         </form>
+    </div>
+</section>
