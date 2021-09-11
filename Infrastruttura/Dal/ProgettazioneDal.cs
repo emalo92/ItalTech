@@ -667,5 +667,131 @@ namespace Infrastruttura.Dal
             }
 
         }
+        public async Task<bool> SaveFornitore(Fornitore fornitore, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Fornitores.AddAsync(fornitore.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Fornitores.Update(fornitore.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+        public async Task<bool> SaveForniture(Fornitura fornitura, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Fornituras.AddAsync(fornitura.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Fornituras.Update(fornitura.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+        public async Task<bool> SaveCliente(Cliente cliente, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Clientes.AddAsync(cliente.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Clientes.Update(cliente.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+        public async Task<bool> SaveComponente(Componente componente, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Componentes.AddAsync(componente.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Componentes.Update(componente.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+        public async Task<bool> SaveImpiegato(Impiegato impiegato, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Impiegatos.AddAsync(impiegato.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Impiegatos.Update(impiegato.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+        public async Task<bool> SaveOrdini(Ordini ordini, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Ordinis.AddAsync(ordini.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.Ordinis.Update(ordini.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+        public async Task<bool> SaveProdottoAssemblato(ProdottoAssemblato prodottoAssemblato, TipoCrud tipoCrud)
+        {
+            try
+            {
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.ProdottoAssemblatos.AddAsync(prodottoAssemblato.ToEntity()); return await context.SaveChangesAsync() == 1;
+                    case TipoCrud.update: context.ProdottoAssemblatos.Update(prodottoAssemblato.ToEntity()); return await context.SaveChangesAsync() == 1;
+
+                }
+                throw new Exception(); ;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+
+        }
     }
 }

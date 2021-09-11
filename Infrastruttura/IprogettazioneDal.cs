@@ -35,6 +35,14 @@ namespace Infrastruttura
         Task<List<Prototipo>> GetAllPrototipi(InputRicercaPrototipi input);
         Task<List<Cliente>> GetAllClienti();
         Task<List<Cliente>> GetAllClienti(InputRicercaClienti input);
+        Task<bool> SaveFornitore(Fornitore fornitore,TipoCrud tipoCrud);
+        Task<bool> SaveForniture(Fornitura fornitura, TipoCrud tipoCrud);
+        Task<bool> SaveCliente(Cliente cliente, TipoCrud tipoCrud);
+        Task<bool> SaveComponente(Componente componente, TipoCrud tipoCrud);
+        Task<bool> SaveImpiegato(Impiegato impiegato, TipoCrud tipoCrud);
+        Task<bool> SaveOrdini(Ordini ordini, TipoCrud tipoCrud);
+        Task<bool> SaveProdottoAssemblato(ProdottoAssemblato prodottoAssemblato, TipoCrud tipoCrud);
+
 
 
     }
