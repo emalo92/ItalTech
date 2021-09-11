@@ -754,7 +754,7 @@ namespace Infrastruttura.Dal
                     case TipoCrud.update: context.Impiegatos.Update(impiegato.ToEntity()); return await context.SaveChangesAsync() == 1;
 
                 }
-                throw new Exception(); ;
+                throw new Exception(); 
             }
             catch (Exception ex)
             {
