@@ -73,7 +73,15 @@ body {
 
 /* Css old site
 -------------------------------------------------- */
-
+/****Loader****/
+.positionFixed {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 500;
+    top: 0;
+    left: 0;
+}
 
 .pulsante {
     padding: .25rem .5rem;
@@ -94,7 +102,7 @@ body {
     }
 
 .setDarkBackground {
-    background-color: #fff;
+    background-color: #33333333;
 }
 
 .finestraPopup {

@@ -26,7 +26,10 @@
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="Tipo"></label>
-        <input id="idInputTipo" type="text" class="form-control" asp-for="Tipo" />
+        <select class="custom-select" asp-for="Tipo" id="idInputTipo">
+                    <option>Case</option>
+                    <option>Assemblato</option>
+        </select>
     </div>
 </div>
 <div class="row mb-3">
@@ -45,8 +48,15 @@
 </div>
 <div class="row mb-3">
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-        <label asp-for="ProjectManager"></label>
-        <input id="idInputProjectManager" type="text" class="form-control" asp-for="ProjectManager" />
+        <div class="input-group mt-5">
+            <label asp-for="ProjectManager" class="mt-1 mr-2" ></label>
+            <input asp-for="ProjectManager" id="idInputProjectManager" readonly class="form-control" />
+            <div id="divAllImpiegati" class="input-group-append">
+                <button id="buttonViewSelezioneImpiegati" type="button" title="Fornisce la lista degli impiegati esistenti" class="btn btn-primary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllImpiegati('/Progettazione/Progettazione/GetAllImpiegatiModal')">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+            </div>
+        </div>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
         <label asp-for="Descrizione"></label>
@@ -54,17 +64,37 @@
     </div>
 </div>
 
-<div id="Div_DynamicViewAllProgetti" class="positionFixed setDarkBackground" style="display:none">
+<div id="Div_DynamicViewAllImpiegati" class="positionFixed setDarkBackground" style="display:none">
     <div class="finestraPopup">
-        <div id="Div_DynamicView_ContainerAllProgetti">
+        <div id="Div_DynamicView_ContainerAllImpiegati">
 
         </div>
     </div>
 </div>
-<div id="Div_DynamicViewAllProgetti" class="positionFixed setDarkBackground" style="display:none">
-    <div class="finestraPopup">
-        <div id="Div_DynamicView_ContainerAllProgetti">
 
-        </div>
-    </div>
-</div>
+<script type="text/javascript">
+    var callbackGenericTableImpiegati;
+    function showDynamicViewAllImpiegati(url) {
+        checkOpenGenericTable = "Impiegati";
+        $("#Div_DynamicView_ContainerAllImpiegati").load(url);
+        $("#Div_DynamicViewAllImpiegati").show();
+        dispatchOpenPopupCustomEvent('ViewAllImpiegatiModal');
+        if (callbackGenericTable !== undefined) {
+            document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllImpiegati), false);
+        }
+    }
+
+    function call_setContainerGenericTableImpiegati() {
+        setContainerGenericTable('Div_DynamicViewAllImpiegati', 'Div_DynamicView_ContainerAllImpiegati', 'ViewAllImpiegatiModal', callbackGetValueSelectedImpiegati);
+    }
+    function callbackGetValueSelectedImpiegati(selectedValuesImpiegati) {
+        setSelectedValuesImpiegati(selectedValuesImpiegati);
+    }
+    function setSelectedValuesImpiegati(valuesImpiegati) {
+        if (valuesImpiegati == null) {
+            return false;
+        }
+        $("#idInputProjectManager").val(valuesImpiegati.AziendaID);
+    }
+
+</script>

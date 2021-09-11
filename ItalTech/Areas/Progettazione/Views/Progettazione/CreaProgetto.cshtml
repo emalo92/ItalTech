@@ -20,4 +20,16 @@
     function salva() {
         document.getElementById("idFormProgetto").submit();
     }
+
+    //serve a disinguere le chiamate in callback da genericTable
+    var checkOpenGenericTable = "";
+
+    document.addEventListener('openPopup_CustomEvent', (event) => {
+        if (event.Sender === "GenericTable") {
+            if (checkOpenGenericTable == "Impiegati") {
+                call_setContainerGenericTableImpiegati();
+            }
+        }
+    }, false)
+
 </script>

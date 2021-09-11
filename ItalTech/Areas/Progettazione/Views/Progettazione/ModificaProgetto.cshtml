@@ -48,14 +48,31 @@
     </div>
 </div>
 
+
+
 <script>
 
     function salva() {
         document.getElementById("idFormModificaProgetto").submit();
     }
 
+    //serve a disinguere le chiamate in callback da genericTable
+    var checkOpenGenericTable;
+
+    document.addEventListener('openPopup_CustomEvent', (event) => {
+        if (event.Sender === "GenericTable") {
+            if (checkOpenGenericTable == "Impiegati") {
+                call_setContainerGenericTableImpiegati();
+            }
+            if (checkOpenGenericTable == "Progetti") {
+                call_setContainerGenericTableProgetti();
+            }
+        }
+    }, false)
+
     var callbackGenericTable;  //viene definita in GenericTable
     function showDynamicViewAllProgetti(url) {
+        checkOpenGenericTable = "Progetti";
         $("#Div_DynamicView_ContainerAllProgetti").load(url);        
         $("#Div_DynamicViewAllProgetti").show();
         dispatchOpenPopupCustomEvent('ViewAllProgettiModal');        
@@ -64,11 +81,6 @@
             document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllProgetti), false);
         }
     }
-    document.addEventListener('openPopup_CustomEvent', (event) => {
-        if (event.Sender === "GenericTable") {            
-            call_setContainerGenericTableProgetti();
-        }
-    }, false)
 
     function call_setContainerGenericTableProgetti() {
         setContainerGenericTable('Div_DynamicViewAllProgetti', 'Div_DynamicView_ContainerAllProgetti', 'ViewAllProgettiModal', callbackGetValueSelectedProgetti);
@@ -93,7 +105,7 @@
         $("#idInputCliente").val(values.Cliente);
         $("#idInputProjectManager").val(values.ProjectManager);
         $('#divPanelCheck').css('display', 'none');
-        $('#divFormProgetto').css('display', 'flex');
+        $('#divFormProgetto').css('display', 'block');
     }
 
     function checkProgettoExists() {
