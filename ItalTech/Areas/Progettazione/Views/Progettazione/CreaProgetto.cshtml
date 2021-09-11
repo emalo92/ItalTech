@@ -18,6 +18,22 @@
 
 <script type="text/javascript">
     function salva() {
+
+        var nomeProgetto = $("#idInputNome").val();
+        var data = $("#idInputDataInizio").val();
+        var projectManager = $("#idInputProjectManager").val();
+        if (nomeProgetto == null || nomeProgetto == "" || nomeProgetto == undefined) {
+            myCustomModalAlertShow("Dati incompleti", "Il nome del progetto è obbligatorio");
+            return;
+        }
+        if (data == null || data == "" || data == undefined) {
+            myCustomModalAlertShow("Dati incompleti", "La data del progetto è obbligatoria");
+            return;
+        }
+        if (projectManager == null || projectManager == "" || projectManager == undefined) {
+            myCustomModalAlertShow("Dati incompleti", "Il project manager è obbligatorio");
+            return;
+        }
         document.getElementById("idFormProgetto").submit();
     }
 
@@ -28,6 +44,9 @@
         if (event.Sender === "GenericTable") {
             if (checkOpenGenericTable == "Impiegati") {
                 call_setContainerGenericTableImpiegati();
+            }
+            if (checkOpenGenericTable == "Clienti") {
+                call_setContainerGenericTableClienti();
             }
         }
     }, false)

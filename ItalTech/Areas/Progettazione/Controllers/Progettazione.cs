@@ -201,6 +201,55 @@ namespace ItalTech.Areas.Progettazione.Controllers
             }
         }
 
+        public async Task<IActionResult> GetAllClientiModalAsync()
+        {
+            var genericTable = new Table()
+            {
+                Title = "Elenco Clienti",
+                ColumnNames = new List<string> { "Codice Fiscale", "Nome", "Cognome"},
+                Elements = new List<List<object>>()
+            };
+            var responseFailed = new Response
+            {
+                IsSucces = false,
+                Message = "Si è verificato un errore durante il recupero dei clienti",
+            };
+            try
+            {
+                var result = await _progettazioneDal.GetAllClienti();
+
+                if (result == null)
+                {
+                    ViewMessage.ShowLocal(this, responseFailed);
+                    return PartialView("_GenericTable", genericTable);
+                }
+                if (result.Count == 0)
+                {
+                    responseFailed.Message = "Non ci sono clienti";
+                    ViewMessage.ShowLocal(this, responseFailed);
+                    return PartialView("_GenericTable", genericTable);
+                }
+                for (var i = 0; i < result.Count; ++i)
+                {
+                    genericTable.Elements.Add(new List<object>());
+                    genericTable.Elements[i].Add(result[i].CodFiscale);
+                    genericTable.Elements[i].Add(result[i].Nome);
+                    genericTable.Elements[i].Add(result[i].Cognome);
+                }
+
+                //ViewBag.SizeModal = "modal-xl";
+                return PartialView("_GenericTable", genericTable);
+
+            }
+            catch (Exception ex)
+            {
+                responseFailed.Message = ex.Message;
+                genericTable.Elements = new List<List<object>>();
+                ViewMessage.ShowLocal(this, responseFailed);
+                return PartialView("_GenericTable", genericTable);
+            }
+        }
+
         //public async Task<IActionResult> GetAllComponenti ()
         //{
 
@@ -268,7 +317,33 @@ namespace ItalTech.Areas.Progettazione.Controllers
                     IsSucces = result,
                     Message = result ? "Progetto salvato correttamente" : "Impossibile modificare il progetto"
                 };
-                ViewMessage.ShowLocal(this, response);
+                ViewMessage.Show(this, response);
+                return View(progetto);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                ViewMessage.Show(this, response);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminaProgetto(Progetto progetto)
+        {
+            try
+            {
+                var result = await _progettazioneDal.SaveProgetto(progetto.ToDto(), TipoCrud.delete.ToDto());
+                var response = new Response
+                {
+                    IsSucces = result,
+                    Message = result ? "Progetto eliminato correttamente" : "Impossibile eliminare il progetto"
+                };
+                ViewMessage.Show(this, response);
                 return View(progetto);
             }
             catch (Exception ex)

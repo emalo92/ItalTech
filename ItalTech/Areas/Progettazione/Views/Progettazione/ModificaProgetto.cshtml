@@ -56,6 +56,12 @@
         document.getElementById("idFormModificaProgetto").submit();
     }
 
+    function elimina() {
+        document.getElementById("idFormModificaProgetto").setAttribute("action", "EliminaProgetto");
+        document.getElementById("idFormModificaProgetto").submit();
+        document.getElementById("idFormModificaProgetto").setAttribute("action", "ModificaProgetto")
+    }
+
     //serve a disinguere le chiamate in callback da genericTable
     var checkOpenGenericTable;
 
@@ -66,6 +72,9 @@
             }
             if (checkOpenGenericTable == "Progetti") {
                 call_setContainerGenericTableProgetti();
+            }
+            if (checkOpenGenericTable == "Clienti") {
+                call_setContainerGenericTableClienti();
             }
         }
     }, false)
