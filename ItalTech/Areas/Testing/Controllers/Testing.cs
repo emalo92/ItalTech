@@ -32,9 +32,16 @@ namespace ItalTech.Areas.Testing.Controllers
         {
             return View();
         }
-
+        public IActionResult ListaTest()
+        {
+            return View();
+        }
+        public IActionResult ModificaTest()
+        {
+            return View();
+        }
         [HttpPost]
-        public async Task<IActionResult> CreaNuovoTest(Test test)
+        public async Task<IActionResult> CreaTest(Test test)
         {
             try
             {
