@@ -687,7 +687,7 @@ namespace Infrastruttura.Dal
             }
 
         }
-        public async Task<bool> SaveForniture(Fornitura fornitura, TipoCrud tipoCrud)
+        public async Task<bool> SaveFornitura(Fornitura fornitura, TipoCrud tipoCrud)
         {
             try
             {
