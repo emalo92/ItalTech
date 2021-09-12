@@ -147,6 +147,9 @@ namespace InfrastrutturaTest
         [TestCase("00011166557","test di resistenza al fuoco","26 min","1026","1000","26", "0000000002", "test resistenza fuoco")]
         [TestCase("00011166558", "test di caduta", "45 metri", "85", "48", "37", "0000000001", "test caduta libera")]
         [TestCase("00011166596", "test immersione", "15 min", "78", "8", "70", "0000000001", "test immersione")]
+        [TestCase("00011164576", "test freddo", "-180 gradi", "89", "89", "0", "0000000003", "test congelamento")]
+        [TestCase("00011166666", "test alta tensione", "2000 V", "100025", "900", "125", "0000000002", "test alta tensione")]
+
         public async Task TestPopulationAsync(int codice, string descrizione, string valorediRiferimento, int quantitaEseguiti, int quantitaPassati, int quantitaFalliti, string operatore, string tipo)
         {
             var test = new Test
