@@ -257,9 +257,9 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.CostoAlKg == input.CostoAlKg);
                 }
-                if (input.PartitaIva != null)
+                if (input.CodiceFornitore!= null)
                 {
-                    query = query.Where(x => x.PartitaIva == input.PartitaIva);
+                    query = query.Where(x => x.CodiceFornitore == input.CodiceFornitore);
                 }
                 if (input.Quantita != 0)
                 {

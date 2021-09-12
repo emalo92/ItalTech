@@ -60,7 +60,7 @@ namespace InfrastrutturaTest
             _sut = _host.Services.GetService<IProgettazioneDal>();
             _sutTest = _host.Services.GetService<ITestingDal>();
         }
-        
+
         [TestCase("Lngmnl92s12d086n", "Emanuele", "Longo", "11/12/1992", "Cosenza", "viale parco", "87100")]
         [TestCase("Cnsncl91r18g317k", "Nicola", "Cunsolo", "10/18/1991", "Cosenza", "Via Giulio Cesare", "87036")]
         [TestCase("mlnlgu91p05c002l", "Luigi", "Maiolino", "09/05/1991", "Cassano all'Ionio", "Via Pietro Mancini", "87040")]
@@ -121,7 +121,11 @@ namespace InfrastrutturaTest
             Assert.IsTrue(result);
         }
 
-        //riempire campi
+        [TestCase("02561348952", "RTX 3060 TI", "scheda grafica 8gb,1845Mhz,3x Displayport,HDMI,Trifrozrfan", null, 948.97, "02749384124", 20, "A", "Scheda Video")]
+        [TestCase("03485267941", "Core i7-9700K", "processore 3,6 GHz Scatola 12 MB Cache intelligente", null, 299.99, "02749384123", 75, "A", "Processore")]
+        [TestCase("03485267956", "Core i9-9900K", "processore Octa Core 3,6 GHz Scatola 16 MB Cache intelligente, Socket LGA1151", null, 344.33, "02749384123", 8, "A", "Processore")]
+        [TestCase("00586412351", "Plastica", "plastica ecologica riciclata ", 1000.00, null, "02749384125", 179, "B", "Plastica")]
+        [TestCase("00586412485", "Polipropilene", "Granuli di Polipropilene resistenti al fuoco V0 per apparecchiatura elettronica", 36.51, 0, "02749384125", 100, "B", "Granuli")]
         public async Task ForniturePopulationAsync(string codice, string nome,string descrizione, decimal costoAlKg, decimal costoPerPezzo, string PartitaIva, int quantita, string settoredeposito, string tipo)
         {
             var fornitura = new Fornitura
@@ -131,7 +135,7 @@ namespace InfrastrutturaTest
                    Descrizione = descrizione,
                    CostoAlKg = costoAlKg,
                    CostoPerPezzo = costoPerPezzo,
-                   PartitaIva = PartitaIva,
+                   CodiceFornitore = PartitaIva,
                    Quantita = quantita,
                    SettoreDeposito = settoredeposito,
                    Tipo = tipo
@@ -139,7 +143,10 @@ namespace InfrastrutturaTest
             var result = await _sut.SaveFornitura(fornitura, TipoCrud.insert);
             Assert.IsTrue(result);
         }
-        //riempire campi
+
+        [TestCase("00011166557","test di resistenza al fuoco","26 min","1026","1000","26", "0000000002", "test resistenza fuoco")]
+        [TestCase("00011166558", "test di caduta", "45 metri", "85", "48", "37", "0000000001", "test caduta libera")]
+        [TestCase("00011166596", "test immersione", "15 min", "78", "8", "70", "0000000001", "test immersione")]
         public async Task TestPopulationAsync(int codice, string descrizione, string valorediRiferimento, int quantitaEseguiti, int quantitaPassati, int quantitaFalliti, string operatore, string tipo)
         {
             var test = new Test

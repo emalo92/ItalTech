@@ -141,7 +141,7 @@ namespace Infrastruttura.Mapper
             {
                 Codice = fornitura.Codice,
                 Nome = fornitura.Nome,
-                PartitaIva = fornitura.PartitaIva,
+                CodiceFornitore = fornitura.CodiceFornitore,
                 CostoAlKg = fornitura.CostoAlKg,
                 Tipo = fornitura.Tipo,
                 SettoreDeposito = fornitura.SettoreDeposito,
@@ -157,7 +157,7 @@ namespace Infrastruttura.Mapper
             {
                 Codice = fornitura.Codice,
                 Nome = fornitura.Nome,
-                PartitaIva = fornitura.PartitaIva,
+                CodiceFornitore = fornitura.CodiceFornitore,
                 CostoAlKg = fornitura.CostoAlKg,
                 Tipo = fornitura.Tipo,
                 SettoreDeposito = fornitura.SettoreDeposito,

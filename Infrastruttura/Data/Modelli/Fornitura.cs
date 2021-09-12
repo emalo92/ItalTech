@@ -18,7 +18,7 @@ namespace Infrastruttura.Data.Modelli
         public string Descrizione { get; set; }
         public decimal? CostoPerPezzo { get; set; }
         public decimal? CostoAlKg { get; set; }
-        public string PartitaIva { get; set; }
+        public string CodiceFornitore { get; set; }
         public int Quantita { get; set; }
         public string SettoreDeposito { get; set; }
         public string Tipo { get; set; }
