@@ -16,12 +16,15 @@
     </div>
 </section>
 
+<partial name="_FormModificaComponenti" />
+
 <script type="text/javascript">
     function salva() {
 
-        var nomeProgetto = $("#idInputNome").val();
+        var nomeProgetto = $("#idInputNomeProgetto").val();
         var data = $("#idInputDataInizio").val();
         var projectManager = $("#idInputProjectManager").val();
+
         if (nomeProgetto == null || nomeProgetto == "" || nomeProgetto == undefined) {
             myCustomModalAlertShow("Dati incompleti", "Il nome del progetto è obbligatorio");
             return;
@@ -48,7 +51,10 @@
             if (checkOpenGenericTable == "Clienti") {
                 call_setContainerGenericTableClienti();
             }
-        }
+            if (checkOpenGenericTable == "Forniture") {
+                call_setContainerGenericTableForniture();
+            }
+        } 
     }, false)
 
 </script>

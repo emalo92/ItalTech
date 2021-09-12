@@ -11,5 +11,7 @@ namespace Infrastruttura.Models
         public string CodiceFornitura { get; set; }
         public int CodiceProgetto { get; set; }
         public int NumPezzi { get; set; }
+        public string Nome { get; set; }
+        public string Descrizione { get; set; }
     }
 }

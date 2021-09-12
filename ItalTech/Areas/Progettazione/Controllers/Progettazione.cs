@@ -250,10 +250,76 @@ namespace ItalTech.Areas.Progettazione.Controllers
             }
         }
 
-        //public async Task<IActionResult> GetAllComponenti ()
-        //{
+        public async Task<IActionResult> GetComponentiProgettoAsync(int codice)
+        { 
+            if (codice == 0)
+            {
+                return PartialView("_FormModificaComponenti");
+            }
 
-        //}
+            var responseFailed = new Response { IsSucces = false };
+            
+            var componenti = await _progettazioneDal.GetAllComponenti();
+
+            if (componenti.Count == 0)
+            {
+                responseFailed.Message = "Non ci sono componenti per il progetto selezionato";
+                ViewMessage.Show(this, responseFailed);
+                return PartialView("_FormModificaComponenti");
+            }
+
+            return PartialView("_FormModificaComponenti", componenti);
+        }
+
+        public async Task<IActionResult> GetAllFornitureModalAsync()
+        {
+            var genericTable = new Table()
+            {
+                Title = "Elenco Forniture",
+                ColumnNames = new List<string> { "Codice Fornitura", "Nome", "Descrizione", "Fornitore" },
+                Elements = new List<List<object>>()
+            };
+            var responseFailed = new Response
+            {
+                IsSucces = false,
+                Message = "Si è verificato un errore durante il recupero delle forniture",
+            };
+            try
+            {
+                var result = await _progettazioneDal.GetAllForniture();
+
+                if (result == null)
+                {
+                    ViewMessage.ShowLocal(this, responseFailed);
+                    return PartialView("_GenericTable", genericTable);
+                }
+                if (result.Count == 0)
+                {
+                    responseFailed.Message = "Non ci sono forniture";
+                    ViewMessage.ShowLocal(this, responseFailed);
+                    return PartialView("_GenericTable", genericTable);
+                }
+                for (var i = 0; i < result.Count; ++i)
+                {
+                    genericTable.Elements.Add(new List<object>());
+                    genericTable.Elements[i].Add(result[i].Codice);
+                    genericTable.Elements[i].Add(result[i].Nome);
+                    genericTable.Elements[i].Add(result[i].Descrizione);
+                    genericTable.Elements[i].Add(result[i].CodiceFornitore);
+                }
+
+                //ViewBag.SizeModal = "modal-xl";
+                return PartialView("_GenericTable", genericTable);
+
+            }
+            catch (Exception ex)
+            {
+                responseFailed.Message = ex.Message;
+                genericTable.Elements = new List<List<object>>();
+                ViewMessage.ShowLocal(this, responseFailed);
+                return PartialView("_GenericTable", genericTable);
+            }
+        }
 
         public IActionResult RichiesteProgetto()
         {
@@ -344,7 +410,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
                     Message = result ? "Progetto eliminato correttamente" : "Impossibile eliminare il progetto"
                 };
                 ViewMessage.Show(this, response);
-                return View(progetto);
+                return View("ModificaProgetto");
             }
             catch (Exception ex)
             {
@@ -354,7 +420,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
                     Message = ex.Message
                 };
                 ViewMessage.Show(this, response);
-                return View();
+                return View("ModificaProgetto");
             }
         }
     }
