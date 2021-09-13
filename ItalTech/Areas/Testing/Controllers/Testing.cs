@@ -103,7 +103,7 @@ namespace ItalTech.Areas.Testing.Controllers
             var genericTable = new Table()
             {
                 Title = "Elenco Test",
-                ColumnNames = new List<string> { "Codice", "Nome Progetto", "Descrizione", "Valori di Riferimento", "Quantità Eseguiti", "Quantità Passati", "Quantità Falliti", "Operatore" },
+                ColumnNames = new List<string> { "Codice", "Nome Test", "Descrizione", "Valori di Riferimento", "Quantità Eseguiti", "Quantità Passati", "Quantità Falliti", "Operatore" },
                 Elements = new List<List<object>>()
             };
             var responseFailed = new Response
