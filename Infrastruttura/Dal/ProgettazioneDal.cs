@@ -30,6 +30,11 @@ namespace Infrastruttura.Dal
             throw new NotImplementedException();
         }
 
+        public Task<bool> CheckRichiestaProgettoExist(string codice)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Progetto>> GetAllProgetti(InputRicercaProgetti input)
         {
             try
@@ -121,6 +126,49 @@ namespace Infrastruttura.Dal
                 throw new Exception("Impossibile trovare progetti con il codice selezionato");
             }
         }
+        public async Task<RichiestaProgetto> GetRichiestaProgetto(string codice)
+        {
+            try
+            {
+                using var sqlConn = new SqlConnection(connectionString);
+                using var command = new SqlCommand();
+                command.Connection = sqlConn;
+                string query = "";
+
+                query = @"SELECT Codice, Descrizione,CodiceProgetto,Tipo,Cliente,EsitoStudio,Budget,Operatore 
+                            FROM RichiestaProgetto
+                            WHERE Codice = @Cod";
+
+                command.Parameters.Add(new SqlParameter("@Cod", int.Parse(codice)));
+
+                command.CommandText = query;
+
+                sqlConn.Open();
+                using var reader = await command.ExecuteReaderAsync(CommandBehavior.SingleRow);
+
+                var progetti = new List<Progetto>();
+
+                var a = reader.Read();
+
+                var richiestaProgetto = new RichiestaProgetto
+                {
+                    Codice = reader.GetSafeInt("Codice").Value,
+                    Descrizione = reader.GetSafeString("Descrizione"),
+                    Tipo = reader.GetSafeString("Tipo"),
+                    Cliente = reader.GetSafeString("Cliente"),
+                    Operatore = reader.GetSafeString("Operatore"),
+                    Budget = reader.GetSafeDecimal("Budget"),
+                    CodiceProgetto = reader.GetSafeInt("CodiceProgetto"),
+                    EsitoStudio = reader.GetBoolean("EsitoStudio")
+                };
+                return richiestaProgetto;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare Richiesta  progetto con il codice selezionato");
+            }
+        }
         public Task<List<RichiestaProgetto>> GetAllRichiesteProgetti()
         {
             InputRicercaRichiesteProgetti input = new();
@@ -135,7 +183,7 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.Codice == input.Codice);
                 }
-                if (input.CodiceProgetto != 0)
+                if (input.CodiceProgetto != null)
                 {
                     query = query.Where(x => x.CodiceProgetto == input.CodiceProgetto);
                 }
@@ -147,7 +195,7 @@ namespace Infrastruttura.Dal
                 {
                     query = query.Where(x => x.Descrizione == input.Descrizione);
                 }
-                if (input.Budget != 0)
+                if (input.Budget != null)
                 {
                     query = query.Where(x => x.Budget == input.Budget);
                 }

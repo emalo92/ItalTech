@@ -333,6 +333,116 @@ namespace ItalTech.Areas.Progettazione.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> ArchivioRichiesteProgetti(InputRicercaRichiesteProgetti input)
+        {
+            try
+            {
+                var resultDal = await _progettazioneDal.GetAllRichiesteProgetti(input.ToDto());
+                var result = resultDal.ToModel();
+                if (result == null || result.Count == 0)
+                {
+                    var response = new Response
+                    {
+                        IsSucces = false,
+                        Message = result.Count == 0 ? "Non ci sono Richieste progetti corrispondenti ai parametri di ricerca" : "Impossibile caricare i progetti"
+                    };
+                    ViewMessage.Show(this, response);
+                    return View(input);
+                }
+                ViewBag.ListaProgetti = result;
+                return View(input);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                ViewMessage.Show(this, response);
+                return View(input);
+            }
+        }
+
+        public async Task<IActionResult> GetAllRichiesteProgettiModalAsync()
+        {
+            var genericTable = new Table()
+            {
+                Title = "Elenco Rchieste Progetti",
+                ColumnNames = new List<string> { "Codice", "CodiceProgetto", "Tipo", "Descrizione", "EsitoStudio", "Budget", "Operatore", "Cliente" },
+                Elements = new List<List<object>>()
+            };
+            var responseFailed = new Response
+            {
+                IsSucces = false,
+                Message = "Si è verificato un errore durante il recupero delle richieste progetti",
+            };
+            try
+            {
+                var resultDal = await _progettazioneDal.GetAllRichiesteProgetti();
+                var result = resultDal.ToModel();
+                if (result == null)
+                {
+                    ViewMessage.ShowLocal(this, responseFailed);
+                    return PartialView("_GenericTable", genericTable);
+                }
+                if (result.Count == 0)
+                {
+                    responseFailed.Message = "Non ci sono Rchieste progetti";
+                    ViewMessage.ShowLocal(this, responseFailed);
+                    return PartialView("_GenericTable", genericTable);
+                }
+                for (var i = 0; i < result.Count; ++i)
+                {
+                    genericTable.Elements.Add(new List<object>());
+                    genericTable.Elements[i].Add(result[i].Codice);
+                    genericTable.Elements[i].Add(result[i].CodiceProgetto);
+                    genericTable.Elements[i].Add(result[i].Tipo);
+                    genericTable.Elements[i].Add(result[i].Descrizione);
+                    genericTable.Elements[i].Add(result[i].EsitoStudio);
+                    genericTable.Elements[i].Add(result[i].Budget);
+                    genericTable.Elements[i].Add(result[i].Operatore);
+                    genericTable.Elements[i].Add(result[i].Cliente);
+                    
+
+                }
+
+                ViewBag.SizeModal = "modal-xl";
+                return PartialView("_GenericTable", genericTable);
+
+            }
+            catch (Exception ex)
+            {
+                responseFailed.Message = ex.Message;
+                genericTable.Elements = new List<List<object>>();
+                ViewMessage.ShowLocal(this, responseFailed);
+                return PartialView("_GenericTable", genericTable);
+            }
+        }
+        public async Task<JsonResult> GetRichiestaProgettoAsync(string codice)
+        {
+            try
+            {
+                var resultDal = await  _progettazioneDal.GetRichiestaProgetto(codice);
+                var result = resultDal.ToModel();
+                var response = new Response
+                {
+                    IsSucces = result != null,
+                    Message = result != null ? "" : "Nessun richiesta progetto trovato",
+                    Result = result
+                };
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                return Json(response);
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> RichiesteProgetto(InputRicercaRichiesteProgetti input)
@@ -463,6 +573,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
         [HttpPost]
         public async Task<IActionResult> CreaRichiestaProgetto(RichiestaProgetto richiestaprogetto)
         {
+             
              try
              {
                     var result = await _progettazioneDal.SaveRichiestaProgetto(richiestaprogetto.ToDto(), TipoCrud.insert.ToDto());
@@ -513,8 +624,58 @@ namespace ItalTech.Areas.Progettazione.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> EliminaRichiestaProgetto(RichiestaProgetto richiestaProgetto)
+        {
+            try
+            {
+                var result = await _progettazioneDal.SaveRichiestaProgetto(richiestaProgetto.ToDto(), TipoCrud.update.ToDto());
+                var response = new Response
+                {
+                    IsSucces = result,
+                    Message = result ? "Richiesta progetto salvata correttamente" : "Impossibile modificare la Richiesta Progetto"
+                };
+                ViewMessage.Show(this, response);
+                return View(richiestaProgetto);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                ViewMessage.Show(this, response);
+                return View();
+            }
+        }
 
-        
+        public async Task<JsonResult> GetTestAsync(string codice)
+        {
+            try
+            {
+                var resultDal = await _progettazioneDal.GetRichiestaProgetto(codice);
+                var result = resultDal.ToModel();
+                var response = new Response
+                {
+                    IsSucces = result != null,
+                    Message = result != null ? "" : "Nessun test trovato",
+                    Result = result
+                };
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                return Json(response);
+            }
+        }
+
+
 
     }
 }

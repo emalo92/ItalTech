@@ -101,5 +101,52 @@ namespace ItalTech.Mapper
                  Operatore = richiestaProgetto.Operatore
             };
         }
+        public static RichiestaProgetto ToModel(this Infrastruttura.Models.RichiestaProgetto richiestaProgetto)
+        {
+            return new RichiestaProgetto
+            {
+                Codice = richiestaProgetto.Codice,
+                CodiceProgetto = richiestaProgetto.CodiceProgetto,
+                Tipo = richiestaProgetto.Tipo,
+                Descrizione = richiestaProgetto.Descrizione,
+                Budget = richiestaProgetto.Budget,
+                Cliente = richiestaProgetto.Cliente,
+                EsitoStudio = richiestaProgetto.EsitoStudio,
+                Operatore = richiestaProgetto.Operatore
+            };
+        }
+        public static Infrastruttura.Models.RichiestaProgetto ToModel(this RichiestaProgetto richiestaProgetto)
+        {
+            return new Infrastruttura.Models.RichiestaProgetto
+            {
+                Codice = richiestaProgetto.Codice,
+                CodiceProgetto = richiestaProgetto.CodiceProgetto,
+                Tipo = richiestaProgetto.Tipo,
+                Descrizione = richiestaProgetto.Descrizione,
+                Budget = richiestaProgetto.Budget,
+                Cliente = richiestaProgetto.Cliente,
+                EsitoStudio = richiestaProgetto.EsitoStudio,
+                Operatore = richiestaProgetto.Operatore
+            };
+        }
+        public static List<RichiestaProgetto> ToModel(this List<Infrastruttura.Models.RichiestaProgetto> richiestaProgettiDal)
+        {
+            var richpro = new List<RichiestaProgetto>();
+            foreach (var rp in richiestaProgettiDal)
+            {
+                richpro.Add(rp.ToModel());
+            }
+            return richpro;
+        }
+
+        public static List<Infrastruttura.Models.RichiestaProgetto> ToModel(this List<RichiestaProgetto> richiestaProgettiDal)
+        {
+            var richpro = new List<Infrastruttura.Models.RichiestaProgetto>();
+            foreach (var rp in richiestaProgettiDal)
+            {
+                richpro.Add(rp.ToModel());
+            }
+            return richpro;
+        }
     }
 }

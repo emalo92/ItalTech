@@ -1,16 +1,15 @@
 ﻿@using ItalTech.Areas.Progettazione.Models
 @model RichiestaProgetto
 
-<h3 class="text-center text-secondary">Modifica  Richiesta Progetto</h3>
-
+<h3 class="text-center text-secondary">Modifica Richiesta Progetto</h3>
 <div>
     <div id="divPanelCheck" class="row p-4">
         <div class="col-lg-4 col-md-6 col-sm-12 mb-1 text-right">
             <div class="input-group">
-                <label class="mt-1 mr-2">Codice RichieProgetto: </label>
-                <input id="idInputCodiceCheck" class="form-control" value="" />
-                <div id="divAllRichiesteProgetti" class="input-group-append">
-                    <button id="buttonViewCodice" title="Fornisce la lista delle Richieste di progetto esistenti" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllRichiesteProgetti('/Progettazione/Progettazione/GetAllRichiesteProgettiModal')">
+                <label class="mt-1 mr-2">Codice Richiesta Progetto: </label>
+                <input id="idInputCodiceCheckRichiestaProgetto" class="form-control" value="" />
+                <div id="divAllRichiestaProgetto" class="input-group-append">
+                    <button id="buttonViewCodiceRichiestaProgetto" title="Fornisce la lista dei richieste progetto esistenti" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllRichiesteProgetti('/Progettazione/Progettazione/GetAllRichiesteProgettiModal')">
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                 </div>
@@ -18,7 +17,7 @@
         </div>
         <div class="col-lg-2 col-md-1 col-sm-12 mb-1 text-right">
             <label id="btnOkCheck" class="mr-1">
-                <button type="button" class="btn btn-secondary btn-sm" style="width:85px" title="Verifica se esiste il codice della Richiesta Progetto inserita e la carica" onclick="checkRichiestaProgettoExists()"><i class="fa fa-check"></i> Verifica</button>
+                <button type="button" class="btn btn-secondary btn-sm" style="width:85px" title="Verifica se esiste il codice del progetto inserito e lo carica" onclick="checkRichiestaProgettoExists()"><i class="fa fa-check"></i> Verifica</button>
             </label>
         </div>
     </div>
@@ -27,10 +26,10 @@
 <section class="bg-light">
     <div id="divFormRichiestaProgetto" class="container" style="display:none">
         <form id="idFormModificaRichiestaProgetto" class="form-group" asp-action="ModificaRichiestaProgetto" method="post">
-            <partial name="_FormInputProgetto" model="@Model" />
+            <partial name="_FormInputRichiestaProgetto" model="@Model" />
             <div class="row p-2">
                 <div class="col-lg-10 col-md-10 col-sm-12 text-right">
-                    <input class="btn btn-info" type="submit" value="Salva" onclick="salvaProgetto()" />
+                    <input class="btn btn-info" type="button" value="Salva" onclick="salvaRichiestaProgetto()" />
                 </div>
                 <div class="col-lg-1 col-md-2 col-sm-12 text-right">
                     <input class="btn btn-info" type="button" onclick="removeRichiestaProgetto()" value="Rimuovi" />
@@ -41,146 +40,74 @@
 </section>
 
 <div id="Div_DynamicViewAllRichiesteProgetti" class="positionFixed setDarkBackground" style="display:none">
-    <div class="finestraPopup">
-        <div id="Div_DynamicView_ContainerAllRichiestaProgetti">
+<div class="finestraPopup">
+    <div id="Div_DynamicView_ContainerAllRichiesteProgetti">
 
-        </div>
     </div>
 </div>
+</div>
 
-
-
-<script>
-
+<script type="text/javascript">
     function salvaRichiestaProgetto() {
-        
 
-        var righeArrayDettaglio = new Array();
-
-        var table = document.getElementById("idBodyTableDettagli");
-        var righe = table.getElementsByTagName("tr");
-        for (var i = 0; i < righe.length; i++) {
-            var cella = {};
-            var celle = righe[i].getElementsByTagName("td");
-
-            cella.CodiceFornitura = isNaN(parseInt(celle[0].getElementsByTagName("input")[0].value)) ? null : parseInt(celle[0].getElementsByTagName("input")[0].value);
-            cella.Nome = celle[1].getElementsByTagName("input")[0].value == "" ? null : celle[1].getElementsByTagName("input")[0].value;
-            cella.Descrizione = celle[2].getElementsByTagName("input")[0].value == "" ? null : celle[2].getElementsByTagName("input")[0].value;
-            cella.NumPezzi = isNaN(parseInt(celle[3].getElementsByTagName("input")[0].value)) ? '1' : parseInt(celle[3].getElementsByTagName("input")[0].value);
-            cella.CodiceProgetto = testata.Codice;
-            // salto l' i == 4 per evitare il button
-            righeArrayDettaglio.push(cella);
-        }
-        var input = {};
-        input.Testata = testata;
-        input.Dettaglio = righeArrayDettaglio;
-        var objectJson = JSON.stringify(input);
-
-        myCustomModalConfirmShow("Conferma", "Confermi il salvataggio del progetto?", function () { doSubmitProgetto(objectJson) }, "", "Si", "No");
-    }
-
-    function doSubmitRichiestaProgetto(objectJson) {
-
-        $.ajax({
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            type: 'POST',
-            url: '/Progettazione/Progettazione/SalvaRichiestaProgetto?tipoCrud=update',
-            data: objectJson,
-            success: function (response) {
-                if (!response.isSucces) {
-                    myCustomModalAlertShow("Dati non salvati", response.message);
-                }
-                else {
-                    $('#idBtnRegistra').addClass("disabledLink");
-                    $('#idBtnDelete').addClass("disabledLink");
-                    $('#divFormRichiestaProgetto').hide();
-                    $('#divPanelCheck').show();
-
-                    myCustomModalAlertShow("Dati salvati", response.message);
-                }
-
-            },
-            error: function () {
-                myCustomModalAlertShow("Dati non salvati", response);
-            }
-        });
-    }
-
-    function removeProgetto() {
-        document.getElementById("idFormModificaRichiestaProgetto").setAttribute("action", "EliminaRichiestaProgetto");
         document.getElementById("idFormModificaRichiestaProgetto").submit();
-        document.getElementById("idFormModificaRichiestaProgetto").setAttribute("action", "ModificaRichiestaProgetto")
+
     }
 
-    //serve a disinguere le chiamate in callback da genericTable
-    var checkOpenGenericTable;
+    var checkOpenGenericTable = "";
 
     document.addEventListener('openPopup_CustomEvent', (event) => {
         if (event.Sender === "GenericTable") {
             if (checkOpenGenericTable == "Impiegati") {
                 call_setContainerGenericTableImpiegati();
             }
-            if (checkOpenGenericTable == "Progetti") {
-                call_setContainerGenericTableProgetti();
+            if(checkOpenGenericTable == "RichiestaProgetto") {
+                call_setContainerGenericTableRichiestaProgetto();
             }
-            if (checkOpenGenericTable == "Clienti") {
-                call_setContainerGenericTableClienti();
-            }           
         }
     }, false)
-
     var callbackGenericTable;  //viene definita in GenericTable
     function showDynamicViewAllRichiesteProgetti(url) {
-        checkOpenGenericTable = "RichiesteProgetti";
+        checkOpenGenericTable = "RichiestaProgetto";
         $("#Div_DynamicView_ContainerAllRichiesteProgetti").load(url);
         $("#Div_DynamicViewAllRichiesteProgetti").show();
         dispatchOpenPopupCustomEvent('ViewAllRichiesteProgettiModal');
         if (callbackGenericTable !== undefined) {
-
             document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllRichiesteProgetti), false);
         }
     }
 
-    function call_setContainerGenericTableRichiesteProgetti() {
-        setContainerGenericTable('Div_DynamicViewAllRichiesteProgetti', 'Div_DynamicView_ContainerAllRichiesteProgetti', 'ViewAllRihiesteProgettiModal', callbackGetValueSelectedRichiesteProgetti);
+    function call_setContainerGenericTableRichiestaProgetto() {
+        setContainerGenericTable('Div_DynamicViewAllRichiesteProgetti', 'Div_DynamicView_ContainerAllRichiesteProgetti', 'ViewAllRichiesteProgettiModal', callbackGetValueSelectedRichiestaProgetto);
     }
-    function callbackGetValueSelectedProgetti(selectedValues) {
-        setSelectedValuesRichiesteProgetti(selectedValues);
+    function callbackGetValueSelectedRichiestaProgetto(selectedValues) {
+        setSelectedValuesRichiestaProgetto(selectedValues);
     }
-    function setSelectedValuesRichiesteProgetti(values) {
+    function setSelectedValuesRichiestaProgetto(values) {
         if (values == null) {
             return false;
         }
-
-        $("#idInputCodice").val(values.Codice);
-        $("#idInputCodiceProgetto").val(values.codiceProgetto);
-        $("#idInputDataFine").val(values.DataFine);
-        $("#idInputNomeProgetto").val(values.NomeProgetto);
-        $("#idInputDescrizione").val(values.Descrizione);
-        $("#idInputTipo").val(values.Tipo);
-        $("#idInputCodiceAnalisiMercato").val(values.CodiceAnalisiMercato);
-        $("#idInputCostoPrevisto").val(values.CostoPrevisto);
-        $("#idInputCostoFinale").val(values.CostoFinale);
-        $("#idInputCliente").val(values.Cliente);
-        $("#idInputProjectManager").val(values.ProjectManager);
-        $('#divPanelCheck').css('display', 'none');
-        $('#divFormProgetto').css('display', 'block');
-
-        loadPartialComponenti(values.Codice)
-        $('#Div_DynamicView_ContainerComponenti').show();
-
+            //qui devi mettere gli id degli input che vuoi inserire e i nomi delle variabili sono values.nomedellacolonnadellatabella
+            $("#idInputCodice").val(values.Codice);
+            $("#idInputCodiceProgetto").val(values.CodiceProgetto);
+            $("#idInputTipo").val(values.Tipo);
+            $("#idInputBudget").val(values.budget);
+            $("#idInputOperatore").val(values.Operatore);
+            $("#idInputDescrizione").val(values.Descrizione);
+            $('#divPanelCheck').css('display', 'none');
+            $('#divFormRichiestaProgetto').css('display', 'block');
+            
+        
     }
-
-    function checkProgettoExists() {
-        var codiceProgetto = $('#idInputCodiceCheck').val();
-        if (codiceProgetto == "" || codiceProgetto == undefined) {
-            myCustomModalAlertShow("Dati incompleti", "Inserire il Codice Progetto da verificare");
+    function checkRichiestaProgettoExists() {
+        var codice = $('#idInputCodiceCheckRichiestaProgetto').val();
+        if (codice == "" || codice == undefined) {
+            myCustomModalAlertShow("Dati incompleti", "Inserire il Codice Richiesta Progetto da verificare");
             return;
         }
         $.ajax({
             type: "GET",
-            url: "/Progettazione/Progettazione/GetProgetto?codice=" + codiceProgetto,
+            url: "/Progettazione/Progettazione/GetRichiestaProgetto?codice=" + codice,
             contentType: "application/json",
             success: function (response) {
                 if (!response.isSucces) {
@@ -196,22 +123,14 @@
                         myCustomModalAlertShow("Attenzione", response.message);
                     }
                     else {
-                        $("#idInputCodice").val(response.result.codice);
-                        $("#idInputDataInizio").val(response.result.dataInizio);
-                        $("#idInputDataFine").val(response.result.dataFine);
-                        $("#idInputNomeProgetto").val(response.result.nomeProgetto);
-                        $("#idInputDescrizione").val(response.result.descrizione);
-                        $("#idInputTipo").val(response.result.tipo);
-                        $("#idInputCodiceAnalisiMercato").val(response.result.codiceAnalisiMercato);
-                        $("#idInputCostoPrevisto").val(response.result.costoPrevisto);
-                        $("#idInputCostoFinale").val(response.result.costoFinale);
-                        $("#idInputCliente").val(response.result.cliente);
-                        $("#idInputProjectManager").val(response.result.projectManager);
+                        $("#idInputCodice").val(responce.response.codice);
+                        $("#idInputCodiceProgetto").val(responce.response.codiceProgetto);
+                        $("#idInputTipo").val(responce.response.tipo);
+                        $("#idInputBudget").val(responce.response.budget);
+                        $("#idInputOperatore").val(responce.response.operatore);
+                        $("#idInputDescrizione").val(responce.response.descrizione);
                         $('#divPanelCheck').css('display', 'none');
-                        $('#divFormProgetto').css('display', 'block');
-
-                        loadPartialComponenti(response.result.codice)
-                        $('#Div_DynamicView_ContainerComponenti').show();
+                        $('#divFormRichiestaProgetto').css('display', 'block');
 
                     }
                 }
@@ -222,7 +141,4 @@
         });
     }
 
-    function loadPartialComponenti(value) {
-        $("#Div_DynamicView_ContainerComponenti").load("/Progettazione/Progettazione/GetComponentiProgetto?codice=" + value);
-    }
 </script>
