@@ -50,6 +50,18 @@ namespace ItalTech.Areas.Testing.Controllers
         }
 
         [HttpPost]
+        public IActionResult EffettuaTest(TestPrototipo input)
+        {
+            var response = new Response
+            {
+                IsSucces = true,
+                Message = "Richiesta inviata correttamente"
+            };
+            ViewMessage.Show(this, response);
+            return View();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CreaTest(Test test)
         {
             try

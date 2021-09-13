@@ -1,34 +1,36 @@
 ﻿@using ItalTech.Areas.Testing.Models
 @model TestPrototipo
 
-<section class="bg-light">
-    <div class="container">
-        <form id="idFormEffettuaTest" class="form-group" asp-action="EffettuaTest" method="post">
-            <div class="row mb-3">
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="CodiceTest">Codice Test</label>
-                    <input title="Codice inserito automaticamente" id="idInputCodiceTest" type="text" class="form-control" asp-for="CodiceTest" />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="CodiceProgetto">Codice Progetto</label>
-                    <input id="idInputNomeTest" type="text" class="form-control" asp-for="CodiceProgetto" />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="NumPrototipo">Codice Prototipo</label>
-                    <input id="idInputOperatore" type="text" class="form-control" asp-for="NumPrototipo" />
-                </div>
-            </div>
-            <div class="row p-2">
-                <div class="col-lg-12 col-md-10 col-sm-12 text-center">
-                    <input class="btn btn-info" type="submit" value="Salva" onclick="eseguiTest()" />
-                </div>
-            </div>
-        </form>
-    </div>
-</section>
+    <h3 class="text-center text-secondary">Richiedi Test</h3>
 
-<script type="text/javascript">
-    function eseguiTest() {
-        document.getElementById("idFormEffettuaTest").submit();
-    }
-</script>
+    <section class="bg-light">
+        <div class="container">
+            <form id="idFormEffettuaTest" class="form-group" asp-action="EffettuaTest" method="post">
+                <div class="row mb-3">
+                    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                        <label asp-for="CodiceTest">Codice Test</label>
+                        <input title="Codice inserito automaticamente" id="idInputCodiceTest" type="text" class="form-control" asp-for="CodiceTest" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                        <label asp-for="CodiceProgetto">Codice Progetto</label>
+                        <input id="idInputNomeTest" type="text" class="form-control" asp-for="CodiceProgetto" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                        <label asp-for="NumPrototipo">Codice Prototipo</label>
+                        <input id="idInputOperatore" type="text" class="form-control" asp-for="NumPrototipo" />
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <div class="col-lg-12 col-md-10 col-sm-12 text-center">
+                        <input class="btn btn-info" type="submit" value="Richiedi" onclick="eseguiTest()" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        function eseguiTest() {
+            document.getElementById("idFormEffettuaTest").submit();
+        }
+    </script>
