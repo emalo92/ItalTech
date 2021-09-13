@@ -138,6 +138,8 @@ namespace Infrastruttura.Dal
         {
             try
             {
+                var codiceTest = context.Tests.Max(x => x.Codice);
+                test.Codice = codiceTest + 1;
                 switch (tipoCrud)
                 {
                     case TipoCrud.insert: await context.Tests.AddAsync(test.ToEntity()); return await context.SaveChangesAsync() == 1;
