@@ -321,6 +321,16 @@ namespace Infrastruttura.Mapper
             }
             return compone;
         }
+
+        public static List<Data.Modelli.Componente> ToEntity(this List<Componente> componente)
+        {
+            List<Data.Modelli.Componente> compone = new();
+            foreach (var com in componente)
+            {
+                compone.Add(com.ToEntity());
+            }
+            return compone;
+        }
         public static Ordini ToDto(this Data.Modelli.Ordini ordine)
         {
             return new Ordini

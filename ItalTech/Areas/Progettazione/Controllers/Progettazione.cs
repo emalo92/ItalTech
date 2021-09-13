@@ -259,7 +259,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
 
             var responseFailed = new Response { IsSucces = false };
             
-            var componenti = await _progettazioneDal.GetAllComponenti();
+            var componenti = await _progettazioneDal.GetAllComponenti(codice);
 
             if (componenti.Count == 0)
             {
@@ -385,6 +385,34 @@ namespace ItalTech.Areas.Progettazione.Controllers
                 };
                 ViewMessage.Show(this, response);
                 return View(progetto);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                ViewMessage.Show(this, response);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SalvaProgetto([FromBody]InputProgettoConComponenti input, TipoCrud tipoCrud)
+        {
+            try
+            {
+                var result = await _progettazioneDal.SaveProgetto(input.Testata, tipoCrud.ToDto());
+                var resultComponenti = await _progettazioneDal.SaveComponenti(input.Dettaglio, tipoCrud.ToDto());
+
+                var response = new Response
+                {
+                    IsSucces = result && resultComponenti,
+                    Message = result && resultComponenti ? "Progetto salvato correttamente" : "Impossibile salvare il progetto"
+                };
+                ViewMessage.Show(this, response);
+                return new JsonResult(response);
             }
             catch (Exception ex)
             {

@@ -25,7 +25,7 @@ namespace Infrastruttura
         Task<List<ProdottoCase>> GetAllProdottiCase(InputRicercaProdottiCase input);
         Task<List<ProdottoAssemblato>> GetAllProdottiAssemblati();
         Task<List<ProdottoAssemblato>> GetAllProdottiAssemblati(InputRicercaProdottiAssemblati input);
-        Task<List<Componente>> GetAllComponenti();
+        Task<List<Componente>> GetAllComponenti(int codice = 0);
         Task<List<Componente>> GetAllComponenti(InputRicercaComponenti input);
         Task<List<Ordini>> GetAllOrdini();
         Task<List<Ordini>> GetAllOrdini(InputRicercaOrdini input);
@@ -46,5 +46,6 @@ namespace Infrastruttura
         Task<bool> SaveProdottoCase(ProdottoCase prodottocase, TipoCrud tipoCrud);
         Task<bool> SavePrototipo(Prototipo prototipo, TipoCrud tipoCrud);
         Task<bool> SaveRichiestaProgetto(RichiestaProgetto richiestaProgetto, TipoCrud tipoCrud);
+        Task<bool> SaveComponenti(List<Componente> dettaglio, TipoCrud tipoCrud);
     }
 }

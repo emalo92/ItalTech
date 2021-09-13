@@ -9,7 +9,7 @@
             <partial name="_FormInputProgetto" model="@Model" />
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 text-right">
-                    <input class="btn btn-info" type="button" value="Salva" onclick="salva()" />
+                    <input class="btn btn-info" type="button" value="Salva" onclick="salvaProgetto()" />
                 </div>
             </div>
         </form>
@@ -19,8 +19,8 @@
 <partial name="_FormModificaComponenti" />
 
 <script type="text/javascript">
-    function salva() {
 
+    function salvaProgetto() {
         var nomeProgetto = $("#idInputNomeProgetto").val();
         var data = $("#idInputDataInizio").val();
         var projectManager = $("#idInputProjectManager").val();
@@ -37,7 +37,73 @@
             myCustomModalAlertShow("Dati incompleti", "Il project manager è obbligatorio");
             return;
         }
-        document.getElementById("idFormProgetto").submit();
+        var testata = {};
+        testata.Codice = isNaN(parseInt($("#idInputCodice").val())) ? 0 : parseInt($("#idInputCodice").val());
+        testata.DataInizio = $("#idInputDataInizio").val() == "" ? null : $("#idInputDataInizio").val();
+        testata.DataFine = $("#idInputDataFine").val() == "" ? null : $("#idInputDataFine").val();
+        testata.NomeProgetto = $("#idInputNomeProgetto").val() == "" ? null : $("#idInputNomeProgetto").val();
+        testata.CodiceAnalisiMercato = $("#idInputCodiceAnalisiMercato").val() == "" ? null : $("#idInputCodiceAnalisiMercato").val();
+        testata.Tipo = $("#idInputTipo").val() == "" ? null : $("#idInputTipo").val();
+        testata.CostoPrevisto = isNaN(parseFloat($("#idInputCostoPrevisto").val())) ? null : parseFloat($("#idInputCostoPrevisto").val());
+        testata.CostoFinale = isNaN(parseFloat($("#idInputCostoFinale").val())) ? null : parseFloat($("#idInputCostoFinale").val());
+        testata.Descrizione = $("#idInputDescrizione").val() == "" ? null : $("#idInputDescrizione").val();
+        testata.ProjectManager = $("#idInputProjectManager").val() == "" ? null : $("#idInputProjectManager").val();
+        testata.Cliente = $("#idInputCliente").val() == "" ? null : $("#idInputCliente").val();
+
+        var righeArrayDettaglio = new Array();
+        var newIndexRiga = 1;
+
+        var table = document.getElementById("idBodyTableDettagli");
+        var righe = table.getElementsByTagName("tr");
+        for (var i = 0; i < righe.length; i++) {
+            var cella = {};
+            var celle = righe[i].getElementsByTagName("td");
+
+            cella.CodiceFornitura = isNaN(parseInt(celle[0].getElementsByTagName("input")[0].value)) ? null : parseInt(celle[0].getElementsByTagName("input")[0].value);
+            cella.Nome = celle[1].getElementsByTagName("input")[0].value == "" ? null : celle[1].getElementsByTagName("input")[0].value;
+            cella.Descrizione = celle[2].getElementsByTagName("input")[0].value == "" ? null : celle[2].getElementsByTagName("input")[0].value;
+            cella.NumPezzi = isNaN(parseInt(celle[3].getElementsByTagName("input")[0].value)) ? null : parseInt(celle[3].getElementsByTagName("input")[0].value);
+            cella.CodiceProgetto = testata.Codice;
+            // salto l' i == 4 per evitare il button
+            righeArrayDettaglio.push(cella);
+
+            newIndexRiga++;
+        }
+        var input = {};
+        input.Testata = testata;
+        input.Dettaglio = righeArrayDettaglio;
+        var objectJson = JSON.stringify(input);
+
+        myCustomModalConfirmShow("Conferma", "Confermi il salvataggio del progetto?", function () { doSubmitProgetto(objectJson) }, "", "Si", "No");
+    }
+
+    function doSubmitProgetto(objectJson) {
+
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '/Progettazione/Progettazione/SalvaProgetto?tipoCrud=insert',
+            data: objectJson,
+            success: function (response) {
+                if (!response.isSucces) {
+                    myCustomModalAlertShow("Dati non salvati", response.message);
+                }
+                else {
+                    $('#idBtnRegistra').addClass("disabledLink");
+                    $('#idBtnDelete').addClass("disabledLink");
+                    $('#divFormProgetto').hide();
+                    $('#Div_DynamicView_ContainerComponenti').hide();
+                    $('#divPanelCheck').show();
+
+                    myCustomModalAlertShow("Dati salvati", response.message);
+                }
+
+            },
+            error: function () {
+                myCustomModalAlertShow("Dati non salvati", response);
+            }
+        });
     }
 
     //serve a disinguere le chiamate in callback da genericTable

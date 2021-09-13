@@ -451,9 +451,13 @@ namespace Infrastruttura.Dal
             }
         }
 
-        public Task<List<Componente>> GetAllComponenti()
+        public Task<List<Componente>> GetAllComponenti(int codice = 0)
         {
             InputRicercaComponenti input = new();
+            if (codice != 0)
+            {
+                input.CodiceProgetto = codice;
+            }
             return GetAllComponenti(input);
         }
         public async Task<List<Componente>> GetAllComponenti(InputRicercaComponenti input)
@@ -880,6 +884,25 @@ namespace Infrastruttura.Dal
             }
 
         }
-        
+
+        public async Task<bool> SaveComponenti(List<Componente> dettaglio, TipoCrud tipoCrud)
+        {
+            try
+            {
+
+                switch (tipoCrud)
+                {
+                    case TipoCrud.insert: await context.Componentes.AddRangeAsync(dettaglio.ToEntity()); break;
+                    case TipoCrud.update: context.Componentes.UpdateRange(dettaglio.ToEntity()); break;
+                    case TipoCrud.delete: context.Componentes.RemoveRange(dettaglio.ToEntity()); break;
+
+                }
+                return await context.SaveChangesAsync() == dettaglio.Count;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Errore durante il salvataggio in DB");
+            }
+        }
     }
 }

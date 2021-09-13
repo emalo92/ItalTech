@@ -120,10 +120,9 @@
         if (values == null) {
             return false;
         }
-        $("#row_CodiceFornitura_" + selectedRowsIdDettaglio).val(values.Codice);
+        $("#row_CodiceFornitura_" + selectedRowsIdDettaglio).val(values.CodiceFornitura);
         $("#row_Nome_" + selectedRowsIdDettaglio).val(values.Nome);
         $("#row_Descrizione_" + selectedRowsIdDettaglio).val(values.Descrizione);
-        $("#row_NumPezzi_" + selectedRowsIdDettaglio).val(values.NumeroPezzi);
     }
 
     indexNewRow = @indexRow;
@@ -183,7 +182,7 @@
                     }
                 }
                 else {
-                    $("#row_CodiceFornitura_" + selectedRowsIdDettaglio).val(response.result.codice);
+                    $("#row_CodiceFornitura_" + selectedRowsIdDettaglio).val(response.result.codiceFornitura);
                     $("#row_Nome_" + selectedRowsIdDettaglio).val(response.result.nome);
                     $("#row_Descrizione_" + selectedRowsIdDettaglio).val(response.result.descrizione);
                 }
