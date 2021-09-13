@@ -1,5 +1,5 @@
-﻿@using ItalTech.Areas.Progettazione.Models
-@model Progetto
+﻿@using ItalTech.Areas.Testing.Models
+@model Test
 
 <h3 class="text-center text-secondary">Modifica Test</h3>
 <div>
@@ -64,8 +64,6 @@
             if(checkOpenGenericTable == "Test") {
                 call_setContainerGenericTableTest();
             }
-
-
         }
     }, false)
     var callbackGenericTable;  //viene definita in GenericTable
@@ -75,7 +73,6 @@
         $("#Div_DynamicViewAllTest").show();
         dispatchOpenPopupCustomEvent('ViewAllTestModal');
         if (callbackGenericTable !== undefined) {
-
             document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllTest), false);
         }
     }
@@ -89,25 +86,9 @@
     function setSelectedValuesTest(values) {
         if (values == null) {
             return false;
+            $("#idInputCliente").val(values.CodiceFiscale);
+            //qui devi mettere gli id degli input che vuoi inserire e i nomi delle variabili sono values.nomedellacolonnadellatabella
         }
-
-        $("#idInputCodice").val(values.Codice);
-        $("#idInputDataInizio").val(values.DataInizio);
-        $("#idInputDataFine").val(values.DataFine);
-        $("#idInputNomeProgetto").val(values.NomeProgetto);
-        $("#idInputDescrizione").val(values.Descrizione);
-        $("#idInputTipo").val(values.Tipo);
-        $("#idInputCodiceAnalisiMercato").val(values.CodiceAnalisiMercato);
-        $("#idInputCostoPrevisto").val(values.CostoPrevisto);
-        $("#idInputCostoFinale").val(values.CostoFinale);
-        $("#idInputCliente").val(values.Cliente);
-        $("#idInputProjectManager").val(values.ProjectManager);
-        $('#divPanelCheck').css('display', 'none');
-        $('#divFormProgetto').css('display', 'block');
-
-        loadPartialComponenti(values.Codice)
-        $('#Div_DynamicView_ContainerComponenti').show();
-
     }
 
 </script>
