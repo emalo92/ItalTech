@@ -271,8 +271,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
 
             if (componenti.Count == 0)
             {
-                responseFailed.Message = "Non ci sono componenti per il progetto selezionato";
-                ViewMessage.Show(this, responseFailed);
+                responseFailed.Message = "Non ci sono componenti per il progetto selezionato";                
                 return PartialView("_FormModificaComponenti");
             }
 
