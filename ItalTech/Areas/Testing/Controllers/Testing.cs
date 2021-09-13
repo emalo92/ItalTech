@@ -32,8 +32,11 @@ namespace ItalTech.Areas.Testing.Controllers
         {
             return View();
         }
-        public IActionResult ListaTest()
+        public async Task<IActionResult> ListaTest() 
         {
+
+            var listaTest = await _testingDal.GetAllTest();
+            ViewBag.listaTest = listaTest.ToModel();
             return View();
         }
         public IActionResult ModificaTest()

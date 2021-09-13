@@ -68,8 +68,7 @@
         testata.ProjectManager = $("#idInputProjectManager").val() == "" ? null : $("#idInputProjectManager").val();
         testata.Cliente = $("#idInputCliente").val() == "" ? null : $("#idInputCliente").val();
         
-        var righeArrayDettaglio = new Array();
-
+        var righeArrayDettaglio = new Array();        
         var table = document.getElementById("idBodyTableDettagli");
         var righe = table.getElementsByTagName("tr");
         for (var i = 0; i < righe.length; i++) {
@@ -116,7 +115,7 @@
 
             },
             error: function () {
-                myCustomModalAlertShow("Dati non salvati", response);
+                myCustomModalAlertShow("Dati non salvati", response.message);
             }
         });
     }
