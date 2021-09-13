@@ -17,7 +17,7 @@
         </div>
         <div class="col-lg-2 col-md-1 col-sm-12 mb-1 text-right">
             <label id="btnOkCheck" class="mr-1">
-                <button type="button" class="btn btn-secondary btn-sm" style="width:85px" title="Verifica se esiste il codice del progetto inserito e lo carica" onclick="checkProgettoExists()"><i class="fa fa-check"></i> Verifica</button>
+                <button type="button" class="btn btn-secondary btn-sm" style="width:85px" title="Verifica se esiste il codice del progetto inserito e lo carica" onclick="checkTestExists()"><i class="fa fa-check"></i> Verifica</button>
             </label>
         </div>
     </div>
@@ -87,17 +87,59 @@
         if (values == null) {
             return false;
         }
-            //qui devi mettere gli id degli input che vuoi inserire e i nomi delle variabili sono values.nomedellacolonnadellatabella
-            $("#idInputCodice").val(values.Codice);
-            $("#idInputTipo").val(values.Tipo);
-            $("#idInputValoriDiRiferimento").val(values.ValoriDiRiferimento);
-            $("#idInputOperatore").val(values.Operatore);
-            $("#idInputDescrizione").val(values.Descrizione);
-            $('#divPanelCheck').css('display', 'none');
-            $('#divFormTest').css('display', 'block');
-            
-        
+        //qui devi mettere gli id degli input che vuoi inserire e i nomi delle variabili sono values.nomedellacolonnadellatabella
+        $("#idInputCodiceTest").val(values.Codice);
+        $("#idInputNomeTest").val(values.NomeTest);
+        $("#idInputValoriDiRiferimento").val(values.ValoridiRiferimento);
+        $("#idInputOperatore").val(values.Operatore);
+        $("#idInputDescrizione").val(values.Descrizione);
+        $('#divPanelCheck').css('display', 'none');
+        $('#divFormTest').css('display', 'block');
+
+
     }
+
+    function checkTestExists() {
+        var codiceTest = $('#idInputCodiceCheckTest').val();
+        if (codiceTest == "" || codiceTest == undefined) {
+            myCustomModalAlertShow("Dati incompleti", "Inserire il Codice del Test da verificare");
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/Testing/Testing/GetTest?codice=" + codiceTest,
+            contentType: "application/json",
+            success: function (response) {
+                if (!response.isSucces) {
+                    if (response.message != null && response.message != undefined && response.message != '') {
+                        myCustomModalAlertShow("Dati non validi", response.message);
+                    }
+                    else {
+                        myCustomModalAlertShow("Dati non validi", response.message);
+                    }
+                }
+                else {
+                    if (response.result == null) {
+                        myCustomModalAlertShow("Attenzione", response.message);
+                    }
+                    else {
+                        $("#idInputCodiceTest").val(response.result.codice);
+                        $("#idInputNomeTest").val(response.result.tipo);
+                        $("#idInputValoriDiRiferimento").val(response.result.valoriDiRiferimento);
+                        $("#idInputOperatore").val(response.result.operatore);
+                        $("#idInputDescrizione").val(response.result.descrizione);
+                        $('#divPanelCheck').css('display', 'none');
+                        $('#divFormTest').css('display', 'block');
+
+                    }
+                }
+            },
+            error(jqXHR, textStatus) {
+                myCustomModalAlertShow("Errore generico", textStatus);
+            }
+        });
+    }
+
 
 </script>
 

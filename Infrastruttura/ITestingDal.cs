@@ -18,6 +18,7 @@ namespace Infrastruttura
         Task<List<TestProdottoCase>> GetAllTestProdottiCase(InputRicercaTestProdottiCase input);
 
         Task<bool> SaveTest(Test test, TipoCrud tipoCrud);
+        Task<Test> GetTest(string codice);
         Task<bool> SaveTestProdottoAssemblato(int codiceTest, int codiceProdottoAssemblato, TipoCrud tipoCrud);
         Task<bool> SaveTestProdottoCase(int codiceTest, int codiceProdottoCase, TipoCrud tipoCrud);
         Task<bool> SaveTestPrototipo(int codiceTest, int codiceProgetto,int numPrototipo, TipoCrud tipoCrud);

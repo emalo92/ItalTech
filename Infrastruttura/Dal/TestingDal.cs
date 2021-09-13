@@ -1,13 +1,16 @@
 ﻿using Infrastruttura.Data.Context;
 using Infrastruttura.Models;
-using Infrastruttura.Mapper;
 using Infrastruttura.Models.Input;
+using Infrastruttura.Mapper;
+using Infrastruttura.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 
+using System.Threading.Tasks;
+using System.Data;
 namespace Infrastruttura.Dal
 {
     public class TestingDal : ITestingDal
@@ -237,6 +240,51 @@ namespace Infrastruttura.Dal
                 throw new Exception("Errore durante il salvataggio in DB");
             }
         }
+
+        public async Task<Test> GetTest(string codice)
+        {
+            try
+            {
+                using var sqlConn = new SqlConnection(connectionString);
+                using var command = new SqlCommand();
+                command.Connection = sqlConn;
+                string query = "";
+
+                query = @"SELECT Codice, Tipo, Descrizione, ValoriDiRiferimento, QuantitaEseguiti, QuantitaPassati, QuantitaFalliti, Operatore 
+                            FROM test 
+                            WHERE Codice = @Cod";
+
+                command.Parameters.Add(new SqlParameter("@Cod", int.Parse(codice)));
+
+                command.CommandText = query;
+
+                sqlConn.Open();
+                using var reader = await command.ExecuteReaderAsync(CommandBehavior.SingleRow);
+
+                var tests = new List<Test>();
+
+                var a = reader.Read();
+
+                var test = new Test
+                {
+                    Codice = reader.GetSafeInt("Codice").Value,
+                    Tipo = reader.GetSafeString("Tipo"),
+                    Descrizione = reader.GetSafeString("Descrizione"),
+                    ValoriDiRiferimento = reader.GetSafeString("ValoriDiRiferimento"),
+                    QuantitaPassati= reader.GetSafeInt("QuantitaPassati"),
+                    QuantitaEseguiti = reader.GetSafeInt("QuantitaEseguiti"),
+                    QuantitaFalliti = reader.GetSafeInt("QuantitaFalliti"),
+                    Operatore = reader.GetSafeString("Operatore"),
+                };
+                return test;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Impossibile trovare Test con il codice selezionato");
+            }
+        }
+
     }
 
 }

@@ -153,5 +153,29 @@ namespace ItalTech.Areas.Testing.Controllers
                 return PartialView("_GenericTable", genericTable);
             }
         }
+        public async Task<JsonResult> GetTestAsync(string codice)
+        {
+            try
+            {
+                var resultDal = await _testingDal.GetTest(codice);
+                var result = resultDal.ToModel();
+                var response = new Response
+                {
+                    IsSucces = result != null,
+                    Message = result != null ? "" : "Nessun test trovato",
+                    Result = result
+                };
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                return Json(response);
+            }
+        }
     }
 }
