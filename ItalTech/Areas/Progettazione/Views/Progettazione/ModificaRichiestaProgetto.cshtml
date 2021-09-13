@@ -140,5 +140,10 @@
             }
         });
     }
+    function removeRichiestaProgetto() {
+        document.getElementById("idFormModificaRichiestaProgetto").setAttribute("action", "EliminaRichiestaProgetto");
+        document.getElementById("idFormModificaRichiestaProgetto").submit();
+        document.getElementById("idFormModificaRichiestaProgetto").setAttribute("action", "ModificaRichiestaProgetto")
+    }
 
 </script>

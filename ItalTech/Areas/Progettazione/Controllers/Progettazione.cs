@@ -632,14 +632,14 @@ namespace ItalTech.Areas.Progettazione.Controllers
         {
             try
             {
-                var result = await _progettazioneDal.SaveRichiestaProgetto(richiestaProgetto.ToDto(), TipoCrud.update.ToDto());
+                var result = await _progettazioneDal.SaveRichiestaProgetto(richiestaProgetto.ToDto(), TipoCrud.delete.ToDto());
                 var response = new Response
                 {
                     IsSucces = result,
-                    Message = result ? "Richiesta progetto salvata correttamente" : "Impossibile modificare la Richiesta Progetto"
+                    Message = result ? "Richiesta eliminata correttamente" : "Impossibile eliminare la richiesta"
                 };
                 ViewMessage.Show(this, response);
-                return View(richiestaProgetto);
+                return View("ModificaRichiestaProgetto");
             }
             catch (Exception ex)
             {
@@ -649,7 +649,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
                     Message = ex.Message
                 };
                 ViewMessage.Show(this, response);
-                return View();
+                return View("ModificaRichiestaProgetto");
             }
         }
 
