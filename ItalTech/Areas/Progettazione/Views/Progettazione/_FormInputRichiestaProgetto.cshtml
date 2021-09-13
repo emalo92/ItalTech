@@ -1,0 +1,123 @@
+﻿@using ItalTech.Areas.Progettazione.Models
+@model RichiestaProgetto
+
+<div class="row mb-3">
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Codice"></label>
+        <input title="Il codice viene inserito automaticamente" id="idInputCodice" type="text" class="form-control" asp-for="Codice" readonly />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="CodiceProgetto"></label>
+        <input id="idCodiceProgetto" type="text" class="form-control" asp-for="CodiceProgetto" readonly />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Tipo"></label>
+        <input id="idInputTipo" type="text" class="form-control" asp-for="Tipo" />
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Descrizione"></label>
+        <input id="idInputDescrizione" type="text" class="form-control" asp-for="Descrizione" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="Budget"></label>
+        <input id="idInputBudget" type="text" class="form-control" asp-for="Budget" />
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <label asp-for="EsitoStudio"></label>
+        <input id="idInputEsitoStudio" type="text" class="form-control" asp-for="EsitoStudio" />
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <div class="input-group mt-3">
+            <label asp-for="Operatore" class="mt-1 mr-2"></label>
+            <input asp-for="Operatore" id="idInputOperatore" readonly class="form-control" />
+            <div id="divAllImpiegati" class="input-group-append">
+                <button id="buttonViewSelezioneImpiegati" type="button" title="Fornisce la lista degli operatori esistenti" class="btn btn-primary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllImpiegati('/Progettazione/Progettazione/GetAllImpiegatiModal')">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+        <div class="input-group mt-3">
+            <label asp-for="Cliente" class="mt-1 mr-2"></label>
+            <input asp-for="Cliente" id="idInputCliente" readonly class="form-control" />
+            <div id="divAllCliente" class="input-group-append">
+                <button id="buttonViewSelezioneCliente" type="button" title="Fornisce la lista dei clienti esistenti" class="btn btn-primary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllClienti('/Progettazione/Progettazione/GetAllClientiModal')">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="Div_DynamicViewAllImpiegati" class="positionFixed setDarkBackground" style="display:none">
+    <div class="finestraPopup">
+        <div id="Div_DynamicView_ContainerAllImpiegati">
+
+        </div>
+    </div>
+</div>
+
+<div id="Div_DynamicViewAllClienti" class="positionFixed setDarkBackground" style="display:none">
+    <div class="finestraPopup">
+        <div id="Div_DynamicView_ContainerAllClienti">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var callbackGenericTableImpiegati;
+    function showDynamicViewAllImpiegati(url) {
+        checkOpenGenericTable = "Impiegati";
+        $("#Div_DynamicView_ContainerAllImpiegati").load(url);
+        $("#Div_DynamicViewAllImpiegati").show();
+        dispatchOpenPopupCustomEvent('ViewAllImpiegatiModal');
+        if (callbackGenericTable !== undefined) {
+            document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllImpiegati), false);
+        }
+    }
+
+    function call_setContainerGenericTableImpiegati() {
+        setContainerGenericTable('Div_DynamicViewAllImpiegati', 'Div_DynamicView_ContainerAllImpiegati', 'ViewAllImpiegatiModal', callbackGetValueSelectedImpiegati);
+    }
+    function callbackGetValueSelectedImpiegati(selectedValuesImpiegati) {
+        setSelectedValuesImpiegati(selectedValuesImpiegati);
+    }
+    function setSelectedValuesImpiegati(valuesImpiegati) {
+        if (valuesImpiegati == null) {
+            return false;
+        }
+        $("#idInputProjectManager").val(valuesImpiegati.AziendaID);
+    }
+
+    var callbackGenericTableClienti;
+    function showDynamicViewAllClienti(url) {
+        checkOpenGenericTable = "Clienti";
+        $("#Div_DynamicView_ContainerAllClienti").load(url);
+        $("#Div_DynamicViewAllClienti").show();
+        dispatchOpenPopupCustomEvent('ViewAllClientiModal');
+        if (callbackGenericTable !== undefined) {
+            document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllClienti), false);
+        }
+    }
+
+    function call_setContainerGenericTableClienti() {
+        setContainerGenericTable('Div_DynamicViewAllClienti', 'Div_DynamicView_ContainerAllClienti', 'ViewAllClientiModal', callbackGetValueSelectedClienti);
+    }
+    function callbackGetValueSelectedClienti(selectedValuesClienti) {
+        setSelectedValuesClienti(selectedValuesClienti);
+    }
+    function setSelectedValuesClienti(valuesClienti) {
+        if (valuesClienti == null) {
+            return false;
+        }
+        $("#idInputCliente").val(valuesClienti.CodiceFiscale);
+    }
+
+</script>

@@ -1,0 +1,36 @@
+﻿@using ItalTech.Areas.Progettazione.Models
+@model RichiestaProgetto
+
+<h3 class="text-center text-secondary">Inserisci la nuova Richiesta di Progetto</h3>
+
+
+<section class="bg-light">
+    <div id="divFormRichiestaProgetto" class="container">
+        <form id="idFormRichiestaProgetto" class="form-group" asp-action="CreaRichiestaProgetto" method="post">
+            <partial name="_FormInputRichiestaProgetto" model="@Model" />
+            <div class="row p-2">
+                <div class="col-lg-10 col-md-10 col-sm-12 text-right">
+                    <input class="btn btn-info" type="submit" value="Salva" onclick="salvaRichiestaProgetto()" />
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    function SalvaRichiestaProgetto() {
+        document.getElementById("idFormRichiestaProgetto").submit();
+    }
+
+    document.addEventListener('openPopup_CustomEvent', (event) => {
+        if (event.Sender === "GenericTable") {
+            if (checkOpenGenericTable == "Impiegati") {
+                call_setContainerGenericTableImpiegati();
+            }
+            if (checkOpenGenericTable == "Clienti") {
+                call_setContainerGenericTableClienti();
+            }
+        }
+    }, false)
+</script>

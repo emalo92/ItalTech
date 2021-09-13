@@ -87,5 +87,19 @@ namespace ItalTech.Mapper
                 Tipo = input.Tipo,
             };
         }
+        public static Infrastruttura.Models.RichiestaProgetto ToDto(this RichiestaProgetto richiestaProgetto)
+        {
+            return new Infrastruttura.Models.RichiestaProgetto
+            {
+                 Codice = richiestaProgetto.Codice,
+                 CodiceProgetto = richiestaProgetto.CodiceProgetto,
+                 Tipo = richiestaProgetto.Tipo,
+                 Descrizione = richiestaProgetto.Descrizione,
+                 Budget = richiestaProgetto.Budget,
+                 Cliente = richiestaProgetto.Cliente,
+                 EsitoStudio = richiestaProgetto.EsitoStudio,
+                 Operatore = richiestaProgetto.Operatore
+            };
+        }
     }
 }

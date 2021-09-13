@@ -29,6 +29,14 @@ namespace ItalTech.Areas.Progettazione.Controllers
         {
             return View();
         }
+        public IActionResult ModificaRichiestaProgetto()
+        {
+            return View();
+        }
+        public IActionResult CreaRichiestaProgetto()
+        {
+            return View();
+        }
 
         public IActionResult ArchivioProgetti()
         {
@@ -451,5 +459,62 @@ namespace ItalTech.Areas.Progettazione.Controllers
                 return View("ModificaProgetto");
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreaRichiestaProgetto(RichiestaProgetto richiestaprogetto)
+        {
+             try
+             {
+                    var result = await _progettazioneDal.SaveRichiestaProgetto(richiestaprogetto.ToDto(), TipoCrud.insert.ToDto());
+                    var response = new Response
+                    {
+                        IsSucces = result,
+                        Message = result ? "Richiesta Progetto salvata correttamente" : "Impossibile salvare la Richiesta Progetto"
+                    };
+                    ViewMessage.Show(this, response);
+                    return View(richiestaprogetto);
+                }
+                catch (Exception ex)
+                {
+                    var response = new Response
+                    {
+                        IsSucces = false,
+                        Message = ex.Message
+                    };
+                    ViewMessage.Show(this, response);
+                    return View();
+             }
+            
+        }
+       
+
+        [HttpPost]
+        public async Task<IActionResult> ModificaRichiestaProgetto(RichiestaProgetto richiestaProgetto)
+        {
+            try
+            {
+                var result = await _progettazioneDal.SaveRichiestaProgetto(richiestaProgetto.ToDto(), TipoCrud.update.ToDto());
+                var response = new Response
+                {
+                    IsSucces = result,
+                    Message = result ? "Richiesta progetto salvata correttamente" : "Impossibile modificare la Richiesta Progetto"
+                };
+                ViewMessage.Show(this, response);
+                return View(richiestaProgetto);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                ViewMessage.Show(this, response);
+                return View();
+            }
+        }
+
+        
+
     }
 }
