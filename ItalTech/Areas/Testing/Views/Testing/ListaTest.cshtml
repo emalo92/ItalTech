@@ -1,11 +1,68 @@
 ﻿@using ItalTech.Areas.Testing.Models
 @model Test
 
+@{
+    var listaTest = (List<Test>)ViewBag.listaTest; @*!= null ? ViewBag.ListaTest : null;*@
+}
+
 <h1 class="display-5">Sezione Testing</h1>
 <br />
 <section class="bg-light">
     <div class="container-fluid">
         <h2 style="bold">Lista Test Disponibili</h2>
-        <p>Da Riempire con la lista dei test disponibili</p>
+        @if (listaTest != null)
+        {
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Codice</th>
+                        <th>Nome Test</th>
+                        <th>Valori di Riferimento</th>
+                        <th>Descrizione</th>
+                        <th>Quantità Eseguiti</th>
+                        <th>Quantità Falliti</th>
+                        <th>Quantità Passati</th>
+                        <th>Operatore</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var elem in listaTest)
+                        {
+                                        <tr>
+                                            <td>
+                                                <label class="control-label">@elem.Codice</label>
+                                            </td>
+                                            <td>
+                                                <label class="control-label">@elem.Tipo</label>
+                                            </td>
+                                            <td>
+                                                <label class="control-label">@elem.ValoriDiRiferimento</label>
+                                            </td>
+                                            <td>
+                                                <label class="control-label">@elem.Descrizione</label>
+                                            </td>
+                                            <td>
+                                                <label class="control-label">@elem.QuantitaEseguiti</label>
+                                            </td>
+                                            <td>
+                                                <label class="control-label">@elem.QuantitaFalliti</label>
+                                            </td>
+                                            <td>
+                                                <label class="control-label">@elem.QuantitaPassati</label>
+                                            </td>
+                                            <td>
+                                                <label class="control-label">@elem.Operatore</label>
+                                            </td>
+                                            
+                                        </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        }
+
     </div>
 </section>
