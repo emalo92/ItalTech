@@ -464,8 +464,19 @@ namespace Infrastruttura.Dal
         {
             try
             {
-                var query = context.Componentes.AsNoTracking();
-
+                var query = (from comp in context.Componentes
+                             join forn in context.Fornituras
+                             on comp.CodiceFornitura equals forn.Codice into temp
+                             from result in temp
+                             select new Componente()
+                             {
+                                 CodiceFornitura = comp.CodiceFornitura,
+                                 CodiceProgetto = comp.CodiceProgetto,
+                                 NumPezzi = comp.NumPezzi,
+                                 Nome = result.Nome,
+                                 Descrizione = result.Descrizione
+                             }).AsQueryable();
+                
                 if (input.CodiceProgetto != 0)
                 {
                     query = query.Where(x => x.CodiceProgetto == input.CodiceProgetto);
@@ -480,7 +491,7 @@ namespace Infrastruttura.Dal
                 }
 
                 var componente = await query.ToListAsync();
-                return componente.ToDto();
+                return componente;
             }
             catch (Exception ex)
             {
