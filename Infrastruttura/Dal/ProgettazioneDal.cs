@@ -900,13 +900,23 @@ namespace Infrastruttura.Dal
         {
             try
             {
-
-                switch (tipoCrud)
+                foreach (var componente in dettaglio)
                 {
-                    case TipoCrud.insert: await context.Componentes.AddRangeAsync(dettaglio.ToEntity()); break;
-                    case TipoCrud.update: context.Componentes.UpdateRange(dettaglio.ToEntity()); break;
-                    case TipoCrud.delete: context.Componentes.RemoveRange(dettaglio.ToEntity()); break;
+                    if (tipoCrud == TipoCrud.update)
+                    {
+                        var presente = await context.Componentes.Where(x => x.CodiceProgetto == componente.CodiceProgetto && x.CodiceFornitura == componente.CodiceFornitura).FirstOrDefaultAsync();
+                        if (presente == null)
+                        {
+                            tipoCrud = TipoCrud.insert;
+                        }
+                    }
+                    switch (tipoCrud)
+                    {
+                        case TipoCrud.insert: await context.Componentes.AddAsync(componente.ToEntity()); break;
+                        case TipoCrud.update: context.Componentes.Update(componente.ToEntity()); break;
+                        case TipoCrud.delete: context.Componentes.Remove(componente.ToEntity()); break;
 
+                    }
                 }
                 return await context.SaveChangesAsync() == dettaglio.Count;
             }
