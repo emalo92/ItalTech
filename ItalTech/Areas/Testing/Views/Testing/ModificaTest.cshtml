@@ -139,7 +139,11 @@
             }
         });
     }
-
+    function removeTest() {
+        document.getElementById("idFormModificaTest").setAttribute("action", "EliminaTest");
+        document.getElementById("idFormModificaTest").submit();
+        document.getElementById("idFormModificaTest").setAttribute("action", "ModificaTest")
+    }
 
 </script>
 

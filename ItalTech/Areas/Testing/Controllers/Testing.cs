@@ -192,5 +192,31 @@ namespace ItalTech.Areas.Testing.Controllers
                 return Json(response);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminaTest(Test test)
+        {
+            try
+            {
+                var result = await _testingDal.SaveTest(test.ToDto(), TipoCrud.delete.ToDto());
+                var response = new Response
+                {
+                    IsSucces = result,
+                    Message = result ? "Test eliminato correttamente" : "Impossibile eliminare il Test"
+                };
+                ViewMessage.Show(this, response);
+                return View("ModificaTest");
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                ViewMessage.Show(this, response);
+                return View("ModificaTest");
+            }
+        }
     }
 }
