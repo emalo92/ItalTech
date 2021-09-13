@@ -900,8 +900,15 @@ namespace Infrastruttura.Dal
         {
             try
             {
+                var count = dettaglio.Count;
                 foreach (var componente in dettaglio)
                 {
+                    
+                    if (componente.CodiceFornitura == null)
+                    {
+                        count = count - 1;
+                        break;
+                    }
                     if (tipoCrud == TipoCrud.update)
                     {
                         var presente = await context.Componentes.Where(x => x.CodiceProgetto == componente.CodiceProgetto && x.CodiceFornitura == componente.CodiceFornitura).FirstOrDefaultAsync();
@@ -918,7 +925,7 @@ namespace Infrastruttura.Dal
 
                     }
                 }
-                return await context.SaveChangesAsync() == dettaglio.Count;
+                return await context.SaveChangesAsync() == count;
             }
             catch (Exception ex)
             {
