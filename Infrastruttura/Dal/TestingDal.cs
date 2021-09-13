@@ -151,8 +151,7 @@ namespace Infrastruttura.Dal
                     case TipoCrud.insert: await context.Tests.AddAsync(test.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.update: context.Tests.Update(test.ToEntity()); return await context.SaveChangesAsync() == 1;
                     case TipoCrud.delete: context.Tests.Remove(test.ToEntity()); return await context.SaveChangesAsync() == 1;
-
-               }
+                }
                 throw new Exception(); 
             }
             catch (Exception ex)
