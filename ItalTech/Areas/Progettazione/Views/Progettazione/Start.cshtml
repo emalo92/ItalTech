@@ -1,5 +1,85 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using ItalTech.Areas.Progettazione.Models;
+
 @{
-}
+    var listaProgetti = (List<Progetto>)ViewBag.ListaProgetti ?? null;
+    var count = listaProgetti != null ? listaProgetti.Count : 0;
+ }
+
+<h3 class="text-center">Panoramica</h3>
+
+<section class="bg-light">
+    <div class="row">
+        <div class="col-lg-4">
+            <label>Totale progetti in dabatase: @count</label>
+        </div>
+    </div>
+</section>
+
+
+
+
+<div class="row mt-5">
+    @if (listaProgetti != null)
+    {
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Codice</th>
+                    <th>Data Inizio</th>
+                    <th>Data Fine</th>
+                    <th>Nome Progetto</th>
+                    <th>Descrizione</th>
+                    <th>Costo Previsto</th>
+                    <th>Costo Finale</th>
+                    <th>Analisi Mercato</th>
+                    <th>Tipo</th>
+                    <th>Cliente</th>
+                    <th>Project Manager</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var elem in listaProgetti)
+                    {
+                        <tr>
+                            <td>
+                                <label class="control-label">@elem.Codice</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.DataInizio.ToString("dd/MM/yyyy")</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.DataFine</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.NomeProgetto</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.Descrizione</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.CostoPrevisto</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.CostoFinale</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.CodiceAnalisiMercato</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.Tipo</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.Cliente</label>
+                            </td>
+                            <td>
+                                <label class="control-label">@elem.ProjectManager</label>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    }
+</div>

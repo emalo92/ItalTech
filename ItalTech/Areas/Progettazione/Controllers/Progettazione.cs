@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 namespace ItalTech.Areas.Progettazione.Controllers
 {
     [Area("Progettazione")]
+    //[Authorize]
     public class Progettazione : Controller
     {
         private readonly ILogger<Progettazione> _logger;
@@ -25,8 +26,11 @@ namespace ItalTech.Areas.Progettazione.Controllers
             _progettazioneDal = progettazioneDal;
         }
 
-        public IActionResult Start()
+        public async Task<IActionResult> Start()
         {
+            var listaProgetti = await _progettazioneDal.GetAllProgetti();
+            ViewBag.Count = listaProgetti.Count;
+            ViewBag.ListaProgetti = listaProgetti.Take(5).ToList().ToModel();
             return View();
         }
         public IActionResult ModificaRichiestaProgetto()
