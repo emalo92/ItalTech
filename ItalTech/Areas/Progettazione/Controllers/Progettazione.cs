@@ -319,7 +319,7 @@ namespace ItalTech.Areas.Progettazione.Controllers
                     genericTable.Elements[i].Add(result[i].CodiceFornitore);
                 }
 
-                //ViewBag.SizeModal = "modal-xl";
+                ViewBag.SizeModal = "modal-xl";
                 return PartialView("_GenericTable", genericTable);
 
             }
