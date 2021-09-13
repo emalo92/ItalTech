@@ -13,17 +13,60 @@
                     <label asp-for="Tipo">Nome Test</label>
                     <input id="idInputNomeTest" type="text" class="form-control" asp-for="Tipo" />
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="Operatore">Operatore</label>
-                    <input id="idInputOperatore" type="text" class="form-control" asp-for="Operatore" />
-                </div>
             </div>
             <div class="row mb-3">
+                <div class="col-lg-4 col-md-6 col-sm-12 form-group mt-2">
+                    <div class="input-group mt-3">
+                        <label asp-for="Operatore" class="mt-1 mr-2"></label>
+                        <input asp-for="Operatore" id="idInputOperatore" readonly class="form-control" />
+                        <div id="divAllImpiegati" class="input-group-append">
+                            <button id="buttonViewSelezioneImpiegati" type="button" title="Fornisce la lista degli impiegati esistenti" class="btn btn-primary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllImpiegati('/Progettazione/Progettazione/GetAllImpiegatiModal')">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 form-group">
                     <label asp-for="Descrizione"></label>
                     <textarea class="form-control" id="idInputDescrizione" rows="3" width="100%" asp-for="Descrizione"></textarea>
                 </div>
             </div>
-         </form>
+
+        </form>
     </div>
 </section>
+
+<div id="Div_DynamicViewAllImpiegati" class="positionFixed setDarkBackground" style="display:none">
+    <div class="finestraPopup">
+        <div id="Div_DynamicView_ContainerAllImpiegati">
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var callbackGenericTableImpiegati;
+    function showDynamicViewAllImpiegati(url) {
+        checkOpenGenericTable = "Impiegati";
+        $("#Div_DynamicView_ContainerAllImpiegati").load(url);
+        $("#Div_DynamicViewAllImpiegati").show();
+        dispatchOpenPopupCustomEvent('ViewAllImpiegatiModal');
+        if (callbackGenericTable !== undefined) {
+            document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllImpiegati), false);
+        }
+    }
+
+    function call_setContainerGenericTableImpiegati() {
+        setContainerGenericTable('Div_DynamicViewAllImpiegati', 'Div_DynamicView_ContainerAllImpiegati', 'ViewAllImpiegatiModal', callbackGetValueSelectedImpiegati);
+    }
+    function callbackGetValueSelectedImpiegati(selectedValuesImpiegati) {
+        setSelectedValuesImpiegati(selectedValuesImpiegati);
+    }
+    function setSelectedValuesImpiegati(valuesImpiegati) {
+        if (valuesImpiegati == null) {
+            return false;
+        }
+        $("#idInputOperatore").val(valuesImpiegati.AziendaID);
+    }
+    </script>

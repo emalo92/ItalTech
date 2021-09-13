@@ -21,4 +21,16 @@
     function salvaTest() {
         document.getElementById("idFormTest").submit();
     }
+
+    var checkOpenGenericTable = "";
+
+    document.addEventListener('openPopup_CustomEvent', (event) => {
+        if (event.Sender === "GenericTable") {
+            if (checkOpenGenericTable == "Impiegati") {
+                call_setContainerGenericTableImpiegati();
+            }
+          
+           
+        }
+    }, false)
 </script>
