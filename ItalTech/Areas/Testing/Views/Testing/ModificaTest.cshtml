@@ -9,7 +9,7 @@
                 <label class="mt-1 mr-2">Codice Test: </label>
                 <input id="idInputCodiceCheckTest" class="form-control" value="" />
                 <div id="divAllTest" class="input-group-append">
-                    <button id="buttonViewCodiceTest" title="Fornisce la lista dei Test esistenti" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllTest('/Testintg/Testing/GetAllTestModal')">
+                    <button id="buttonViewCodiceTest" title="Fornisce la lista dei Test esistenti" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllTest('/Testing/Testing/GetAllTestModal')">
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                 </div>
@@ -86,9 +86,17 @@
     function setSelectedValuesTest(values) {
         if (values == null) {
             return false;
-            $("#idInputCliente").val(values.CodiceFiscale);
-            //qui devi mettere gli id degli input che vuoi inserire e i nomi delle variabili sono values.nomedellacolonnadellatabella
         }
+            //qui devi mettere gli id degli input che vuoi inserire e i nomi delle variabili sono values.nomedellacolonnadellatabella
+            $("#idInputCodice").val(values.Codice);
+            $("#idInputTipo").val(values.Tipo);
+            $("#idInputValoriDiRiferimento").val(values.ValoriDiRiferimento);
+            $("#idInputOperatore").val(values.Operatore);
+            $("#idInputDescrizione").val(values.Descrizione);
+            $('#divPanelCheck').css('display', 'none');
+            $('#divFormTest').css('display', 'block');
+            
+        
     }
 
 </script>

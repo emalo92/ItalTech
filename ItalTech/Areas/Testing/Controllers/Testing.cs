@@ -97,7 +97,7 @@ namespace ItalTech.Areas.Testing.Controllers
                 return View();
             }
         }
-        [HttpPost]
+        
         public async Task<IActionResult> GetAllTestModalAsync()
         {
             var genericTable = new Table()
