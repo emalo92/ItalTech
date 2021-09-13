@@ -22,5 +22,31 @@ namespace ItalTech.Mapper
                 Operatore = test.Operatore,
             };
         }
+
+        public static Test ToModel(this Infrastruttura.Models.Test test)
+        {
+            return new Test
+            {
+                Codice = test.Codice,
+                Tipo = test.Tipo,
+                ValoriDiRiferimento = test.ValoriDiRiferimento,
+                Descrizione = test.Descrizione,
+                QuantitaEseguiti = test.QuantitaEseguiti,
+                QuantitaPassati = test.QuantitaPassati,
+                QuantitaFalliti = test.QuantitaFalliti,
+                Operatore = test.Operatore,
+            };
+        }
+
+
+        public static List<Test> ToModel(this List<Infrastruttura.Models.Test> testDal)
+        {
+            var tests = new List<Test>();
+            foreach (var test in testDal)
+            {
+                tests.Add(test.ToModel());
+            }
+            return tests;
+        }
     }
 }

@@ -1,5 +1,114 @@
-﻿@using ItalTech.Areas.Testing.Models
-@model Test
+﻿@using ItalTech.Areas.Progettazione.Models
+@model Progetto
 
 <h3 class="text-center text-secondary">Modifica Test</h3>
+<div>
+    <div id="divPanelCheck" class="row p-4">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-1 text-right">
+            <div class="input-group">
+                <label class="mt-1 mr-2">Codice Test: </label>
+                <input id="idInputCodiceCheckTest" class="form-control" value="" />
+                <div id="divAllTest" class="input-group-append">
+                    <button id="buttonViewCodiceTest" title="Fornisce la lista dei Test esistenti" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" onclick="showDynamicViewAllTest('/Testintg/Testing/GetAllTestModal')">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-1 col-sm-12 mb-1 text-right">
+            <label id="btnOkCheck" class="mr-1">
+                <button type="button" class="btn btn-secondary btn-sm" style="width:85px" title="Verifica se esiste il codice del progetto inserito e lo carica" onclick="checkProgettoExists()"><i class="fa fa-check"></i> Verifica</button>
+            </label>
+        </div>
+    </div>
+</div>
+
+<section class="bg-light">
+    <div id="divFormTest" class="container" style="display:none">
+        <form id="idFormModificaTest" class="form-group" asp-action="ModificaTest" method="post">
+            <partial name="_FormInputTest" model="@Model" />
+            <div class="row p-2">
+                <div class="col-lg-10 col-md-10 col-sm-12 text-right">
+                    <input class="btn btn-info" type="button" value="Salva" onclick="salvaTest()" />
+                </div>
+                <div class="col-lg-1 col-md-2 col-sm-12 text-right">
+                    <input class="btn btn-info" type="button" onclick="removeTest()" value="Rimuovi" />
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<div id="Div_DynamicViewAllTest" class="positionFixed setDarkBackground" style="display:none">
+<div class="finestraPopup">
+    <div id="Div_DynamicView_ContainerAllTest">
+
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+    function salvaTest() {
+
+        document.getElementById("idFormModificaTest").submit();
+
+    }
+
+    var checkOpenGenericTable = "";
+
+    document.addEventListener('openPopup_CustomEvent', (event) => {
+        if (event.Sender === "GenericTable") {
+            if (checkOpenGenericTable == "Impiegati") {
+                call_setContainerGenericTableImpiegati();
+            }
+            if(checkOpenGenericTable == "Test") {
+                call_setContainerGenericTableTest();
+            }
+
+
+        }
+    }, false)
+    var callbackGenericTable;  //viene definita in GenericTable
+    function showDynamicViewAllTest(url) {
+        checkOpenGenericTable = "Test";
+        $("#Div_DynamicView_ContainerAllTest").load(url);
+        $("#Div_DynamicViewAllTest").show();
+        dispatchOpenPopupCustomEvent('ViewAllTestModal');
+        if (callbackGenericTable !== undefined) {
+
+            document.removeEventListener('closedPopup_CustomEvent', callbackGenericTable(showDynamicViewAllTest), false);
+        }
+    }
+
+    function call_setContainerGenericTableTest() {
+        setContainerGenericTable('Div_DynamicViewAllTest', 'Div_DynamicView_ContainerAllTest', 'ViewAllTestModal', callbackGetValueSelectedTest);
+    }
+    function callbackGetValueSelectedTest(selectedValues) {
+        setSelectedValuesTest(selectedValues);
+    }
+    function setSelectedValuesTest(values) {
+        if (values == null) {
+            return false;
+        }
+
+        $("#idInputCodice").val(values.Codice);
+        $("#idInputDataInizio").val(values.DataInizio);
+        $("#idInputDataFine").val(values.DataFine);
+        $("#idInputNomeProgetto").val(values.NomeProgetto);
+        $("#idInputDescrizione").val(values.Descrizione);
+        $("#idInputTipo").val(values.Tipo);
+        $("#idInputCodiceAnalisiMercato").val(values.CodiceAnalisiMercato);
+        $("#idInputCostoPrevisto").val(values.CostoPrevisto);
+        $("#idInputCostoFinale").val(values.CostoFinale);
+        $("#idInputCliente").val(values.Cliente);
+        $("#idInputProjectManager").val(values.ProjectManager);
+        $('#divPanelCheck').css('display', 'none');
+        $('#divFormProgetto').css('display', 'block');
+
+        loadPartialComponenti(values.Codice)
+        $('#Div_DynamicView_ContainerComponenti').show();
+
+    }
+
+</script>
 

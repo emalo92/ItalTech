@@ -71,5 +71,87 @@ namespace ItalTech.Areas.Testing.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ModificaTest(Test test)
+        {
+            try
+            {
+                var result = await _testingDal.SaveTest(test.ToDto(), TipoCrud.update.ToDto());
+                var response = new Response
+                {
+                    IsSucces = result,
+                    Message = result ? "Test modificato correttamente" : "Impossibile modificare il Test"
+                };
+                ViewMessage.Show(this, response);
+                return View(test);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                ViewMessage.Show(this, response);
+                return View();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetAllTestModalAsync()
+        {
+            var genericTable = new Table()
+            {
+                Title = "Elenco Test",
+                ColumnNames = new List<string> { "Codice", "Nome Progetto", "Descrizione", "Valori di Riferimento", "Quantità Eseguiti", "Quantità Passati", "Quantità Falliti", "Operatore" },
+                Elements = new List<List<object>>()
+            };
+            var responseFailed = new Response
+            {
+                IsSucces = false,
+                Message = "Si è verificato un errore durante il recupero dei Test",
+            };
+            try
+            {
+                var resultDal = await _testingDal.GetAllTest();
+                var result = resultDal.ToModel();
+                if (result == null)
+                {
+                    ViewMessage.ShowLocal(this, responseFailed);
+                    return PartialView("_GenericTable", genericTable);
+                }
+                if (result.Count == 0)
+                {
+                    responseFailed.Message = "Non ci sono Test";
+                    ViewMessage.ShowLocal(this, responseFailed);
+                    return PartialView("_GenericTable", genericTable);
+                }
+                for (var i = 0; i < result.Count; ++i)
+                {
+                    genericTable.Elements.Add(new List<object>());
+                    genericTable.Elements[i].Add(result[i].Codice);
+                    genericTable.Elements[i].Add(result[i].Tipo);
+                    genericTable.Elements[i].Add(result[i].Descrizione);
+                    genericTable.Elements[i].Add(result[i].ValoriDiRiferimento);
+                    genericTable.Elements[i].Add(result[i].QuantitaEseguiti);
+                    genericTable.Elements[i].Add(result[i].QuantitaFalliti);
+                    genericTable.Elements[i].Add(result[i].QuantitaPassati);
+                    genericTable.Elements[i].Add(result[i].Operatore);
+              
+
+                }
+
+                ViewBag.SizeModal = "modal-xl";
+                return PartialView("_GenericTable", genericTable);
+
+            }
+            catch (Exception ex)
+            {
+                responseFailed.Message = ex.Message;
+                genericTable.Elements = new List<List<object>>();
+                ViewMessage.ShowLocal(this, responseFailed);
+                return PartialView("_GenericTable", genericTable);
+            }
+        }
     }
 }

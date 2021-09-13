@@ -22,13 +22,13 @@ namespace ItalTech.Areas.Testing.Models
         public string Operatore { get; set; }
 
         [Display(Name = "Test Eseguiti")]
-        public int QuantitaEseguiti { get; set; }
+        public int? QuantitaEseguiti { get; set; }
 
         [Display(Name = "Test Superati")]
-        public int QuantitaPassati { get; set; }
+        public int? QuantitaPassati { get; set; }
 
         [Display(Name = "Test Falliti")]
-        public int QuantitaFalliti { get; set; }
+        public int? QuantitaFalliti { get; set; }
 
         [Display(Name = "Descrizione")]
         public string Descrizione { get; set; }
