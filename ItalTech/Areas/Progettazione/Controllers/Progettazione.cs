@@ -450,10 +450,33 @@ namespace ItalTech.Areas.Progettazione.Controllers
         [HttpPost]
         public async Task<IActionResult> RichiesteProgetto(InputRicercaRichiesteProgetti input)
         {
-            var resultDal = await _progettazioneDal.GetAllRichiesteProgetti(input.ToDto());
-            //var result = resultDal.ToModel();
-            //ViewBag.ListaRichiesteProgetti = result;
-            return View(input);
+            try
+            {
+                var resultDal = await _progettazioneDal.GetAllRichiesteProgetti(input.ToDto());
+                var result = resultDal.ToModel();
+                if (result == null || result.Count == 0)
+                {
+                    var response = new Response
+                    {
+                        IsSucces = false,
+                        Message = result.Count == 0 ? "Non ci sono richieste progetti corrispondenti ai parametri di ricerca" : "Impossibile caricare le richieste progetti"
+                    };
+                    ViewMessage.Show(this, response);
+                    return View(input);
+                }
+                ViewBag.ListaRichiesteProgetti = result;
+                return View(input);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+                ViewMessage.Show(this, response);
+                return View(input);
+            }
         }
 
         public IActionResult CreaProgetto()
@@ -677,8 +700,6 @@ namespace ItalTech.Areas.Progettazione.Controllers
                 return Json(response);
             }
         }
-
-
 
     }
 }
