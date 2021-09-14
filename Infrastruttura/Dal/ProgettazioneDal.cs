@@ -959,7 +959,7 @@ namespace Infrastruttura.Dal
                     }
                     if (tipoCrud == TipoCrud.update)
                     {
-                        var presente = await context.Componentes.Where(x => x.CodiceProgetto == componente.CodiceProgetto && x.CodiceFornitura == componente.CodiceFornitura).FirstOrDefaultAsync();
+                        var presente = await context.Componentes.AsNoTracking().Where(x => x.CodiceProgetto == componente.CodiceProgetto && x.CodiceFornitura == componente.CodiceFornitura).FirstOrDefaultAsync();
                         if (presente == null)
                         {
                             tipoCrud = TipoCrud.insert;

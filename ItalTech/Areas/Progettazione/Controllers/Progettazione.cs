@@ -547,7 +547,17 @@ namespace ItalTech.Areas.Progettazione.Controllers
         {
             try
             {
+                //input.Testata.DataInizio = DateTime.Now;
                 var result = await _progettazioneDal.SaveProgetto(input.Testata, tipoCrud.ToDto());
+                if (tipoCrud == TipoCrud.insert)
+                {
+                    var progetti = await _progettazioneDal.GetAllProgetti();
+                    var codiceProgetto = progetti.Max(x => x.Codice);
+                    foreach (var elem in input.Dettaglio)
+                    {
+                        elem.CodiceProgetto = codiceProgetto;
+                    }
+                }
                 var resultComponenti = await _progettazioneDal.SaveComponenti(input.Dettaglio, tipoCrud.ToDto());
 
                 var response = new Response

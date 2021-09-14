@@ -37,9 +37,9 @@
             myCustomModalAlertShow("Dati incompleti", "Il project manager è obbligatorio");
             return;
         }
-        var testata = {};
+        var testata = {};        
         testata.Codice = isNaN(parseInt($("#idInputCodice").val())) ? 0 : parseInt($("#idInputCodice").val());
-        testata.DataInizio = $("#idInputDataInizio").val() == "" ? null : $("#idInputDataInizio").val();
+        testata.DataInizio = $("#idInputDataInizio").val();
         testata.DataFine = $("#idInputDataFine").val() == "" ? null : $("#idInputDataFine").val();
         testata.NomeProgetto = $("#idInputNomeProgetto").val() == "" ? null : $("#idInputNomeProgetto").val();
         testata.CodiceAnalisiMercato = $("#idInputCodiceAnalisiMercato").val() == "" ? null : $("#idInputCodiceAnalisiMercato").val();
@@ -59,10 +59,10 @@
             var cella = {};
             var celle = righe[i].getElementsByTagName("td");
 
-            cella.CodiceFornitura = isNaN(parseInt(celle[0].getElementsByTagName("input")[0].value)) ? null : parseInt(celle[0].getElementsByTagName("input")[0].value);
+            cella.CodiceFornitura = celle[0].getElementsByTagName("input")[0].value == "" ? null : celle[0].getElementsByTagName("input")[0].value;
             cella.Nome = celle[1].getElementsByTagName("input")[0].value == "" ? null : celle[1].getElementsByTagName("input")[0].value;
             cella.Descrizione = celle[2].getElementsByTagName("input")[0].value == "" ? null : celle[2].getElementsByTagName("input")[0].value;
-            cella.NumPezzi = isNaN(parseInt(celle[3].getElementsByTagName("input")[0].value)) ? null : parseInt(celle[3].getElementsByTagName("input")[0].value);
+            cella.NumPezzi = isNaN(parseInt(celle[3].getElementsByTagName("input")[0].value)) ? '1' : parseInt(celle[3].getElementsByTagName("input")[0].value);
             cella.CodiceProgetto = testata.Codice;
             // salto l' i == 4 per evitare il button
             righeArrayDettaglio.push(cella);
