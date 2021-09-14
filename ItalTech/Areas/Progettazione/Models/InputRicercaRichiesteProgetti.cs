@@ -8,16 +8,22 @@ namespace ItalTech.Areas.Progettazione.Models
 {
     public class InputRicercaRichiesteProgetti
     {
+        
         public int Codice { get; set; }
-        [Display(Name = "Dal")]
-        public DateTime? DataDal { get; set; }
-        [Display(Name = "Al")]
-        public DateTime? DataAl { get; set; }
-        [Display(Name = "Codice Progetto")]
-        public int CodiceProgetto { get; set; }
+
+       
+        public int? CodiceProgetto { get; set; }
+
+       
         public string Tipo { get; set; }
+
+        [Display(Name = "Budget")]
+        public decimal? Budget { get; set; }
+
+        [Display(Name = "Cliente")]
         public string Cliente { get; set; }
-        [Display(Name = "Project Manager")]
-        public string ProjectManager { get; set; }
+
+        [Display(Name = "Operatore")]
+        public string Operatore { get; set; }
     }
 }

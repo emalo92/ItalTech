@@ -3,7 +3,7 @@
 @model InputRicercaRichiesteProgetti
 
 @{
-    var listaRichiesteProgetti = (List<Progetto>)ViewBag.ListaRichiesteProgetti; @*!= null ? ViewBag.ListaRichiesteProgetti : null;*@
+    var listaRichiesteProgetti = (List<RichiestaProgetto>)ViewBag.ListaRichiesteProgetti; @*!= null ? ViewBag.ListaRichiesteProgetti : null;*@
 }
 
 <section class="bg-light">
@@ -21,22 +21,17 @@
             </div>
             <div class="row mb-3">
                 <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="DataDal"></label>
-                    <input type="date" class="form-control" asp-for="DataDal" />
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                    <label asp-for="DataAl"></label>
-                    <input type="date" class="form-control" asp-for="DataAl" />
-                </div>
-                </div>
+                    <label asp-for="Budget"></label>
+                    <input type="text" class="form-control" asp-for="Budget" />
+               
                 <div class="row mb-3">
                     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
                         <label asp-for="Tipo"></label>
                         <input type="text" class="form-control" asp-for="Tipo" />
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
-                        <label asp-for="ProjectManager"></label>
-                        <input type="text" class="form-control" asp-for="ProjectManager" />
+                        <label asp-for="Operatore"></label>
+                        <input type="text" class="form-control" asp-for="Operatore" />
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 form-group">
                         <label asp-for="Cliente"></label>
@@ -57,16 +52,13 @@
         <thead class="thead-dark">
             <tr>
                 <th>Codice</th>
-                <th>Data Inizio</th>
-                <th>Data Fine</th>
-                <th>Nome Progetto</th>
+                <th>Codice Progetto</th>
                 <th>Descrizione</th>
-                <th>Costo Previsto</th>
-                <th>Costo Finale</th>
-                <th>Analisi Mercato</th>
+                <th>Budget</th>
+                <th>Esito Studio</th>                
                 <th>Tipo</th>
                 <th>Cliente</th>
-                <th>Project Manager</th>
+                <th>Operatore</th>
             </tr>
         </thead>
         <tbody>
@@ -78,26 +70,11 @@
                             <label class="control-label">@elem.Codice</label>
                         </td>
                         <td>
-                            <label class="control-label">@elem.DataInizio.ToString("dd/MM/yyyy")</label>
+                            <label class="control-label">@elem.CodiceProgetto)</label>
                         </td>
                         <td>
-                            <label class="control-label">@elem.DataFine</label>
-                        </td>
-                        <td>
-                            <label class="control-label">@elem.NomeProgetto</label>
-                        </td>
-                        <td>
-                            <label class="control-label">@elem.Descrizione</label>
-                        </td>
-                        <td>
-                            <label class="control-label">@elem.CostoPrevisto</label>
-                        </td>
-                        <td>
-                            <label class="control-label">@elem.CostoFinale</label>
-                        </td>
-                        <td>
-                            <label class="control-label">@elem.CodiceAnalisiMercato</label>
-                        </td>
+                            <label class="control-label">@elem.Budget</label>
+                        
                         <td>
                             <label class="control-label">@elem.Tipo</label>
                         </td>
@@ -105,7 +82,7 @@
                             <label class="control-label">@elem.Cliente</label>
                         </td>
                         <td>
-                            <label class="control-label">@elem.ProjectManager</label>
+                            <label class="control-label">@elem.Operatore</label>
                         </td>
                     </tr>
                 }

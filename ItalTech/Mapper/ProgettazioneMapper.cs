@@ -83,7 +83,7 @@ namespace ItalTech.Mapper
                 Cliente = input.Cliente,
                 Codice = input.Codice,
                 CodiceProgetto = input.CodiceProgetto,
-                Operatore = input.ProjectManager,
+                Operatore = input.Operatore,
                 Tipo = input.Tipo,
             };
         }
